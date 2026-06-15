@@ -1,0 +1,142 @@
+<div class="signup-container">
+  <mat-card class="signup-card">
+    <h1>{{ 'signup.title' | translate }}</h1>
+    <p class="subtitle">{{ 'signup.as' | translate }} {{ userType }}</p>
+    <div class="language-switcher-container">
+      <app-language-switcher />
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Campos comunes -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.fullName' | translate }}*</mat-label>
+        <input matInput formControlName="fullName">
+        <mat-error *ngIf="isFieldInvalid('fullName')">{{ 'common.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.username' | translate }}*</mat-label>
+        <input matInput formControlName="username">
+        <mat-error *ngIf="isFieldInvalid('username')">{{ 'common.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.email' | translate }}*</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="isFieldInvalid('email')">{{ 'common.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.phone' | translate }}*</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error *ngIf="isFieldInvalid('phone')">{{ 'signupErrors.phoneRequired' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.password' | translate }}*</mat-label>
+        <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="isFieldInvalid('password')">{{ 'common.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'signup.confirmPassword' | translate }}*</mat-label>
+        <input matInput type="password" formControlName="confirmPassword">
+        <mat-error *ngIf="form.hasError('mismatch') && form.get('confirmPassword')?.touched">
+          {{ 'signupErrors.passwordMismatch' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- OWNER -->
+      @if (userType === 'OWNER') {
+        <div formGroupName="ownerGroup">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.district' | translate }}*</mat-label>
+            <mat-select formControlName="district">
+              @for (d of districts; track d) {
+                <mat-option [value]="d">{{ d }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+        </div>
+      }
+
+      <!-- CLINIC -->
+      @if (userType === 'CLINIC') {
+        <div formGroupName="clinicGroup">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.clinicName' | translate }}*</mat-label>
+            <input matInput formControlName="clinicName">
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.ruc' | translate }}*</mat-label>
+            <input matInput formControlName="ruc">
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.address' | translate }}*</mat-label>
+            <input matInput formControlName="address">
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.clinicType' | translate }}*</mat-label>
+            <mat-select formControlName="clinicType">
+              <mat-option value="General">General</mat-option>
+              <mat-option value="Specialized">Specialized</mat-option>
+              <mat-option value="Emergency 24h">Emergency 24h</mat-option>
+            </mat-select>
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+        </div>
+      }
+
+      <!-- MOBILE -->
+      @if (userType === 'MOBILE') {
+        <div formGroupName="mobileGroup">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.mobileSubtype' | translate }}*</mat-label>
+            <mat-select formControlName="mobileSubtype">
+              @for (sub of mobileSubtypes; track sub) {
+                <mat-option [value]="sub">{{ sub }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.coverageDistricts' | translate }}*</mat-label>
+            <mat-select formControlName="coverageDistricts" multiple>
+              @for (d of districts; track d) {
+                <mat-option [value]="d">{{ d }}</mat-option>
+              }
+            </mat-select>
+            <mat-error>{{ 'common.required' | translate }}</mat-error>
+          </mat-form-field>
+
+          <mat-checkbox formControlName="hasVehicle">{{ 'signup.haveVehicle' | translate }}</mat-checkbox>
+
+          @if (form.get('mobileGroup.hasVehicle')?.value) {
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'signup.vehiclePlate' | translate }}</mat-label>
+              <input matInput formControlName="vehiclePlate">
+            </mat-form-field>
+          }
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'signup.specialty' | translate }}</mat-label>
+            <input matInput formControlName="specialty">
+          </mat-form-field>
+        </div>
+      }
+
+      <button mat-raised-button color="primary" type="submit" class="full-width-button" [disabled]="form.invalid">
+        {{ 'buttons.signUp' | translate }}
+      </button>
+
+      <p class="signin-link">{{ 'signup.alreadyAccount' | translate }} <a (click)="goToSignIn()">{{ 'buttons.signIn' | translate }}</a></p>
+    </form>
+  </mat-card>
+<!--  <div class="signup-image-column">
+    <img src="assets/fotoperfil.png" alt="PetCare">
+  </div> -->
+</div>

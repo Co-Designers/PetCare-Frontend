@@ -1,0 +1,61 @@
+@if (loading) {
+  <div class="loading">{{ 'common.loading' | translate }}</div>
+} @else if (patient) {
+  <div class="detail-container">
+    <mat-card class="info-card">
+      <mat-card-header>
+        <mat-card-title>{{ patient.name }}</mat-card-title>
+        <mat-card-subtitle>{{ patient.species }} {{ patient.breed ? '- ' + patient.breed : '' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>{{ 'clinic.patients.owner' | translate }}:</strong> {{ patient.ownerName || ('ID: ' + patient.ownerId) }}</p>
+        <p><strong>{{ 'clinic.patients.phone' | translate }}:</strong> {{ patient.ownerPhone || '-' }}</p>
+        <p><strong>{{ 'clinic.patients.birthDate' | translate }}:</strong> {{ (patient.birthDate | date:'dd/MM/yyyy') || '-' }}</p>
+        <p><strong>{{ 'clinic.patients.weight' | translate }}:</strong> {{ patient.weight }} kg</p>
+        <p><strong>{{ 'clinic.patients.allergies' | translate }}:</strong> {{ patient.allergies || '-' }}</p>
+        <p><strong>{{ 'clinic.patients.lastVisit' | translate }}:</strong> {{ (patient.lastVisit | date:'dd/MM/yyyy') || '-' }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="history-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'clinic.medicalHistory.title' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (loadingRecords) {
+          <div class="loading">{{ 'common.loading' | translate }}</div>
+        } @else if (medicalRecords.length === 0) {
+          <div class="no-data">{{ 'clinic.medicalHistory.noData' | translate }}</div>
+        } @else {
+          @for (record of medicalRecords; track record.id) {
+            <div class="record-item">
+              <div class="record-date">{{ record.date | date:'dd/MM/yyyy' }}</div>
+              <div class="record-details">
+                <strong>{{ record.vaccinationName || 'Consulta' }}</strong>
+                @if (record.diagnosis) {
+                  <p><strong>{{ 'clinic.medicalHistory.diagnosis' | translate }}:</strong> {{ record.diagnosis }}</p>
+                }
+                @if (record.treatment) {
+                  <p><strong>{{ 'clinic.medicalHistory.treatment' | translate }}:</strong> {{ record.treatment }}</p>
+                }
+                @if (record.medications) {
+                  <p><strong>{{ 'clinic.medicalHistory.medications' | translate }}:</strong> {{ record.medications }}</p>
+                }
+                @if (record.observations) {
+                  <p><strong>{{ 'clinic.medicalHistory.observations' | translate }}:</strong> {{ record.observations }}</p>
+                }
+                @if (record.nextDueDate) {
+                  <p><strong>{{ 'clinic.medicalHistory.nextDue' | translate }}:</strong> {{ record.nextDueDate | date }}</p>
+                }
+              </div>
+            </div>
+          }
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card-actions>
+      <button mat-button routerLink="/clinic/patients">{{ 'common.back' | translate }}</button>
+    </mat-card-actions>
+  </div>
+}

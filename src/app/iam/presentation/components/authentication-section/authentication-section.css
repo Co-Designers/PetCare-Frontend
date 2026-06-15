@@ -1,0 +1,125 @@
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.welcome-text {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.auth-btn,
+.logout-btn {
+  color: white !important;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+
+.auth-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+.logout-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== CONTAINER ===== */
+
+.signup-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  justify-content: center;
+  background: linear-gradient(135deg, #17345d, #214b84);
+  overflow: hidden;
+}
+
+/* ===== FORM COLUMN ===== */
+
+.signup-form-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* ===== CARD ===== */
+
+.signup-card {
+  width: 100%;
+  max-width: 650px;
+  padding: 2rem;
+  border-radius: 16px;
+  background: white;
+}
+
+/* ===== IMAGE SECTION ===== */
+
+.signup-image-column {
+  width: 45%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  position: relative;
+}
+
+.signup-image-column::before {
+  display: none;
+}
+
+/* ===== IMAGE ===== */
+
+.signup-image-column img {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 92%;
+  object-fit: cover;
+  border-radius: 35px;
+  border: 5px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35),
+    0 0 25px rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+/* ===== LANGUAGE SWITCHER ===== */
+
+.language-switcher-container {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 1000;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
+  .signup-image-column {
+    display: none;
+  }
+
+  .signup-form-column {
+    width: 100%;
+  }
+}

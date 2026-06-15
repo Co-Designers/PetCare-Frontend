@@ -1,0 +1,52 @@
+<div class="auth-container">
+  <div class="auth-form-column">
+    <mat-card class="auth-card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h1>{{ 'login.title' | translate }}</h1>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'login.username' | translate }}</mat-label>
+          <input matInput formControlName="username">
+          <mat-error *ngIf="isInvalidControl(form, 'username')">
+            {{ 'common.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'login.password' | translate }}</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="isInvalidControl(form, 'password')">
+            {{ 'common.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="options">
+          <mat-checkbox formControlName="rememberMe">{{ 'login.rememberMe' | translate }}</mat-checkbox>
+          <a class="forgot-link">{{ 'login.forgotPassword' | translate }}</a>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width-button">
+          {{ 'buttons.signIn' | translate }}
+        </button>
+
+        <p class="signup-link">
+          {{ 'login.noAccount' | translate }}
+          <a (click)="goToSelectType()">{{ 'buttons.signUp' | translate }}</a>
+        </p>
+
+        @if (store.errorMessage(); as error) {
+          <div class="error-message">{{ error }}</div>
+        }
+      </form>
+    </mat-card>
+  </div>
+  <div class="language-switcher-container">
+    <app-language-switcher />
+  </div>
+  <div class="auth-image-column">
+    <img src="assets/fotoperfil.png" alt="PetCare">
+  </div>
+</div>

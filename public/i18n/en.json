@@ -1,0 +1,311 @@
+{
+  "layout": {
+    "logo": "PetCare"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "pets": "Pets",
+    "appointments": "Appointments",
+    "search": "Search",
+    "profile": "Profile",
+    "patients": "Patients",
+    "settings": "Settings",
+    "myServices": "My Services",
+    "availability": "Availability",
+    "veterinarians": "Veterinarians",
+    "requests": "Requests"
+  },
+  "auth": {
+    "welcome": "Welcome,",
+    "logout": "Logout"
+  },
+  "buttons": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "common": {
+    "loading": "Loading...",
+    "required": "Required",
+    "save": "Save",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "view": "View",
+    "back": "Back",
+    "yes": "Yes",
+    "no": "No",
+    "close": "Close"
+  },
+  "login": {
+    "title": "SIGN IN",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?"
+  },
+  "selectAccount": {
+    "title": "Select account type",
+    "ownerTitle": "Pet Owner",
+    "ownerDescription": "Manage your pets' health, appointments and alerts.",
+    "clinicTitle": "Veterinary Clinic",
+    "clinicDescription": "Manage schedules, patients and clinic operations.",
+    "mobileTitle": "Mobile Professional",
+    "mobileDescription": "Independent vet, groomer or technician."
+  },
+  "signup": {
+    "title": "Create your PetCare account",
+    "as": "As",
+    "owner": "Pet Owner",
+    "clinic": "Veterinary Clinic",
+    "mobile": "Mobile Professional",
+    "fullName": "Full name",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "district": "District",
+    "clinicName": "Clinic name",
+    "ruc": "RUC",
+    "address": "Address",
+    "clinicType": "Clinic type",
+    "mobileSubtype": "Professional subtype",
+    "coverageDistricts": "Coverage districts",
+    "vehiclePlate": "Vehicle plate",
+    "specialty": "Specialty",
+    "haveVehicle": "I have a vehicle / mobile unit",
+    "alreadyAccount": "Already have an account?"
+  },
+  "signupErrors": {
+    "phoneRequired": "9-digit phone required",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "owner": {
+    "dashboard": {
+      "welcome": "Welcome back!",
+      "myPets": "My Pets",
+      "viewAll": "View all",
+      "upcomingAppointments": "Upcoming Appointments",
+      "schedule": "Schedule",
+      "healthAlerts": "Health Alerts",
+      "noAlerts": "No active alerts.",
+      "addPet": "Add pet",
+      "findServices": "Find services"
+    },
+    "pets": {
+      "title": "My Pets",
+      "add": "Add Pet",
+      "name": "Name",
+      "species": "Species",
+      "dog": "Dog",
+      "cat": "Cat",
+      "other": "Other",
+      "breed": "Breed",
+      "birthDate": "Birth date",
+      "weight": "Weight",
+      "weightMin": "Weight must be positive",
+      "allergies": "Allergies",
+      "age": "Age",
+      "viewHistory": "View history",
+      "edit": "Edit Pet"
+    },
+    "appointments": {
+      "title": "My Appointments",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "new": "New Appointment",
+      "edit": "Edit Appointment",
+      "pet": "Pet",
+      "providerType": "Provider type",
+      "providerId": "Provider ID",
+      "serviceType": "Service type",
+      "dateTime": "Date & time",
+      "notes": "Notes",
+      "provider": "Provider",
+      "status": "Status",
+      "reschedule": "Reschedule",
+      "cancel": "Cancel",
+      "viewHistory": "View history",
+      "clinic": "Clinic",
+      "mobile": "Mobile professional",
+      "services": "Services"
+    },
+    "medicalHistory": {
+      "title": "Medical history of",
+      "export": "Export",
+      "share": "Share temporarily",
+      "veterinarian": "Veterinarian",
+      "diagnosis": "Diagnosis",
+      "treatment": "Treatment",
+      "medications": "Medications",
+      "observations": "Observations",
+      "nextDue": "Next due",
+      "noData": "No medical records found for this pet."
+    },
+    "search": {
+      "district": "District",
+      "specialty": "Specialty",
+      "providerType": "Provider type",
+      "all": "All",
+      "clinic": "Clinic",
+      "mobile": "Mobile professional",
+      "search": "Search",
+      "specialties": "Specialties",
+      "services": "Services",
+      "rating": "Rating",
+      "select": "Select"
+    },
+    "profile": {
+      "title": "My Profile",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "district": "District",
+      "invalidEmail": "Invalid email format",
+      "phoneError": "9-digit phone required",
+      "changePassword": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "passwordMismatch": "Passwords do not match"
+    }
+  },
+  "clinic": {
+    "dashboard": {
+      "welcome": "Welcome to your Clinic Dashboard",
+      "todayAppointments": "Today's Appointments",
+      "pendingAppointments": "Pending Appointments",
+      "totalPatients": "Total Patients",
+      "viewAppointments": "View Appointments",
+      "viewPatients": "View Patients",
+      "manageVets": "Manage Veterinarians",
+      "settings": "Settings"
+    },
+    "appointments": {
+      "title": "Appointments",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "detail": "Appointment Details",
+      "service": "Service",
+      "date": "Date & Time",
+      "petId": "Pet ID",
+      "status": "Status",
+      "notes": "Notes",
+      "confirm": "Confirm",
+      "complete": "Complete",
+      "cancel": "Cancel",
+      "filterDate": "Filter by date",
+      "filterVet": "Veterinarian",
+      "filterStatus": "Status",
+      "cancelled": "Cancelled",
+      "outsideHours": "Selected time is outside clinic working hours",
+      "selectPet": "Select pet"
+    },
+    "patients": {
+      "title": "Patients",
+      "owner": "Owner",
+      "lastVisit": "Last Visit",
+      "phone": "Phone",
+      "birthDate": "Birth Date",
+      "weight": "Weight",
+      "allergies": "Allergies"
+    },
+    "veterinarians": {
+      "title": "Veterinarians",
+      "add": "Add Veterinarian",
+      "edit": "Edit Veterinarian",
+      "name": "Full Name",
+      "specialty": "Specialty",
+      "license": "License Number",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "services": {
+      "title": "Services",
+      "add": "Add Service",
+      "edit": "Edit Service",
+      "name": "Service Name",
+      "description": "Description",
+      "duration": "Duration (minutes)",
+      "durationError": "Minimum 5 minutes",
+      "price": "Price"
+    },
+    "settings": {
+      "title": "Clinic Settings",
+      "name": "Clinic Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "district": "District",
+      "description": "Description",
+      "openingHours": "Opening Hours"
+    },
+    "medicalHistory": {
+      "title": "Medical History",
+      "noData": "No medical records found",
+      "diagnosis": "Diagnosis",
+      "treatment": "Treatment",
+      "medications": "Medications",
+      "observations": "Observations",
+      "nextDue": "Next due"
+    }
+  },
+  "mobile": {
+    "requests": {
+      "title": "Service Requests",
+      "detail": "Request Details",
+      "request": "Request",
+      "serviceId": "Service ID",
+      "date": "Date & Time",
+      "address": "Address",
+      "status": "Status",
+      "notes": "Notes",
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "availability": {
+      "title": "Set Availability",
+      "date": "Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "available": "Available"
+    },
+    "services": {
+      "title": "My Services",
+      "add": "Add Service",
+      "edit": "Edit Service",
+      "name": "Service Name",
+      "description": "Description",
+      "duration": "Duration (minutes)",
+      "durationError": "Minimum 5 minutes",
+      "price": "Price"
+    },
+    "profile": {
+      "title": "Mobile Professional Profile",
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneError": "9-digit phone required",
+      "invalidEmail": "Invalid email format",
+      "subtype": "Professional subtype",
+      "vet": "Veterinarian",
+      "groomer": "Groomer",
+      "diagnosticTech": "Diagnostic Technician",
+      "coverageDistricts": "Coverage districts",
+      "hasVehicle": "I have a vehicle / mobile unit",
+      "vehiclePlate": "Vehicle plate",
+      "specialty": "Specialty"
+    },
+    "dashboard": {
+      "welcome": "Welcome to your Mobile Dashboard",
+      "pendingRequests": "Pending Requests",
+      "activeServices": "Active Services",
+      "viewRequests": "View Requests",
+      "manageServices": "Manage Services",
+      "setAvailability": "Set Availability",
+      "profile": "Profile"
+    }
+  }
+}

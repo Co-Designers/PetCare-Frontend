@@ -1,0 +1,31 @@
+<div class="vets-container">
+  <div class="header">
+    <h2>{{ 'clinic.veterinarians.title' | translate }}</h2>
+    <button mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon> {{ 'clinic.veterinarians.add' | translate }}
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">{{ 'common.loading' | translate }}</div>
+  } @else {
+    <div class="vets-grid">
+      @for (vet of vets; track vet.id) {
+        <mat-card class="vet-card">
+          <mat-card-header>
+            <mat-card-title>{{ vet.name }}</mat-card-title>
+            <mat-card-subtitle>{{ vet.specialty }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>{{ 'clinic.veterinarians.license' | translate }}:</strong> {{ vet.licenseNumber }}</p>
+            <p><strong>{{ 'clinic.veterinarians.phone' | translate }}:</strong> {{ vet.phone || '-' }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button color="primary" (click)="editVet(vet)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="deleteVet(vet.id!)"><mat-icon>delete</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

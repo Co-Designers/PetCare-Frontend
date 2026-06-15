@@ -1,0 +1,100 @@
+:root {
+  --primary: #1A3458;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --radius: 1rem;
+}
+
+.vets-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f5f7fb;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  position: relative;
+}
+
+.header h2:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), #2c7da0);
+  border-radius: 3px;
+}
+
+.vets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.vet-card {
+  border-radius: var(--radius);
+  background: white;
+  transition: all 0.3s ease;
+  border: 1px solid #eef2f6;
+  overflow: hidden;
+}
+
+.vet-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-sm);
+  border-color: transparent;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, var(--primary-light) 0%, white 100%);
+  padding: 1rem 1.25rem;
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+mat-card-subtitle {
+  color: #2c7da0;
+  font-weight: 500;
+}
+
+mat-card-content {
+  padding: 1rem 1.25rem;
+  color: #6c757d;
+}
+
+mat-card-actions {
+  padding: 0.75rem 1.25rem 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.loading {
+  text-align: center;
+  margin: 2rem;
+  color: #6c757d;
+}
+
+@media (max-width: 768px) {
+  .vets-container {
+    padding: 1rem;
+  }
+}

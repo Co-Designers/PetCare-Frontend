@@ -1,0 +1,1306 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "clinic1",
+      "password": "clinic123",
+      "email": "clinic@petcare.com",
+      "userType": "CLINIC",
+      "fullName": "Dr. Carlos",
+      "phone": "999888777"
+    },
+    {
+      "id": 2,
+      "username": "clinic2",
+      "password": "clinic123",
+      "email": "clinic2@petcare.com",
+      "userType": "CLINIC",
+      "fullName": "Dr. Laura",
+      "phone": "999777666"
+    },
+    {
+      "id": 3,
+      "username": "owner1",
+      "password": "owner123",
+      "email": "owner1@petcare.com",
+      "userType": "OWNER",
+      "fullName": "Ana Owner",
+      "phone": "987654321",
+      "district": "Miraflores"
+    },
+    {
+      "id": 4,
+      "username": "owner2",
+      "password": "owner123",
+      "email": "owner2@petcare.com",
+      "userType": "OWNER",
+      "fullName": "Luis Martínez",
+      "phone": "912345678",
+      "district": "San Isidro"
+    },
+    {
+      "id": 5,
+      "username": "owner3",
+      "password": "owner123",
+      "email": "owner3@petcare.com",
+      "userType": "OWNER",
+      "fullName": "María Rodríguez",
+      "phone": "998877665",
+      "district": "Surco"
+    },
+    {
+      "id": 6,
+      "username": "mobile1",
+      "password": "mobile123",
+      "email": "mobile1@petcare.com",
+      "userType": "MOBILE",
+      "fullName": "Dr. Ana Móvil",
+      "phone": "955566677",
+      "mobileSubtype": "vet",
+      "coverageDistricts": [
+        "San Isidro",
+        "Miraflores"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "ABC-123",
+      "specialty": "Cardiology"
+    },
+    {
+      "id": 7,
+      "username": "mobile2",
+      "password": "mobile123",
+      "email": "mobile2@petcare.com",
+      "userType": "MOBILE",
+      "fullName": "Groomer Móvil",
+      "phone": "944433322",
+      "mobileSubtype": "groomer",
+      "coverageDistricts": [
+        "San Isidro",
+        "Miraflores",
+        "Surco"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "GRO-789",
+      "specialty": ""
+    },
+    {
+      "id": 8,
+      "username": "mobile3",
+      "password": "mobile123",
+      "email": "mobile3@petcare.com",
+      "userType": "MOBILE",
+      "fullName": "Técnico Rayos X",
+      "phone": "911122233",
+      "mobileSubtype": "diagnostic_tech",
+      "coverageDistricts": [
+        "San Isidro",
+        "Miraflores"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "RAY-456",
+      "specialty": "Radiología"
+    },
+    {
+      "id": 9,
+      "username": "mobile4",
+      "password": "mobile123",
+      "email": "mobile4@petcare.com",
+      "userType": "MOBILE",
+      "fullName": "Veterinario Domicilio",
+      "phone": "923456789",
+      "mobileSubtype": "vet",
+      "coverageDistricts": [
+        "La Molina",
+        "San Borja"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "VET-001",
+      "specialty": "Medicina General"
+    },
+    {
+      "id": 10,
+      "username": "mobile5",
+      "password": "mobile123",
+      "email": "mobile5@petcare.com",
+      "userType": "MOBILE",
+      "fullName": "Estilista Canino",
+      "phone": "934567890",
+      "mobileSubtype": "groomer",
+      "coverageDistricts": [
+        "San Miguel",
+        "Pueblo Libre"
+      ],
+      "hasVehicle": false,
+      "specialty": ""
+    }
+  ],
+  "pets": [
+    {
+      "id": 1,
+      "ownerId": 3,
+      "name": "Max",
+      "species": "dog",
+      "breed": "Golden Retriever",
+      "birthDate": "2020-05-10",
+      "weight": 28,
+      "allergies": ""
+    },
+    {
+      "id": 2,
+      "ownerId": 3,
+      "name": "Luna",
+      "species": "cat",
+      "breed": "Persian",
+      "birthDate": "2021-08-15",
+      "weight": 4.5,
+      "allergies": "Polen"
+    },
+    {
+      "id": 3,
+      "ownerId": 3,
+      "name": "Rocky",
+      "species": "dog",
+      "breed": "Bulldog",
+      "birthDate": "2019-11-20",
+      "weight": 22,
+      "allergies": ""
+    },
+    {
+      "id": 4,
+      "ownerId": 3,
+      "name": "Coco",
+      "species": "cat",
+      "breed": "Siamés",
+      "birthDate": "2022-03-10",
+      "weight": 3.8,
+      "allergies": "Ácaros"
+    },
+    {
+      "id": 5,
+      "ownerId": 3,
+      "name": "Toby",
+      "species": "dog",
+      "breed": "Beagle",
+      "birthDate": "2018-07-25",
+      "weight": 14,
+      "allergies": ""
+    },
+    {
+      "id": 6,
+      "ownerId": 4,
+      "name": "Simba",
+      "species": "dog",
+      "breed": "Labrador",
+      "birthDate": "2021-02-10",
+      "weight": 30,
+      "allergies": ""
+    },
+    {
+      "id": 7,
+      "ownerId": 4,
+      "name": "Mimi",
+      "species": "cat",
+      "breed": "Siames",
+      "birthDate": "2022-06-10",
+      "weight": 3,
+      "allergies": ""
+    },
+    {
+      "id": 8,
+      "ownerId": 4,
+      "name": "Bobby",
+      "species": "dog",
+      "breed": "Poodle",
+      "birthDate": "2020-12-01",
+      "weight": 8,
+      "allergies": "Pelo"
+    },
+    {
+      "id": 9,
+      "ownerId": 5,
+      "name": "Nina",
+      "species": "dog",
+      "breed": "Husky",
+      "birthDate": "2019-09-15",
+      "weight": 25,
+      "allergies": ""
+    },
+    {
+      "id": 10,
+      "ownerId": 5,
+      "name": "Pelusa",
+      "species": "cat",
+      "breed": "Común",
+      "birthDate": "2021-01-20",
+      "weight": 4,
+      "allergies": ""
+    }
+  ],
+  "clinics": [
+    {
+      "id": 1,
+      "name": "Veterinaria San Martín",
+      "email": "contacto@sanmartinvet.com",
+      "phone": "999888777",
+      "address": "Av. Javier Prado 1234",
+      "district": "San Isidro",
+      "ruc": "20601234567",
+      "clinicType": "General",
+      "description": "Clínica con más de 10 años de experiencia",
+      "openingHours": "Lun-Vie 8am-8pm, Sáb 9am-2pm",
+      "servicesOffered": [
+        "Consulta general",
+        "Vacunación",
+        "Cirugía"
+      ],
+      "specialties": [
+        "Cardiología",
+        "Odontología"
+      ],
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "name": "Clínica Veterinaria Central",
+      "email": "info@clinicacentral.com",
+      "phone": "987654321",
+      "address": "Calle Principal 567",
+      "district": "Miraflores",
+      "ruc": "20765432123",
+      "clinicType": "General",
+      "description": "Especialistas en animales pequeños",
+      "openingHours": "Lun-Dom 24h",
+      "servicesOffered": [
+        "Consulta",
+        "Vacunación",
+        "Emergencia"
+      ],
+      "specialties": [
+        "Urgencias",
+        "Cirugía"
+      ],
+      "rating": 4.8
+    },
+    {
+      "id": 3,
+      "name": "VetCare La Molina",
+      "email": "lamolina@vetcare.com",
+      "phone": "945612378",
+      "address": "Av. La Molina 890",
+      "district": "La Molina",
+      "ruc": "20876543212",
+      "clinicType": "Especializada",
+      "description": "Centro de rehabilitación",
+      "openingHours": "Lun-Sáb 9am-7pm",
+      "servicesOffered": [
+        "Fisioterapia",
+        "Acupuntura",
+        "Consulta"
+      ],
+      "specialties": [
+        "Rehabilitación"
+      ],
+      "rating": 4.6
+    },
+    {
+      "id": 4,
+      "name": "PetHealth Surco",
+      "email": "surco@pethealth.com",
+      "phone": "998877665",
+      "address": "Av. Caminos del Inca 345",
+      "district": "Surco",
+      "ruc": "20987654321",
+      "clinicType": "General",
+      "description": "Atención personalizada",
+      "openingHours": "Lun-Vie 8am-6pm",
+      "servicesOffered": [
+        "Consulta",
+        "Vacunación",
+        "Laboratorio"
+      ],
+      "specialties": [
+        "Dermatología"
+      ],
+      "rating": 4.4
+    },
+    {
+      "id": 5,
+      "name": "Clínica San Borja",
+      "email": "sanborja@vetsan.com",
+      "phone": "987123456",
+      "address": "Av. San Borja Norte 222",
+      "district": "San Borja",
+      "ruc": "20123456789",
+      "clinicType": "Especializada",
+      "description": "Especialistas en cardiología",
+      "openingHours": "Lun-Vie 9am-8pm",
+      "servicesOffered": [
+        "Consulta",
+        "Ecocardiografía",
+        "Radiografía"
+      ],
+      "specialties": [
+        "Cardiología"
+      ],
+      "rating": 4.9
+    },
+    {
+      "id": 6,
+      "name": "Vet Express Jesus María",
+      "email": "jesusmaria@vetexpress.com",
+      "phone": "965432178",
+      "address": "Av. Brasil 456",
+      "district": "Jesus Maria",
+      "ruc": "20345678901",
+      "clinicType": "General",
+      "description": "Atención rápida",
+      "openingHours": "Lun-Vie 10am-6pm",
+      "servicesOffered": [
+        "Consulta",
+        "Vacunación"
+      ],
+      "specialties": [],
+      "rating": 4.2
+    },
+    {
+      "id": 7,
+      "name": "Clínica La Castellana",
+      "email": "castellana@laclinica.com",
+      "phone": "963258741",
+      "address": "Calle Los Álamos 789",
+      "district": "San Isidro",
+      "ruc": "20456789012",
+      "clinicType": "General",
+      "description": "Atención con amor",
+      "openingHours": "Lun-Vie 8am-7pm, Sáb 9am-1pm",
+      "servicesOffered": [
+        "Consulta",
+        "Cirugía",
+        "Vacunación"
+      ],
+      "specialties": [
+        "Odontología"
+      ],
+      "rating": 4.3
+    },
+    {
+      "id": 8,
+      "name": "Veterinaria 24/7",
+      "email": "emergencias@vet247.com",
+      "phone": "912345678",
+      "address": "Av. Arequipa 1001",
+      "district": "Lima",
+      "ruc": "20567890123",
+      "clinicType": "Emergencias",
+      "description": "Atención las 24 horas",
+      "openingHours": "24/7",
+      "servicesOffered": [
+        "Emergencia",
+        "Hospitalización",
+        "Cirugía"
+      ],
+      "specialties": [
+        "Urgencias"
+      ],
+      "rating": 4.7
+    }
+  ],
+  "veterinarians": [
+    {
+      "id": 1,
+      "clinicId": 1,
+      "name": "Dr. Rafael González",
+      "specialty": "Clínica General",
+      "licenseNumber": "VET-001-2024",
+      "email": "rafael@vet.com",
+      "phone": "999111222",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "clinicId": 1,
+      "name": "Dra. María Rodríguez",
+      "specialty": "Cirugía",
+      "licenseNumber": "VET-002-2024",
+      "email": "maria@vet.com",
+      "phone": "999111223",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "clinicId": 1,
+      "name": "Dr. Luis Torres",
+      "specialty": "Cardiología",
+      "licenseNumber": "VET-003-2024",
+      "email": "luis@vet.com",
+      "phone": "999111224",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "clinicId": 2,
+      "name": "Dra. Ana Gómez",
+      "specialty": "Urgencias",
+      "licenseNumber": "VET-004-2024",
+      "email": "ana@clinicacentral.com",
+      "phone": "987654322",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "clinicId": 2,
+      "name": "Dr. Carlos Pérez",
+      "specialty": "Cirugía",
+      "licenseNumber": "VET-005-2024",
+      "email": "carlos@clinicacentral.com",
+      "phone": "987654323",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "clinicId": 3,
+      "name": "Dr. Fernando Ríos",
+      "specialty": "Rehabilitación",
+      "licenseNumber": "VET-006-2024",
+      "email": "fernando@vetcare.com",
+      "phone": "945612379",
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "clinicId": 4,
+      "name": "Dra. Patricia López",
+      "specialty": "Dermatología",
+      "licenseNumber": "VET-007-2024",
+      "email": "patricia@pethealth.com",
+      "phone": "998877666",
+      "isActive": true
+    },
+    {
+      "id": 8,
+      "clinicId": 5,
+      "name": "Dr. Miguel Ángel",
+      "specialty": "Cardiología",
+      "licenseNumber": "VET-008-2024",
+      "email": "miguel@vetsan.com",
+      "phone": "987123457",
+      "isActive": true
+    },
+    {
+      "id": 9,
+      "clinicId": 6,
+      "name": "Dr. Javier Mora",
+      "specialty": "Clínica General",
+      "licenseNumber": "VET-009-2024",
+      "email": "javier@vetexpress.com",
+      "phone": "965432179",
+      "isActive": true
+    },
+    {
+      "id": 10,
+      "clinicId": 7,
+      "name": "Dra. Cecilia Soto",
+      "specialty": "Odontología",
+      "licenseNumber": "VET-010-2024",
+      "email": "cecilia@laclinica.com",
+      "phone": "963258742",
+      "isActive": true
+    },
+    {
+      "id": 11,
+      "clinicId": 8,
+      "name": "Dr. Andrés Medina",
+      "specialty": "Urgencias",
+      "licenseNumber": "VET-011-2024",
+      "email": "andres@vet247.com",
+      "phone": "912345679",
+      "isActive": true
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "clinicId": 1,
+      "name": "Consulta general",
+      "description": "Revisión completa",
+      "durationMinutes": 30,
+      "price": 80,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "clinicId": 1,
+      "name": "Vacunación",
+      "description": "Aplicación de vacunas",
+      "durationMinutes": 15,
+      "price": 50,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "clinicId": 1,
+      "name": "Cirugía menor",
+      "description": "Procedimientos simples",
+      "durationMinutes": 60,
+      "price": 200,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "clinicId": 2,
+      "name": "Consulta general",
+      "description": "Evaluación general",
+      "durationMinutes": 30,
+      "price": 85,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "clinicId": 2,
+      "name": "Emergencia",
+      "description": "Atención urgente",
+      "durationMinutes": 20,
+      "price": 150,
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "clinicId": 3,
+      "name": "Fisioterapia",
+      "description": "Rehabilitación",
+      "durationMinutes": 45,
+      "price": 120,
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "clinicId": 4,
+      "name": "Consulta dermatológica",
+      "description": "Especialidad piel",
+      "durationMinutes": 30,
+      "price": 90,
+      "isActive": true
+    },
+    {
+      "id": 8,
+      "clinicId": 5,
+      "name": "Ecocardiografía",
+      "description": "Estudio cardíaco",
+      "durationMinutes": 60,
+      "price": 250,
+      "isActive": true
+    },
+    {
+      "id": 9,
+      "clinicId": 6,
+      "name": "Consulta rápida",
+      "description": "15 min",
+      "durationMinutes": 15,
+      "price": 40,
+      "isActive": true
+    },
+    {
+      "id": 10,
+      "clinicId": 7,
+      "name": "Limpieza dental",
+      "description": "Profilaxis",
+      "durationMinutes": 45,
+      "price": 180,
+      "isActive": true
+    },
+    {
+      "id": 11,
+      "clinicId": 8,
+      "name": "Emergencia 24h",
+      "description": "Atención inmediata",
+      "durationMinutes": 30,
+      "price": 200,
+      "isActive": true
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "petId": 1,
+      "clinicId": 1,
+      "veterinarianId": 1,
+      "serviceType": "Consulta general",
+      "dateTime": "2025-06-15T10:00:00Z",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "notes": "Primera consulta",
+      "createdAt": "2025-06-01T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "petId": 2,
+      "clinicId": 1,
+      "veterinarianId": 1,
+      "serviceType": "Vacunación",
+      "dateTime": "2025-06-20T14:00:00Z",
+      "status": "confirmed",
+      "paymentStatus": "pending",
+      "notes": "",
+      "createdAt": "2025-06-10T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "petId": 3,
+      "clinicId": 2,
+      "veterinarianId": 4,
+      "serviceType": "Consulta general",
+      "dateTime": "2025-06-18T11:30:00Z",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2025-06-05T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "petId": 4,
+      "clinicId": 3,
+      "veterinarianId": 6,
+      "serviceType": "Fisioterapia",
+      "dateTime": "2025-06-22T09:00:00Z",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2025-06-12T14:00:00Z"
+    },
+    {
+      "id": 5,
+      "petId": 5,
+      "clinicId": 4,
+      "veterinarianId": 7,
+      "serviceType": "Consulta dermatológica",
+      "dateTime": "2025-06-25T16:00:00Z",
+      "status": "pending",
+      "paymentStatus": "pending",
+      "notes": "Alergias",
+      "createdAt": "2025-06-15T11:00:00Z"
+    },
+    {
+      "id": 6,
+      "petId": 6,
+      "clinicId": 5,
+      "veterinarianId": 8,
+      "serviceType": "Ecocardiografía",
+      "dateTime": "2025-06-12T08:00:00Z",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2025-06-01T08:00:00Z"
+    },
+    {
+      "id": 7,
+      "petId": 7,
+      "clinicId": 6,
+      "veterinarianId": 9,
+      "serviceType": "Consulta rápida",
+      "dateTime": "2025-06-14T10:30:00Z",
+      "status": "cancelled",
+      "paymentStatus": "refunded",
+      "notes": "Cancelado por dueño",
+      "createdAt": "2025-06-07T16:00:00Z"
+    },
+    {
+      "id": 8,
+      "petId": 8,
+      "clinicId": 7,
+      "veterinarianId": 10,
+      "serviceType": "Limpieza dental",
+      "dateTime": "2025-06-19T09:00:00Z",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "notes": "",
+      "createdAt": "2025-06-08T12:00:00Z"
+    },
+    {
+      "id": 9,
+      "petId": 9,
+      "clinicId": 8,
+      "veterinarianId": 11,
+      "serviceType": "Emergencia 24h",
+      "dateTime": "2025-06-21T22:00:00Z",
+      "status": "confirmed",
+      "paymentStatus": "paid",
+      "notes": "Urgencia",
+      "createdAt": "2025-06-20T20:00:00Z"
+    },
+    {
+      "id": 10,
+      "petId": 1,
+      "clinicId": 1,
+      "providerType": "clinic",
+      "serviceType": "Consulta general",
+      "dateTime": "2025-06-15T11:00:00Z",
+      "createdAt": "2026-06-09T07:02:24.878Z"
+    },
+    {
+      "id": 11,
+      "petId": 1,
+      "providerType": "clinic",
+      "providerId": 1,
+      "serviceType": "Consulta general",
+      "dateTime": "2025-06-15T12:00:00Z",
+      "createdAt": "2026-06-09T07:10:50.553Z"
+    },
+    {
+      "id": 12,
+      "petId": 4,
+      "providerType": "clinic",
+      "providerId": 5,
+      "serviceType": "Radiografía",
+      "dateTime": "2026-06-12T18:00:00.000Z",
+      "notes": "jhkjhg",
+      "status": "pending",
+      "paymentStatus": "pending",
+      "createdAt": "2026-06-09T07:26:44.044Z"
+    },
+    {
+      "id": 13,
+      "petId": 3,
+      "providerType": "clinic",
+      "providerId": 2,
+      "serviceType": "Consulta, Vacunación",
+      "dateTime": "2026-06-11T17:00:00.000Z",
+      "notes": "kjkuhlhk",
+      "status": "pending",
+      "paymentStatus": "pending",
+      "createdAt": "2026-06-09T07:29:08.740Z"
+    },
+    {
+      "id": 14,
+      "providerType": "clinic",
+      "petId": 1,
+      "providerId": 1,
+      "notes": "jhkjhg",
+      "serviceType": "Radiograf�a",
+      "dateTime": "2026-06-12T13:00:00Z",
+      "createdAt": "2026-06-09T07:34:38.989Z"
+    },
+    {
+      "id": 15,
+      "providerType": "clinic",
+      "petId": 1,
+      "providerId": 1,
+      "notes": "jhkjhg",
+      "serviceType": "Radiograf�a",
+      "dateTime": "2026-06-12T13:00:00Z",
+      "createdAt": "2026-06-09T07:35:30.232Z"
+    },
+    {
+      "id": 16,
+      "serviceType": "Radiograf�a",
+      "providerType": "clinic",
+      "petId": 1,
+      "providerId": 1,
+      "notes": "jhkjhg",
+      "clinicId": 1,
+      "dateTime": "2026-06-12T13:00:00Z",
+      "createdAt": "2026-06-09T07:36:55.362Z"
+    },
+    {
+      "id": 17,
+      "petId": 2,
+      "providerType": "clinic",
+      "serviceType": "Vacunación",
+      "dateTime": "2026-06-10T18:00:00.000Z",
+      "notes": "",
+      "clinicId": 1,
+      "providerId": 1,
+      "status": "confirmed",
+      "paymentStatus": "pending",
+      "createdAt": "2026-06-09T07:44:10.427Z"
+    },
+    {
+      "id": 18,
+      "petId": 2,
+      "providerType": "clinic",
+      "serviceType": "Consulta general",
+      "dateTime": "2026-06-10T17:00:00.000Z",
+      "notes": ",jnjnl",
+      "clinicId": 1,
+      "providerId": 1,
+      "status": "pending",
+      "paymentStatus": "pending",
+      "createdAt": "2026-06-09T07:45:19.263Z"
+    },
+    {
+      "id": 19,
+      "petId": 3,
+      "providerType": "clinic",
+      "serviceType": "Cirugía",
+      "dateTime": "2026-06-10T19:00:00.000Z",
+      "notes": "",
+      "clinicId": 1,
+      "providerId": 1,
+      "status": "pending",
+      "paymentStatus": "pending",
+      "createdAt": "2026-06-09T07:45:59.707Z"
+    }
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "petId": 1,
+      "clinicId": 1,
+      "name": "Max",
+      "species": "dog",
+      "breed": "Golden Retriever",
+      "birthDate": "2020-05-10",
+      "weight": 28,
+      "ownerId": 3,
+      "ownerName": "Ana Owner",
+      "ownerPhone": "987654321",
+      "allergies": "",
+      "lastVisit": "2025-06-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "petId": 2,
+      "clinicId": 1,
+      "name": "Luna",
+      "species": "cat",
+      "breed": "Persian",
+      "birthDate": "2021-08-15",
+      "weight": 4.5,
+      "ownerId": 3,
+      "ownerName": "Ana Owner",
+      "ownerPhone": "987654321",
+      "allergies": "Polen",
+      "lastVisit": "2025-05-20T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "petId": 3,
+      "clinicId": 2,
+      "name": "Rocky",
+      "species": "dog",
+      "breed": "Bulldog",
+      "birthDate": "2019-11-20",
+      "weight": 22,
+      "ownerId": 3,
+      "ownerName": "Ana Owner",
+      "ownerPhone": "987654321",
+      "allergies": "",
+      "lastVisit": "2025-06-18T11:30:00Z"
+    },
+    {
+      "id": 4,
+      "petId": 4,
+      "clinicId": 3,
+      "name": "Coco",
+      "species": "cat",
+      "breed": "Siamés",
+      "birthDate": "2022-03-10",
+      "weight": 3.8,
+      "ownerId": 3,
+      "ownerName": "Ana Owner",
+      "ownerPhone": "987654321",
+      "allergies": "Ácaros",
+      "lastVisit": "2025-06-22T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "petId": 5,
+      "clinicId": 4,
+      "name": "Toby",
+      "species": "dog",
+      "breed": "Beagle",
+      "birthDate": "2018-07-25",
+      "weight": 14,
+      "ownerId": 3,
+      "ownerName": "Ana Owner",
+      "ownerPhone": "987654321",
+      "allergies": "",
+      "lastVisit": "2025-05-30T14:00:00Z"
+    },
+    {
+      "id": 6,
+      "petId": 6,
+      "clinicId": 5,
+      "name": "Simba",
+      "species": "dog",
+      "breed": "Labrador",
+      "birthDate": "2021-02-10",
+      "weight": 30,
+      "ownerId": 4,
+      "ownerName": "Luis Martínez",
+      "ownerPhone": "912345678",
+      "allergies": "",
+      "lastVisit": "2025-06-12T08:00:00Z"
+    },
+    {
+      "id": 7,
+      "petId": 7,
+      "clinicId": 6,
+      "name": "Mimi",
+      "species": "cat",
+      "breed": "Siames",
+      "birthDate": "2022-06-10",
+      "weight": 3,
+      "ownerId": 4,
+      "ownerName": "Luis Martínez",
+      "ownerPhone": "912345678",
+      "allergies": "",
+      "lastVisit": "2025-05-25T11:00:00Z"
+    },
+    {
+      "id": 8,
+      "petId": 8,
+      "clinicId": 7,
+      "name": "Bobby",
+      "species": "dog",
+      "breed": "Poodle",
+      "birthDate": "2020-12-01",
+      "weight": 8,
+      "ownerId": 4,
+      "ownerName": "Luis Martínez",
+      "ownerPhone": "912345678",
+      "allergies": "Pelo",
+      "lastVisit": "2025-06-19T09:00:00Z"
+    },
+    {
+      "id": 9,
+      "petId": 9,
+      "clinicId": 8,
+      "name": "Nina",
+      "species": "dog",
+      "breed": "Husky",
+      "birthDate": "2019-09-15",
+      "weight": 25,
+      "ownerId": 5,
+      "ownerName": "María Rodríguez",
+      "ownerPhone": "998877665",
+      "allergies": "",
+      "lastVisit": "2025-06-21T22:00:00Z"
+    },
+    {
+      "id": 10,
+      "petId": 10,
+      "clinicId": 2,
+      "name": "Pelusa",
+      "species": "cat",
+      "breed": "Común",
+      "birthDate": "2021-01-20",
+      "weight": 4,
+      "ownerId": 5,
+      "ownerName": "María Rodríguez",
+      "ownerPhone": "998877665",
+      "allergies": "",
+      "lastVisit": "2025-06-01T15:00:00Z"
+    }
+  ],
+  "medicalRecords": [
+    {
+      "id": 1,
+      "petId": 1,
+      "date": "2025-06-15T10:00:00Z",
+      "diagnosis": "Sano",
+      "treatment": "Sin tratamiento",
+      "vaccinationName": "Rabia",
+      "nextDueDate": "2026-06-15"
+    },
+    {
+      "id": 2,
+      "petId": 2,
+      "date": "2025-05-20T09:00:00Z",
+      "diagnosis": "Alergia",
+      "treatment": "Antihistamínico",
+      "medications": "Loratadina",
+      "observations": "Evitar polen"
+    }
+  ],
+  "mobileProfessionals": [
+    {
+      "id": 1,
+      "userId": 6,
+      "name": "Dr. Ana Móvil",
+      "type": "mobile",
+      "district": "Miraflores",
+      "specialties": [
+        "Urgencias",
+        "Domicilio"
+      ],
+      "servicesOffered": [
+        "Consulta a domicilio",
+        "Vacunación"
+      ],
+      "rating": 4.8,
+      "mobileSubtype": "groomer",
+      "coverageDistricts": [
+        "Miraflores",
+        "San Isidro"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "ABC-123",
+      "specialty": "Cardiología",
+      "email": "style@gmail.com",
+      "phone": "789654123"
+    },
+    {
+      "id": 2,
+      "userId": 7,
+      "name": "Groomer Móvil",
+      "type": "mobile",
+      "district": "San Isidro",
+      "specialties": [
+        "Estética"
+      ],
+      "servicesOffered": [
+        "Baño",
+        "Corte",
+        "Uñas"
+      ],
+      "rating": 4.7,
+      "mobileSubtype": "groomer",
+      "coverageDistricts": [
+        "San Isidro",
+        "Miraflores",
+        "Surco"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "GRO-789"
+    },
+    {
+      "id": 3,
+      "userId": 8,
+      "name": "Técnico Rayos X",
+      "type": "mobile",
+      "district": "San Isidro",
+      "specialties": [
+        "Radiología"
+      ],
+      "servicesOffered": [
+        "Radiografía a domicilio",
+        "Ecografía a domicilio"
+      ],
+      "rating": 4.9,
+      "mobileSubtype": "diagnostic_tech",
+      "coverageDistricts": [
+        "San Isidro",
+        "Miraflores"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "RAY-456",
+      "specialty": "Radiología"
+    },
+    {
+      "id": 4,
+      "userId": 9,
+      "name": "Veterinario Domicilio",
+      "type": "mobile",
+      "district": "La Molina",
+      "specialties": [
+        "Medicina General"
+      ],
+      "servicesOffered": [
+        "Consulta",
+        "Vacunación",
+        "Revisión"
+      ],
+      "rating": 4.5,
+      "mobileSubtype": "vet",
+      "coverageDistricts": [
+        "La Molina",
+        "San Borja"
+      ],
+      "hasVehicle": true,
+      "vehiclePlate": "VET-001",
+      "specialty": "Medicina General"
+    },
+    {
+      "id": 5,
+      "userId": 10,
+      "name": "Estilista Canino",
+      "type": "mobile",
+      "district": "San Miguel",
+      "specialties": [
+        "Estética"
+      ],
+      "servicesOffered": [
+        "Baño",
+        "Corte",
+        "Cepillado"
+      ],
+      "rating": 4.3,
+      "mobileSubtype": "groomer",
+      "coverageDistricts": [
+        "San Miguel",
+        "Pueblo Libre"
+      ],
+      "hasVehicle": false
+    }
+  ],
+  "mobileServices": [
+    {
+      "id": 1,
+      "mobileId": 1,
+      "name": "Consulta a domicilio",
+      "description": "Evaluación general en casa",
+      "durationMinutes": 45,
+      "price": 120,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "mobileId": 1,
+      "name": "Vacunación a domicilio",
+      "description": "Aplicación de vacunas",
+      "durationMinutes": 20,
+      "price": 80,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "mobileId": 2,
+      "name": "Baño completo",
+      "description": "Baño y secado",
+      "durationMinutes": 60,
+      "price": 50,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "mobileId": 2,
+      "name": "Corte de pelo",
+      "description": "Estilismo completo",
+      "durationMinutes": 90,
+      "price": 70,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "mobileId": 3,
+      "name": "Radiografía",
+      "description": "Placa digital",
+      "durationMinutes": 30,
+      "price": 150,
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "mobileId": 3,
+      "name": "Ecografía",
+      "description": "Ultrasonido",
+      "durationMinutes": 45,
+      "price": 200,
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "mobileId": 4,
+      "name": "Consulta general",
+      "description": "Revisión completa",
+      "durationMinutes": 30,
+      "price": 100,
+      "isActive": true
+    },
+    {
+      "id": 8,
+      "mobileId": 5,
+      "name": "Corte higiénico",
+      "description": "Recorte sanitario",
+      "durationMinutes": 40,
+      "price": 40,
+      "isActive": true
+    }
+  ],
+  "mobileAvailability": [
+    {
+      "id": 1,
+      "mobileId": 1,
+      "date": "2025-06-20",
+      "startTime": "09:00",
+      "endTime": "13:00",
+      "isAvailable": true
+    },
+    {
+      "id": 2,
+      "mobileId": 1,
+      "date": "2025-06-21",
+      "startTime": "10:00",
+      "endTime": "14:00",
+      "isAvailable": false
+    },
+    {
+      "id": 3,
+      "mobileId": 2,
+      "date": "2025-06-20",
+      "startTime": "14:00",
+      "endTime": "18:00",
+      "isAvailable": true
+    },
+    {
+      "id": 4,
+      "mobileId": 3,
+      "date": "2025-06-22",
+      "startTime": "08:00",
+      "endTime": "12:00",
+      "isAvailable": true
+    }
+  ],
+  "mobileRequests": [
+    {
+      "id": 1,
+      "mobileId": 1,
+      "ownerId": 3,
+      "petId": 1,
+      "serviceId": 1,
+      "status": "pending",
+      "scheduledDateTime": "2025-06-25T10:00:00Z",
+      "address": "Calle Los Pinos 123, Miraflores",
+      "notes": "Perro nervioso",
+      "createdAt": "2025-06-18T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "mobileId": 2,
+      "ownerId": 4,
+      "petId": 6,
+      "serviceId": 3,
+      "status": "accepted",
+      "scheduledDateTime": "2025-06-22T15:00:00Z",
+      "address": "Av. La Molina 456",
+      "notes": "",
+      "createdAt": "2025-06-19T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "mobileId": 3,
+      "ownerId": 5,
+      "petId": 9,
+      "serviceId": 5,
+      "status": "completed",
+      "scheduledDateTime": "2025-06-19T11:00:00Z",
+      "address": "Calle Los Ángeles 789, Surco",
+      "notes": "Radiografía cadera",
+      "createdAt": "2025-06-17T09:00:00Z"
+    }
+  ],
+  "mobileAppointments": [
+    {
+      "id": 1,
+      "mobileId": 1,
+      "ownerId": 3,
+      "petId": 1,
+      "serviceName": "Consulta a domicilio",
+      "scheduledDateTime": "2025-06-25T10:00:00Z",
+      "address": "Calle Los Pinos 123, Miraflores",
+      "status": "confirmed",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "mobileId": 2,
+      "ownerId": 4,
+      "petId": 6,
+      "serviceName": "Baño completo",
+      "scheduledDateTime": "2025-06-22T15:00:00Z",
+      "address": "Av. La Molina 456",
+      "status": "confirmed",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+.history-container {
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.header h2 {
+  margin: 0;
+  color: #1A3458;
+}
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+.record-card {
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+mat-card-header {
+  background-color: #F2F6FF;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1rem;
+}
+mat-card-title {
+  color: #1A3458;
+  font-size: 1.1rem;
+}
+.loading, .no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}

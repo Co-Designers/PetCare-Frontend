@@ -1,0 +1,46 @@
+<div class="history-container">
+  <div class="header">
+    <h2>{{ 'owner.medicalHistory.title' | translate }} {{ petName }}</h2>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="exportHistory()">
+        <mat-icon>download</mat-icon> {{ 'owner.medicalHistory.export' | translate }}
+      </button>
+      <button mat-raised-button color="accent" (click)="shareTemporarily()">
+        <mat-icon>share</mat-icon> {{ 'owner.medicalHistory.share' | translate }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading">{{ 'common.loading' | translate }}</div>
+  } @else {
+    @for (record of records; track record.id) {
+      <mat-card class="record-card">
+        <mat-card-header>
+          <mat-card-title>{{ record.date | date:'dd/MM/yyyy' }} - {{ record.vaccinationName || 'Consulta' }}</mat-card-title>
+          <mat-card-subtitle *ngIf="record.veterinarianName">{{ 'owner.medicalHistory.veterinarian' | translate }}: {{ record.veterinarianName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          @if (record.diagnosis) {
+            <p><strong>{{ 'owner.medicalHistory.diagnosis' | translate }}:</strong> {{ record.diagnosis }}</p>
+          }
+          @if (record.treatment) {
+            <p><strong>{{ 'owner.medicalHistory.treatment' | translate }}:</strong> {{ record.treatment }}</p>
+          }
+          @if (record.medications) {
+            <p><strong>{{ 'owner.medicalHistory.medications' | translate }}:</strong> {{ record.medications }}</p>
+          }
+          @if (record.observations) {
+            <p><strong>{{ 'owner.medicalHistory.observations' | translate }}:</strong> {{ record.observations }}</p>
+          }
+          @if (record.nextDueDate) {
+            <p><strong>{{ 'owner.medicalHistory.nextDue' | translate }}:</strong> {{ record.nextDueDate | date:'dd/MM/yyyy' }}</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+    @if (!loading && records.length === 0) {
+      <div class="no-data">{{ 'owner.medicalHistory.noData' | translate }}</div>
+    }
+  }
+</div>

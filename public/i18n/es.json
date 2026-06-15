@@ -1,0 +1,311 @@
+{
+  "layout": {
+    "logo": "PetCare"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "pets": "Mascotas",
+    "appointments": "Citas",
+    "search": "Buscar",
+    "profile": "Perfil",
+    "patients": "Pacientes",
+    "settings": "Configuración",
+    "myServices": "Mis Servicios",
+    "availability": "Disponibilidad",
+    "veterinarians": "Veterinarios",
+    "requests": "Solicitudes"
+  },
+  "auth": {
+    "welcome": "Bienvenido,",
+    "logout": "Cerrar sesión"
+  },
+  "buttons": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "required": "Requerido",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "reset": "Limpiar",
+    "view": "Ver",
+    "back": "Volver",
+    "yes": "Sí",
+    "no": "No",
+    "close": "Cerrar"
+  },
+  "login": {
+    "title": "INICIAR SESIÓN",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "rememberMe": "Recuérdame",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?"
+  },
+  "selectAccount": {
+    "title": "Selecciona tipo de cuenta",
+    "ownerTitle": "Dueño de mascota",
+    "ownerDescription": "Gestiona la salud de tus mascotas, citas y alertas.",
+    "clinicTitle": "Clínica Veterinaria",
+    "clinicDescription": "Gestiona horarios, pacientes y operaciones.",
+    "mobileTitle": "Profesional Móvil",
+    "mobileDescription": "Veterinario, estilista o técnico independiente."
+  },
+  "signup": {
+    "title": "Crea tu cuenta PetCare",
+    "as": "Como",
+    "owner": "Dueño de mascota",
+    "clinic": "Clínica Veterinaria",
+    "mobile": "Profesional Móvil",
+    "fullName": "Nombre completo",
+    "username": "Usuario",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "district": "Distrito",
+    "clinicName": "Nombre de la clínica",
+    "ruc": "RUC",
+    "address": "Dirección",
+    "clinicType": "Tipo de clínica",
+    "mobileSubtype": "Subtipo profesional",
+    "coverageDistricts": "Distritos de cobertura",
+    "vehiclePlate": "Placa del vehículo",
+    "specialty": "Especialidad",
+    "haveVehicle": "Tengo vehículo / unidad móvil",
+    "alreadyAccount": "¿Ya tienes cuenta?"
+  },
+  "signupErrors": {
+    "phoneRequired": "Teléfono de 9 dígitos requerido",
+    "passwordMismatch": "Las contraseñas no coinciden"
+  },
+  "owner": {
+    "dashboard": {
+      "welcome": "¡Bienvenido de vuelta!",
+      "myPets": "Mis Mascotas",
+      "viewAll": "Ver todas",
+      "upcomingAppointments": "Próximas citas",
+      "schedule": "Agendar",
+      "healthAlerts": "Alertas de salud",
+      "noAlerts": "No hay alertas activas.",
+      "addPet": "Agregar mascota",
+      "findServices": "Buscar servicios"
+    },
+    "pets": {
+      "title": "Mis Mascotas",
+      "add": "Agregar mascota",
+      "name": "Nombre",
+      "species": "Especie",
+      "dog": "Perro",
+      "cat": "Gato",
+      "other": "Otro",
+      "breed": "Raza",
+      "birthDate": "Fecha de nacimiento",
+      "weight": "Peso",
+      "weightMin": "El peso debe ser positivo",
+      "allergies": "Alergias",
+      "age": "Edad",
+      "viewHistory": "Ver historial",
+      "edit": "Editar mascota"
+    },
+    "appointments": {
+      "title": "Mis Citas",
+      "upcoming": "Próximas",
+      "past": "Pasadas",
+      "new": "Nueva cita",
+      "edit": "Editar cita",
+      "pet": "Mascota",
+      "providerType": "Tipo de proveedor",
+      "providerId": "ID del proveedor",
+      "serviceType": "Tipo de servicio",
+      "dateTime": "Fecha y hora",
+      "notes": "Notas",
+      "provider": "Proveedor",
+      "status": "Estado",
+      "reschedule": "Reprogramar",
+      "cancel": "Cancelar",
+      "viewHistory": "Ver historial",
+      "clinic": "Clínica",
+      "mobile": "Profesional móvil",
+      "services": "Servicios"
+    },
+    "medicalHistory": {
+      "title": "Historial clínico de",
+      "export": "Exportar",
+      "share": "Compartir temporalmente",
+      "veterinarian": "Veterinario",
+      "diagnosis": "Diagnóstico",
+      "treatment": "Tratamiento",
+      "medications": "Medicamentos",
+      "observations": "Observaciones",
+      "nextDue": "Próxima fecha",
+      "noData": "No hay registros médicos para esta mascota."
+    },
+    "search": {
+      "district": "Distrito",
+      "specialty": "Especialidad",
+      "providerType": "Tipo de proveedor",
+      "all": "Todos",
+      "clinic": "Clínica",
+      "mobile": "Profesional móvil",
+      "search": "Buscar",
+      "specialties": "Especialidades",
+      "services": "Servicios",
+      "rating": "Calificación",
+      "select": "Seleccionar"
+    },
+    "profile": {
+      "title": "Mi Perfil",
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "district": "Distrito",
+      "invalidEmail": "Formato de correo inválido",
+      "phoneError": "Teléfono de 9 dígitos requerido",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+      "passwordMismatch": "Las contraseñas no coinciden"
+    }
+  },
+  "clinic": {
+    "dashboard": {
+      "welcome": "Bienvenido al Panel de la Clínica",
+      "todayAppointments": "Citas de hoy",
+      "pendingAppointments": "Citas pendientes",
+      "totalPatients": "Total pacientes",
+      "viewAppointments": "Ver citas",
+      "viewPatients": "Ver pacientes",
+      "manageVets": "Gestionar veterinarios",
+      "settings": "Configuración"
+    },
+    "appointments": {
+      "title": "Citas",
+      "pending": "Pendientes",
+      "confirmed": "Confirmadas",
+      "completed": "Completadas",
+      "detail": "Detalle de cita",
+      "service": "Servicio",
+      "date": "Fecha y hora",
+      "petId": "ID mascota",
+      "status": "Estado",
+      "notes": "Notas",
+      "confirm": "Confirmar",
+      "complete": "Completar",
+      "cancel": "Cancelar",
+      "filterDate": "Filtrar por fecha",
+      "filterVet": "Veterinario",
+      "filterStatus": "Estado",
+      "cancelled": "Cancelada",
+      "outsideHours": "El horario seleccionado está fuera del horario de atención",
+      "selectPet": "Seleccionar mascota"
+    },
+    "patients": {
+      "title": "Pacientes",
+      "owner": "Dueño",
+      "lastVisit": "Última visita",
+      "phone": "Teléfono",
+      "birthDate": "Fecha nacimiento",
+      "weight": "Peso",
+      "allergies": "Alergias"
+    },
+    "veterinarians": {
+      "title": "Veterinarios",
+      "add": "Agregar veterinario",
+      "edit": "Editar veterinario",
+      "name": "Nombre completo",
+      "specialty": "Especialidad",
+      "license": "Número de colegiatura",
+      "email": "Correo",
+      "phone": "Teléfono"
+    },
+    "services": {
+      "title": "Servicios",
+      "add": "Agregar servicio",
+      "edit": "Editar servicio",
+      "name": "Nombre del servicio",
+      "description": "Descripción",
+      "duration": "Duración (minutos)",
+      "durationError": "Mínimo 5 minutos",
+      "price": "Precio"
+    },
+    "settings": {
+      "title": "Configuración de la clínica",
+      "name": "Nombre de la clínica",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "address": "Dirección",
+      "district": "Distrito",
+      "description": "Descripción",
+      "openingHours": "Horario de atención"
+    },
+    "medicalHistory": {
+      "title": "Historial médico",
+      "noData": "No hay registros médicos",
+      "diagnosis": "Diagnóstico",
+      "treatment": "Tratamiento",
+      "medications": "Medicamentos",
+      "observations": "Observaciones",
+      "nextDue": "Próxima fecha"
+    }
+  },
+  "mobile": {
+    "requests": {
+      "title": "Solicitudes de servicio",
+      "detail": "Detalle de solicitud",
+      "request": "Solicitud",
+      "serviceId": "ID servicio",
+      "date": "Fecha y hora",
+      "address": "Dirección",
+      "status": "Estado",
+      "notes": "Notas",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    },
+    "availability": {
+      "title": "Configurar disponibilidad",
+      "date": "Fecha",
+      "startTime": "Hora inicio",
+      "endTime": "Hora fin",
+      "available": "Disponible"
+    },
+    "services": {
+      "title": "Mis servicios",
+      "add": "Agregar servicio",
+      "edit": "Editar servicio",
+      "name": "Nombre del servicio",
+      "description": "Descripción",
+      "duration": "Duración (minutos)",
+      "durationError": "Mínimo 5 minutos",
+      "price": "Precio"
+    },
+    "profile": {
+      "title": "Perfil profesional móvil",
+      "name": "Nombre completo",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "phoneError": "Teléfono de 9 dígitos requerido",
+      "invalidEmail": "Formato de correo inválido",
+      "subtype": "Subtipo profesional",
+      "vet": "Veterinario",
+      "groomer": "Estilista",
+      "diagnosticTech": "Técnico de diagnóstico",
+      "coverageDistricts": "Distritos de cobertura",
+      "hasVehicle": "Tengo vehículo / unidad móvil",
+      "vehiclePlate": "Placa del vehículo",
+      "specialty": "Especialidad"
+    },
+    "dashboard": {
+      "welcome": "Bienvenido a tu Panel Móvil",
+      "pendingRequests": "Solicitudes pendientes",
+      "activeServices": "Servicios activos",
+      "viewRequests": "Ver solicitudes",
+      "manageServices": "Gestionar servicios",
+      "setAvailability": "Configurar disponibilidad",
+      "profile": "Perfil"
+    }
+  }
+}

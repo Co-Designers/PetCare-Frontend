@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{ (isEditMode ? 'mobile.services.edit' : 'mobile.services.add') | translate }}</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'mobile.services.name' | translate }}*</mat-label>
+      <input matInput formControlName="name">
+      <mat-error>{{ 'common.required' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'mobile.services.description' | translate }}</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'mobile.services.duration' | translate }}*</mat-label>
+      <input matInput type="number" formControlName="durationMinutes">
+      <mat-error *ngIf="form.get('durationMinutes')?.hasError('min')">{{ 'mobile.services.durationError' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'mobile.services.price' | translate }}*</mat-label>
+      <input matInput type="number" formControlName="price">
+      <mat-error>{{ 'common.required' | translate }}</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+    <button mat-raised-button color="primary" type="submit">{{ 'common.save' | translate }}</button>
+  </mat-dialog-actions>
+</form>

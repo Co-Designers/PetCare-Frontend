@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.signup-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  justify-content: center;
+  background: linear-gradient(135deg, #17345d, #214b84);
+  overflow: hidden;
+}
+
+.signup-form-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 650px;
+  padding: 2rem;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+  color: #17345d;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.full-width-button {
+  width: 100%;
+  margin-top: 1rem;
+  height: 48px;
+  background-color: #17345d !important;
+  color: white !important;
+}
+
+.signin-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signin-link a {
+  cursor: pointer;
+  color: #17345d;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* ===== IMAGE SECTION ===== */
+
+.signup-image-column {
+  width: 45%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  position: relative;
+}
+
+.signup-image-column::before {
+  display: none;
+}
+
+.signup-image-column img {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 92%;
+  object-fit: cover;
+  border-radius: 35px;
+  border: 5px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35),
+    0 0 25px rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+/* ===== LANGUAGE SWITCHER ===== */
+
+.language-switcher-container {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 1000;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
+
+  .signup-image-column {
+    display: none;
+  }
+
+  .signup-form-column {
+    width: 100%;
+    padding: 25px;
+  }
+
+  .signup-card {
+    max-width: 100%;
+  }
+}

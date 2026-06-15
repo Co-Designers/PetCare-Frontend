@@ -1,0 +1,133 @@
+<div class="appointments-container">
+  <h2>{{ 'clinic.appointments.title' | translate }}</h2>
+
+  <!-- BARRA DE FILTROS -->
+  <div class="filters-bar">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'clinic.appointments.filterDate' | translate }}</mat-label>
+      <input matInput type="date" [(ngModel)]="filterDate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'clinic.appointments.filterVet' | translate }}</mat-label>
+      <mat-select [(ngModel)]="filterVetId">
+        <mat-option [value]="null">{{ 'common.all' | translate }}</mat-option>
+        @for (vet of veterinarians; track vet.id) {
+          <mat-option [value]="vet.id">{{ vet.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'clinic.appointments.filterStatus' | translate }}</mat-label>
+      <mat-select [(ngModel)]="filterStatus">
+        <mat-option value="">{{ 'common.all' | translate }}</mat-option>
+        <mat-option value="pending">{{ 'clinic.appointments.pending' | translate }}</mat-option>
+        <mat-option value="confirmed">{{ 'clinic.appointments.confirmed' | translate }}</mat-option>
+        <mat-option value="completed">{{ 'clinic.appointments.completed' | translate }}</mat-option>
+        <mat-option value="cancelled">{{ 'clinic.appointments.cancelled' | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button (click)="resetFilters()">{{ 'common.reset' | translate }}</button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">{{ 'common.loading' | translate }}</div>
+  } @else {
+    <mat-tab-group>
+      <!-- PESTAÑA: PENDIENTES -->
+      <mat-tab [label]="'clinic.appointments.pending' | translate">
+        <div class="cards-grid">
+          @for (app of filteredAppointments; track app.id) {
+            @if (app.status === 'pending') {
+              <mat-card class="appointment-card">
+                <mat-card-header>
+                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
+                  <mat-card-subtitle>
+                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
+                  @if (app.notes) {
+                    <p><strong>{{ 'clinic.appointments.notes' | translate }}:</strong> {{ app.notes }}</p>
+                  }
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
+                    {{ 'common.view' | translate }}
+                  </button>
+                  <button mat-button color="accent" (click)="updateStatus(app.id!, 'confirmed')">
+                    {{ 'clinic.appointments.confirm' | translate }}
+                  </button>
+                  <button mat-button color="warn" (click)="updateStatus(app.id!, 'cancelled')">
+                    {{ 'clinic.appointments.cancel' | translate }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+
+      <!-- PESTAÑA: CONFIRMADAS -->
+      <mat-tab [label]="'clinic.appointments.confirmed' | translate">
+        <div class="cards-grid">
+          @for (app of filteredAppointments; track app.id) {
+            @if (app.status === 'confirmed') {
+              <mat-card class="appointment-card">
+                <mat-card-header>
+                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
+                  <mat-card-subtitle>
+                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
+                    {{ 'common.view' | translate }}
+                  </button>
+                  <button mat-button color="primary" (click)="updateStatus(app.id!, 'completed')">
+                    {{ 'clinic.appointments.complete' | translate }}
+                  </button>
+                  <button mat-button color="warn" (click)="updateStatus(app.id!, 'cancelled')">
+                    {{ 'clinic.appointments.cancel' | translate }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+
+      <!-- PESTAÑA: COMPLETADAS -->
+      <mat-tab [label]="'clinic.appointments.completed' | translate">
+        <div class="cards-grid">
+          @for (app of filteredAppointments; track app.id) {
+            @if (app.status === 'completed') {
+              <mat-card class="appointment-card">
+                <mat-card-header>
+                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
+                  <mat-card-subtitle>
+                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button [routerLink]="['/clinic/appointments', app.id]">
+                    {{ 'common.view' | translate }}
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            }
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>

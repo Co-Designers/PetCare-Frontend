@@ -1,0 +1,46 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #1a3458;
+}
+
+.logo {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: white !important;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.active-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}

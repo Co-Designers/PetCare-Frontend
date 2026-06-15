@@ -1,0 +1,67 @@
+<mat-toolbar class="toolbar" color="primary">
+  <mat-toolbar-row>
+    <span class="logo">{{ 'layout.logo' | translate }}</span>
+
+    <div class="spacer"></div>
+
+    <div class="right-section">
+      <!-- Enlaces de navegación según el rol -->
+      <div class="nav-links">
+        @if (userRole() === 'OWNER') {
+          <a mat-button routerLink="/owner/dashboard" routerLinkActive="active-link">
+            {{ 'nav.dashboard' | translate }}
+          </a>
+          <a mat-button routerLink="/owner/pets" routerLinkActive="active-link">
+            {{ 'nav.pets' | translate }}
+          </a>
+          <a mat-button routerLink="/owner/appointments" routerLinkActive="active-link">
+            {{ 'nav.appointments' | translate }}
+          </a>
+          <a mat-button routerLink="/owner/search" routerLinkActive="active-link">
+            {{ 'nav.search' | translate }}
+          </a>
+          <a mat-button routerLink="/owner/profile" routerLinkActive="active-link">
+            {{ 'nav.profile' | translate }}
+          </a>
+        } @else if (userRole() === 'CLINIC') {
+          <a mat-button routerLink="/clinic/dashboard" routerLinkActive="active-link">
+            {{ 'nav.dashboard' | translate }}
+          </a>
+          <a mat-button routerLink="/clinic/appointments" routerLinkActive="active-link">
+            {{ 'nav.appointments' | translate }}
+          </a>
+          <a mat-button routerLink="/clinic/patients" routerLinkActive="active-link">
+            {{ 'nav.patients' | translate }}
+          </a>
+          <a mat-button routerLink="/clinic/veterinarians" routerLinkActive="active-link">
+            {{ 'nav.veterinarians' | translate }}
+          </a>
+          <a mat-button routerLink="/clinic/settings" routerLinkActive="active-link">
+            {{ 'nav.settings' | translate }}
+          </a>
+        } @else if (userRole() === 'MOBILE') {
+          <a mat-button routerLink="/mobile/dashboard" routerLinkActive="active-link">
+            {{ 'nav.dashboard' | translate }}
+          </a>
+          <a mat-button routerLink="/mobile/requests" routerLinkActive="active-link">
+            {{ 'nav.requests' | translate }}
+          </a>
+          <a mat-button routerLink="/mobile/services" routerLinkActive="active-link">
+            {{ 'nav.myServices' | translate }}
+          </a>
+          <a mat-button routerLink="/mobile/availability" routerLinkActive="active-link">
+            {{ 'nav.availability' | translate }}
+          </a>
+          <a mat-button routerLink="/mobile/profile" routerLinkActive="active-link">
+            {{ 'nav.profile' | translate }}
+          </a>
+        }
+      </div>
+
+      <app-language-switcher />
+      <app-authentication-section />
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet />

@@ -1,0 +1,23 @@
+<div class="auth-buttons">
+  @if (isSignedIn()) {
+    <span class="welcome-text">
+    </span>
+    <button mat-button (click)="performSignOut()" class="logout-btn">
+      <mat-icon>logout</mat-icon>
+      {{ 'auth.logout' | translate }}
+    </button>
+  } @else {
+    <button mat-button routerLink="/iam/sign-in" class="auth-btn">
+      {{ 'buttons.signIn' | translate }}
+    </button>
+    <button mat-button routerLink="/iam/select-type" class="auth-btn">
+      {{ 'buttons.signUp' | translate }}
+    </button>
+    <div class="language-switcher-container">
+      <app-language-switcher />
+    </div>
+    <div class="signup-image-column">
+      <img src="assets/fotoperfil.png" alt="PetCare">
+    </div>
+  }
+</div>

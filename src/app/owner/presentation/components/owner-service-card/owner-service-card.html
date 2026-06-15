@@ -1,0 +1,17 @@
+<mat-card class="service-card">
+  <mat-card-header>
+    <mat-card-title>{{ provider().name }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ (provider().type === 'clinic' ? 'owner.search.clinic' : 'owner.search.mobile') | translate }}
+      • {{ provider().district }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p><strong>{{ 'owner.search.specialties' | translate }}:</strong> {{ provider().specialties?.join(', ') || '-' }}</p>
+    <p><strong>{{ 'owner.search.services' | translate }}:</strong> {{ provider().servicesOffered?.join(', ') || '-' }}</p>
+    <p><strong>{{ 'owner.search.rating' | translate }}:</strong> ⭐ {{ provider().rating || 'Nuevo' }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSelect()">{{ 'owner.search.select' | translate }}</button>
+  </mat-card-actions>
+</mat-card>

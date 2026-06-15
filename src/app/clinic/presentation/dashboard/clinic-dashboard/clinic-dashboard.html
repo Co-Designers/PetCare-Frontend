@@ -1,0 +1,50 @@
+<div class="dashboard-container">
+  <h1>{{ 'clinic.dashboard.welcome' | translate }}</h1>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'clinic.dashboard.todayAppointments' | translate }}</mat-card-title>
+        <mat-icon>today</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ getTodayAppointments().length }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'clinic.dashboard.pendingAppointments' | translate }}</mat-card-title>
+        <mat-icon>pending</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ getPendingAppointments().length }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'clinic.dashboard.totalPatients' | translate }}</mat-card-title>
+        <mat-icon>pets</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ patients.length }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-actions">
+    <button mat-raised-button color="primary" routerLink="/clinic/appointments">
+      <mat-icon>event</mat-icon> {{ 'clinic.dashboard.viewAppointments' | translate }}
+    </button>
+    <button mat-raised-button color="accent" routerLink="/clinic/patients">
+      <mat-icon>list</mat-icon> {{ 'clinic.dashboard.viewPatients' | translate }}
+    </button>
+    <button mat-raised-button routerLink="/clinic/veterinarians">
+      <mat-icon>medical_services</mat-icon> {{ 'clinic.dashboard.manageVets' | translate }}
+    </button>
+    <button mat-raised-button routerLink="/clinic/settings">
+      <mat-icon>settings</mat-icon> {{ 'clinic.dashboard.settings' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+.dashboard-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.dashboard-container h1 {
+  color: #1A3458;
+  margin-bottom: 1.5rem;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.stat-card {
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+.stat-card mat-card-header {
+  background-color: #F2F6FF;
+  border-radius: 1rem 1rem 0 0;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.stat-card mat-card-title {
+  color: #1A3458;
+}
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1A3458;
+  margin: 1rem 0;
+  text-align: center;
+}
+.alert-card {
+  border-left: 4px solid #f44336;
+}
+.no-alerts {
+  color: #666;
+  text-align: center;
+  margin: 1rem 0;
+}
+.quick-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.quick-actions button {
+  min-width: 180px;
+}

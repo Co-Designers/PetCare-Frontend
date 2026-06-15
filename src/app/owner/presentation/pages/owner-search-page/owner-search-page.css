@@ -1,0 +1,10 @@
+.search-page {
+  padding: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.loading, .no-results {
+  text-align: center;
+  margin: 2rem;
+  color: #666;
+}

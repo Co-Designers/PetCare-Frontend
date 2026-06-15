@@ -1,0 +1,138 @@
+/* Variables de diseño */
+:root {
+  --primary: #1A3458;
+  --primary-dark: #0F243D;
+  --primary-light: #F2F6FF;
+  --accent: #2c7da0;
+  --warn: #e74c3c;
+  --success: #2ecc71;
+  --gray-light: #f8f9fa;
+  --gray-border: #e9ecef;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 36px rgba(0,0,0,0.12);
+  --radius: 1rem;
+}
+
+.appointments-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f5f7fb;
+  min-height: calc(100vh - 64px);
+}
+
+.appointments-container h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.3px;
+  position: relative;
+  display: inline-block;
+}
+
+.appointments-container h2:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 3px;
+}
+
+.cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.appointment-card {
+  border-radius: var(--radius);
+  background: white;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  border: 1px solid var(--gray-border);
+  overflow: hidden;
+}
+
+.appointment-card:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, var(--primary-light) 0%, white 100%);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+mat-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+mat-card-subtitle {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+mat-card-content {
+  padding: 1.25rem 1.5rem;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+mat-card-actions {
+  padding: 0.75rem 1.5rem 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--gray-border);
+  background: #fefefe;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* Pestañas mejoradas */
+.mat-mdc-tab-header {
+  background: white;
+  border-radius: 2rem;
+  padding: 0.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.mat-mdc-tab {
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 1rem;
+  }
+  mat-card-actions button {
+    font-size: 0.8rem;
+    padding: 0 0.75rem;
+  }
+}.filters-bar {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 1rem;
+   margin-bottom: 1rem;
+   align-items: center;
+ }
+.filters-bar mat-form-field {
+  flex: 1;
+  min-width: 150px;
+}

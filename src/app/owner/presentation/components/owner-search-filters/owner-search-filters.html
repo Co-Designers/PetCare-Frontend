@@ -1,0 +1,35 @@
+<div class="filters-container">
+  <form [formGroup]="filtersForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'owner.search.district' | translate }}</mat-label>
+      <mat-select formControlName="district">
+        @for (d of districts; track d) {
+          <mat-option [value]="d">{{ d }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'owner.search.specialty' | translate }}</mat-label>
+      <mat-select formControlName="specialty">
+        @for (s of specialties; track s) {
+          <mat-option [value]="s">{{ s }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'owner.search.providerType' | translate }}</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="">{{ 'owner.search.all' | translate }}</mat-option>
+        <mat-option value="clinic">{{ 'owner.search.clinic' | translate }}</mat-option>
+        <mat-option value="mobile">{{ 'owner.search.mobile' | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="search()">{{ 'owner.search.search' | translate }}</button>
+      <button mat-button (click)="reset()">{{ 'common.reset' | translate }}</button>
+    </div>
+  </form>
+</div>

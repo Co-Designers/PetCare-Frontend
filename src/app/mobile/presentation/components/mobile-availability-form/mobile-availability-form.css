@@ -1,0 +1,38 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+  padding: 2rem;
+  background: #f8fafc;
+}
+.form-card {
+  max-width: 550px;
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.time-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.half-width {
+  flex: 1;
+}
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+@media (max-width: 600px) {
+  .time-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

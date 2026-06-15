@@ -1,0 +1,123 @@
+:root {
+  --primary: #1A3458;
+  --primary-light: #F2F6FF;
+  --white: #ffffff;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+  --radius: 1rem;
+}
+
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+  background: #f8fafc;
+}
+
+.dashboard-container h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  letter-spacing: -0.3px;
+  position: relative;
+  display: inline-block;
+}
+
+.dashboard-container h1:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), #2c7da0);
+  border-radius: 3px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid #eef2f6;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.stat-card mat-card-header {
+  background: var(--primary-light);
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-card mat-card-title {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.stat-card mat-icon {
+  color: var(--primary);
+  opacity: 0.7;
+}
+
+.stat-card mat-card-content {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.dashboard-actions button {
+  min-width: 180px;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dashboard-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  .stats-grid {
+    gap: 1rem;
+  }
+  .dashboard-actions button {
+    min-width: 140px;
+    font-size: 0.85rem;
+  }
+}

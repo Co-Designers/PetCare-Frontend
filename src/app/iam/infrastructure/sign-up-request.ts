@@ -1,0 +1,18 @@
+export interface SignUpRequest {
+  username: string;
+  password: string;
+  email: string;
+  userType: string;
+  fullName: string;
+  phone: string;
+  district?: string;
+  clinicName?: string;
+  ruc?: string;
+  address?: string;
+  clinicType?: string;
+  mobileSubtype?: string;
+  coverageDistricts?: string[];
+  hasVehicle?: boolean;
+  vehiclePlate?: string;
+  specialty?: string;
+}

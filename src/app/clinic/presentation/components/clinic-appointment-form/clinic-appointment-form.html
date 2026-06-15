@@ -1,0 +1,47 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ (isEditMode ? 'clinic.appointments.edit' : 'clinic.appointments.new') | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'clinic.appointments.selectPet' | translate }} *</mat-label>
+          <mat-select formControlName="petId">
+            @for (pet of patients(); track pet.id) {
+              <mat-option [value]="pet.id">{{ pet.name }} ({{ pet.species }})</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="isFieldInvalid('petId')">{{ 'common.required' | translate }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'clinic.appointments.serviceType' | translate }} *</mat-label>
+          <input matInput formControlName="serviceType">
+          <mat-error *ngIf="isFieldInvalid('serviceType')">{{ 'common.required' | translate }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'clinic.appointments.dateTime' | translate }} *</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateTime">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="isFieldInvalid('dateTime')">{{ 'common.required' | translate }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'clinic.appointments.notes' | translate }}</mat-label>
+          <textarea matInput formControlName="notes" rows="3"></textarea>
+        </mat-form-field>
+
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit">{{ 'common.save' | translate }}</button>
+          <button mat-button type="button" routerLink="/clinic/appointments">{{ 'common.cancel' | translate }}</button>
+        </div>
+      </form>
+      <mat-error *ngIf="appointmentForm.get('dateTime')?.hasError('outsideHours')">
+        {{ 'clinic.appointments.outsideHours' | translate }}
+      </mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>

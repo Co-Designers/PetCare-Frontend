@@ -1,0 +1,41 @@
+<div class="selector-container">
+  <div class="selector-form-column">
+    <mat-card class="selector-card">
+      <h2>{{ 'selectAccount.title' | translate }}</h2>
+      <div class="cards">
+        <mat-card class="type-card" (click)="selectType(userTypeEnum.OWNER)">
+          <mat-card-header>
+            <mat-card-title>🐾 {{ 'selectAccount.ownerTitle' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'selectAccount.ownerDescription' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="type-card" (click)="selectType(userTypeEnum.CLINIC)">
+          <mat-card-header>
+            <mat-card-title>🏥 {{ 'selectAccount.clinicTitle' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'selectAccount.clinicDescription' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="type-card" (click)="selectType(userTypeEnum.MOBILE)">
+          <mat-card-header>
+            <mat-card-title>🚐 {{ 'selectAccount.mobileTitle' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'selectAccount.mobileDescription' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card>
+  </div>
+  <div class="language-switcher-container">
+    <app-language-switcher />
+  </div>
+  <div class="selector-image-column">
+    <img src="assets/fotoperfil.png" alt="PetCare">
+  </div>
+</div>

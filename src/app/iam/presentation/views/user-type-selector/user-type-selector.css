@@ -1,0 +1,119 @@
+.selector-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  justify-content: center;
+  background: linear-gradient(135deg, #17345d, #214b84);
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.selector-form-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.selector-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 2rem;
+  border-radius: 16px;
+  background: white;
+}
+
+.selector-container h2 {
+  color: white;
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+}
+
+.type-card {
+  width: 280px;
+  cursor: pointer;
+  border-radius: 16px;
+  background: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.type-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.type-card mat-card-title {
+  color: #17345d;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.type-card p {
+  color: #333;
+  margin: 0;
+}
+
+/* ===== IMAGE SECTION ===== */
+
+.selector-image-column {
+  width: 45%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  position: relative;
+}
+
+.selector-image-column::before {
+  display: none;
+}
+
+/* ===== IMAGE ===== */
+
+.selector-image-column img {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 92%;
+  object-fit: cover;
+  border-radius: 35px;
+  border: 5px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35),
+    0 0 25px rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+/* ===== LANGUAGE SWITCHER ===== */
+
+.language-switcher-container {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 1000;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
+  .selector-image-column {
+    display: none;
+  }
+
+  .selector-form-column {
+    width: 100%;
+  }
+}

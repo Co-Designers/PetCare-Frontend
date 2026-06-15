@@ -1,0 +1,30 @@
+<div class="services-container">
+  <div class="header">
+    <h2>{{ 'mobile.services.title' | translate }}</h2>
+    <button mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon> {{ 'mobile.services.add' | translate }}
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">{{ 'common.loading' | translate }}</div>
+  } @else {
+    <div class="services-grid">
+      @for (s of services; track s.id) {
+        <mat-card class="service-card">
+          <mat-card-header>
+            <mat-card-title>{{ s.name }}</mat-card-title>
+            <mat-card-subtitle>{{ s.durationMinutes }} min - {{ s.price | currency }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ s.description || '-' }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button color="primary" (click)="editService(s)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="deleteService(s.id!)"><mat-icon>delete</mat-icon></button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,30 @@
+<mat-button-toggle-group
+  [value]="currentLang"
+  appearance="standard"
+  aria-label="Preferred language"
+  name="language"
+  class="language-selector">
+
+  <mat-button-toggle
+    value="es"
+    (click)="useLanguage('es')">
+
+    <span class="lang-option">
+      <img src="assets/ES.jpg" alt="Spanish" class="flag-icon">
+      ES
+    </span>
+
+  </mat-button-toggle>
+
+  <mat-button-toggle
+    value="en"
+    (click)="useLanguage('en')">
+
+    <span class="lang-option">
+      <img src="assets/US.png" alt="English" class="flag-icon">
+      EN
+    </span>
+
+  </mat-button-toggle>
+
+</mat-button-toggle-group>

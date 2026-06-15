@@ -1,0 +1,29 @@
+@if (loading) {
+  <div class="loading">{{ 'common.loading' | translate }}</div>
+} @else if (appointment) {
+  <div class="detail-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ 'clinic.appointments.detail' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>{{ 'clinic.appointments.service' | translate }}:</strong> {{ appointment.serviceType }}</p>
+        <p><strong>{{ 'clinic.appointments.date' | translate }}:</strong> {{ appointment.dateTime | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>{{ 'clinic.appointments.petId' | translate }}:</strong> {{ appointment.petId }}</p>
+        <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ appointment.status }}</p>
+        <p><strong>{{ 'clinic.appointments.notes' | translate }}:</strong> {{ appointment.notes || '-' }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        @if (appointment.status === 'pending') {
+          <button mat-raised-button color="accent" (click)="updateStatus('confirmed')">{{ 'clinic.appointments.confirm' | translate }}</button>
+          <button mat-raised-button color="warn" (click)="updateStatus('cancelled')">{{ 'clinic.appointments.cancel' | translate }}</button>
+        }
+        @if (appointment.status === 'confirmed') {
+          <button mat-raised-button color="primary" (click)="updateStatus('completed')">{{ 'clinic.appointments.complete' | translate }}</button>
+          <button mat-raised-button color="warn" (click)="updateStatus('cancelled')">{{ 'clinic.appointments.cancel' | translate }}</button>
+        }
+        <button mat-button routerLink="/clinic/appointments">{{ 'common.back' | translate }}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}

@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ (isEditMode ? 'owner.pets.edit' : 'owner.pets.add') | translate }}</h2>
+<form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="form-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.name' | translate }} *</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="isFieldInvalid('name')">{{ 'common.required' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.species' | translate }} *</mat-label>
+      <mat-select formControlName="species">
+        @for (sp of speciesList; track sp) {
+          <mat-option [value]="sp">{{ ('owner.pets.' + sp) | translate }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="isFieldInvalid('species')">{{ 'common.required' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.breed' | translate }}</mat-label>
+      <input matInput formControlName="breed">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.birthDate' | translate }}</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.weight' | translate }} (kg)</mat-label>
+      <input matInput type="number" formControlName="weight" step="0.1">
+      <mat-error *ngIf="petForm.get('weight')?.hasError('min')">{{ 'owner.pets.weightMin' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'owner.pets.allergies' | translate }}</mat-label>
+      <textarea matInput formControlName="allergies" rows="2"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <input type="file" accept="image/*" (change)="onFileSelected($event)" style="margin-bottom: 1rem;">
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="petForm.invalid">
+      {{ 'common.save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

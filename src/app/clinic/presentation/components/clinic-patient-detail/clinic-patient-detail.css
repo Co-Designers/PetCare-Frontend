@@ -1,0 +1,97 @@
+:root {
+  --primary: #1A3458;
+  --shadow-lg: 0 12px 36px rgba(0,0,0,0.12);
+  --radius: 1rem;
+}
+
+.detail-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+mat-card {
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, #1A3458 0%, #2c5a7a 100%);
+  padding: 1.5rem;
+}
+
+mat-card-title {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+mat-card-content {
+  padding: 1.75rem;
+  background: white;
+}
+
+mat-card-content p {
+  display: flex;
+  margin: 0.75rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+mat-card-content strong {
+  width: 130px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+mat-card-actions {
+  padding: 1rem 1.75rem 1.75rem;
+  background: #fafbfc;
+  border-top: 1px solid #eef2f6;
+  text-align: right;
+}
+
+.loading {
+  text-align: center;
+  margin: 2rem;
+  color: #6c757d;
+}
+
+@media (max-width: 640px) {
+  mat-card-content p {
+    flex-direction: column;
+  }
+  mat-card-content strong {
+    width: auto;
+  }
+}.history-card {
+   margin-top: 1.5rem;
+ }
+.record-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0.75rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.record-date {
+  font-weight: bold;
+  min-width: 100px;
+  color: #1A3458;
+}
+.record-details {
+  flex: 1;
+}
+.no-data {
+  text-align: center;
+  padding: 1rem;
+  color: #6c757d;
+}

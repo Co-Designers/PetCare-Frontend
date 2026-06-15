@@ -1,0 +1,12 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.form-content {
+  min-width: 400px;
+}
+@media (max-width: 480px) {
+  .form-content {
+    min-width: auto;
+  }
+}

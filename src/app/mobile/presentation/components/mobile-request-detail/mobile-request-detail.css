@@ -1,0 +1,10 @@
+.detail-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.loading {
+  text-align: center;
+  margin: 2rem;
+  color: #6c757d;
+}

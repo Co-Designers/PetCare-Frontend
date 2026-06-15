@@ -1,0 +1,63 @@
+:root {
+  --primary: #1A3458;
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+  --radius: 1rem;
+}
+
+.settings-container {
+  max-width: 650px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+mat-card {
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #2c5a7a 100%);
+  color: white;
+  padding: 1.25rem 1.5rem;
+}
+
+mat-card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+}
+
+mat-card-content {
+  padding: 1.75rem;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+button[mat-raised-button] {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 0 1.5rem;
+  transition: all 0.2s;
+}
+
+button[mat-raised-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 640px) {
+  .settings-container {
+    padding: 0 1rem;
+  }
+}

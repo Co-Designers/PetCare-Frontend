@@ -1,0 +1,29 @@
+.language-selector {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.mat-button-toggle {
+  min-width: 90px;
+}
+
+.mat-button-toggle-checked {
+  background-color: #1A3458 !important;
+  color: white !important;
+}

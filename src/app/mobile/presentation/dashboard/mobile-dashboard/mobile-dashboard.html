@@ -1,0 +1,42 @@
+<div class="dashboard-container">
+  <div class="welcome-section">
+    <h1>{{ 'mobile.dashboard.welcome' | translate }}</h1>
+  </div>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'mobile.dashboard.pendingRequests' | translate }}</mat-card-title>
+        <mat-icon>pending</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ pendingRequests }}</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'mobile.dashboard.activeServices' | translate }}</mat-card-title>
+        <mat-icon>build</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ activeServices }}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-actions">
+    <button mat-raised-button color="primary" routerLink="/mobile/requests">
+      <mat-icon>list</mat-icon> {{ 'mobile.dashboard.viewRequests' | translate }}
+    </button>
+    <button mat-raised-button color="accent" routerLink="/mobile/services">
+      <mat-icon>medical_services</mat-icon> {{ 'mobile.dashboard.manageServices' | translate }}
+    </button>
+    <button mat-raised-button routerLink="/mobile/availability">
+      <mat-icon>event</mat-icon> {{ 'mobile.dashboard.setAvailability' | translate }}
+    </button>
+    <button mat-raised-button routerLink="/mobile/profile">
+      <mat-icon>person</mat-icon> {{ 'mobile.dashboard.profile' | translate }}
+    </button>
+  </div>
+</div>
