@@ -42,78 +42,36 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./owner-appointment-form.css'],
 })
 export class OwnerAppointmentFormComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private appointmentService = inject(OwnerAppointmentService);
-  private petService = inject(OwnerPetService);
-  private http = inject(HttpClient);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private notification = inject(NotificationService);
-  private availabilityService = inject(AvailabilityService);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly fb = inject(FormBuilder);
+  private readonly appointmentService = inject(OwnerAppointmentService);
+  private readonly petService = inject(OwnerPetService);
+  private readonly http = inject(HttpClient);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly notification = inject(NotificationService);
+  private readonly availabilityService = inject(AvailabilityService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   appointmentForm!: FormGroup;
   pets = this.petService.pets;
+
   isEditMode = false;
   appointmentId: number | null = null;
 
   allProviders: any[] = [];
   filteredProviders: any[] = [];
   currentProviderServices: string[] = [];
-
-  // Propiedades para disponibilidad
   availableSlots: TimeSlot[] = [];
-  selectedTime: string = '';
+  mobileAvailabilities: any[] = [];
 
   ngOnInit(): void {
     this.petService.loadPets();
     this.buildForm();
     this.loadProviders();
-
-    // Al cambiar el tipo de proveedor, resetear proveedor, servicios y slots
-    this.appointmentForm.get('providerType')?.valueChanges.subscribe(() => {
-      this.filterProviders();
-      this.appointmentForm.patchValue({
-        providerId: '',
-        services: [],
-        appointmentDate: '',
-        timeSlot: '',
-      });
-      this.currentProviderServices = [];
-      this.availableSlots = [];
-    });
-
-    // Al cambiar el proveedor, cargar sus servicios y recargar slots si hay fecha
-    this.appointmentForm.get('providerId')?.valueChanges.subscribe((providerId) => {
-      const pid = Number(providerId);
-      this.loadProviderServices(pid);
-      this.appointmentForm.patchValue({ services: [], timeSlot: '' });
-      this.loadAvailableSlots(); // recargar slots si ya hay fecha seleccionada
-    });
-
-    // Al cambiar la fecha, recargar slots y resetear hora seleccionada
-    this.appointmentForm.get('appointmentDate')?.valueChanges.subscribe(() => {
-      this.appointmentForm.patchValue({ timeSlot: '' });
-      this.loadAvailableSlots();
-    });
-
-    // Verificar si viene desde la búsqueda
-    const queryParams = this.route.snapshot.queryParamMap;
-    if (queryParams.has('providerId') && queryParams.has('providerType')) {
-      setTimeout(() => {
-        this.appointmentForm.patchValue({
-          providerType: queryParams.get('providerType'),
-          providerId: +queryParams.get('providerId')!,
-        });
-      }, 500);
-    }
-
-    // Modo edición
-    const idParam = this.route.snapshot.params['id'];
-    if (idParam) {
-      this.isEditMode = true;
-      this.appointmentId = +idParam;
-      this.loadAppointmentData();
-    }
+    this.loadMobileAvailabilities();
+    this.listenFormChanges();
+    this.applyQueryParams();
+    this.checkEditMode();
   }
 
   private buildForm(): void {
@@ -128,35 +86,118 @@ export class OwnerAppointmentFormComponent implements OnInit {
     });
   }
 
+  private listenFormChanges(): void {
+    this.appointmentForm.get('providerType')?.valueChanges.subscribe(() => {
+      this.filterProviders();
+
+      this.appointmentForm.patchValue({
+        providerId: '',
+        services: [],
+        appointmentDate: '',
+        timeSlot: '',
+      });
+
+      this.currentProviderServices = [];
+      this.availableSlots = [];
+      this.clearUnavailableDateError();
+      this.cdr.detectChanges();
+    });
+
+    this.appointmentForm.get('providerId')?.valueChanges.subscribe((providerId) => {
+      const id = Number(providerId);
+
+      this.loadProviderServices(id);
+
+      this.appointmentForm.patchValue({
+        services: [],
+        appointmentDate: '',
+        timeSlot: '',
+      });
+
+      this.availableSlots = [];
+      this.clearUnavailableDateError();
+      this.appointmentForm.get('appointmentDate')?.updateValueAndValidity();
+      this.cdr.detectChanges();
+    });
+
+    this.appointmentForm.get('appointmentDate')?.valueChanges.subscribe(() => {
+      this.appointmentForm.patchValue({ timeSlot: '' });
+      this.loadAvailableSlots();
+    });
+  }
+
+  private applyQueryParams(): void {
+    const queryParams = this.route.snapshot.queryParamMap;
+
+    if (queryParams.has('providerId') && queryParams.has('providerType')) {
+      setTimeout(() => {
+        this.appointmentForm.patchValue({
+          providerType: queryParams.get('providerType'),
+          providerId: Number(queryParams.get('providerId')),
+        });
+      }, 500);
+    }
+  }
+
+  private checkEditMode(): void {
+    const idParam = this.route.snapshot.params['id'];
+
+    if (!idParam) return;
+
+    this.isEditMode = true;
+    this.appointmentId = Number(idParam);
+    this.loadAppointmentData();
+  }
+
   private loadProviders(): void {
     const url = `${environment.platformProviderApiBaseUrl}/service-providers`;
+
     this.http.get<any[]>(url).subscribe({
       next: (providers) => {
-        // Normalizar proveedores: asegurar id numérico y type en minúsculas
-        this.allProviders = providers.map((p) => ({
-          ...p,
-          id: Number(p.id),
-          type: (p.type || '').toString().toLowerCase(),
-          servicesOffered: p.servicesOffered || p.services || [],
+        this.allProviders = providers.map((provider) => ({
+          ...provider,
+          id: Number(provider.id),
+          name: this.resolveProviderName(provider),
+          type: (provider.type || '').toString().toLowerCase(),
+          servicesOffered: provider.servicesOffered || provider.services || [],
         }));
+
         this.filterProviders();
+        this.cdr.detectChanges();
       },
       error: () => this.notification.error('Error al cargar proveedores'),
     });
   }
 
+  private loadMobileAvailabilities(): void {
+    this.http
+      .get<any[]>(`${environment.platformProviderApiBaseUrl}/mobile-availability`)
+      .subscribe({
+        next: (availability) => {
+          this.mobileAvailabilities = availability || [];
+          this.appointmentForm?.get('appointmentDate')?.updateValueAndValidity();
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.mobileAvailabilities = [];
+          this.notification.error('Error al cargar disponibilidad móvil');
+        },
+      });
+  }
+
   private filterProviders(): void {
-    const currentType = (this.appointmentForm.get('providerType')?.value || '').toString().toLowerCase();
-    this.filteredProviders = this.allProviders.filter((p) => (p.type || '').toString().toLowerCase() === currentType);
+    const currentType = (this.appointmentForm.get('providerType')?.value || '')
+      .toString()
+      .toLowerCase();
+
+    this.filteredProviders = this.allProviders.filter(
+      (provider) => (provider.type || '').toString().toLowerCase() === currentType,
+    );
   }
 
   private loadProviderServices(providerId: number): void {
-    const provider = this.allProviders.find((p) => Number(p.id) === Number(providerId));
-    if (provider && provider.servicesOffered) {
-      this.currentProviderServices = provider.servicesOffered;
-    } else {
-      this.currentProviderServices = [];
-    }
+    const provider = this.allProviders.find((item) => Number(item.id) === Number(providerId));
+    this.currentProviderServices = provider?.servicesOffered || [];
   }
 
   private loadAvailableSlots(): void {
@@ -169,123 +210,278 @@ export class OwnerAppointmentFormComponent implements OnInit {
       return;
     }
 
-    const dateStr = new Date(date).toISOString().split('T')[0];
+    const selectedDate = new Date(date);
+
+    if (!this.availableDateFilter(selectedDate)) {
+      this.availableSlots = [];
+      this.setUnavailableDateError();
+      this.notification.error('Fecha no disponible para este proveedor');
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.clearUnavailableDateError();
+
+    const dateStr = this.toDateOnlyString(selectedDate);
 
     if (providerType === 'clinic') {
       this.availabilityService.getClinicSlots(providerId, dateStr).subscribe({
         next: (slots) => {
-          this.availableSlots = slots;
-          this.cdr.detectChanges(); // 👈 Forzar detección de cambios
+          this.availableSlots = slots || [];
+
+          if (this.availableSlots.length === 0) {
+            this.setUnavailableDateError();
+            this.notification.error('Fecha no disponible');
+          } else {
+            this.clearUnavailableDateError();
+          }
+
+          this.cdr.detectChanges();
         },
         error: () => {
-          this.notification.error('Error al cargar horarios disponibles');
           this.availableSlots = [];
+          this.setUnavailableDateError();
+          this.notification.error('Error al cargar horarios disponibles');
           this.cdr.detectChanges();
         },
       });
-    } else {
-      this.availabilityService.getMobileSlots(providerId, dateStr).subscribe({
-        next: (slots) => {
-          this.availableSlots = slots;
-          this.cdr.detectChanges(); // 👈 Forzar detección de cambios
-        },
-        error: () => {
-          this.notification.error('Error al cargar horarios disponibles');
-          this.availableSlots = [];
-          this.cdr.detectChanges();
-        },
-      });
+
+      return;
     }
+
+    this.availabilityService.getMobileSlots(providerId, dateStr).subscribe({
+      next: (slots) => {
+        this.availableSlots = slots || [];
+
+        if (this.availableSlots.length === 0) {
+          this.setUnavailableDateError();
+          this.notification.error('Fecha no disponible para este profesional');
+        } else {
+          this.clearUnavailableDateError();
+        }
+
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.availableSlots = [];
+        this.setUnavailableDateError();
+        this.notification.error('Error al cargar horarios disponibles');
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   private loadAppointmentData(): void {
     if (!this.appointmentId) return;
+
     this.appointmentService.getAppointmentById(this.appointmentId).subscribe({
-      next: (app) => {
-        // Convertir serviceType (string) a array de servicios
-        const servicesArray = app.serviceType
-          ? app.serviceType.split(', ').filter((s: string) => s.trim() !== '')
+      next: (appointment) => {
+        const appointmentDateTime = new Date(appointment.dateTime);
+
+        const servicesArray = appointment.serviceType
+          ? appointment.serviceType.split(', ').filter((service: string) => service.trim() !== '')
           : [];
 
-        // Parsear fecha y hora desde app.dateTime
-        const appointmentDateTime = new Date(app.dateTime);
-        const appointmentDate = appointmentDateTime;
         const timeSlot = `${appointmentDateTime.getHours().toString().padStart(2, '0')}:00`;
 
         this.appointmentForm.patchValue({
-          petId: app.petId,
-          providerType: app.providerType,
-          providerId: app.providerId,
-          appointmentDate: appointmentDate,
-          timeSlot: timeSlot,
+          petId: appointment.petId,
+          providerType: appointment.providerType,
+          providerId: appointment.providerId,
+          appointmentDate: appointmentDateTime,
+          timeSlot,
           services: servicesArray,
-          notes: app.notes || '',
+          notes: appointment.notes || '',
         });
 
-        this.loadProviders();
-        this.loadProviderServices(app.providerId);
-        // Cargar los slots después de haber seteado proveedor y fecha
-        setTimeout(() => this.loadAvailableSlots(), 100);
+        this.loadProviderServices(appointment.providerId);
+        setTimeout(() => this.loadAvailableSlots(), 150);
       },
       error: () => {
         this.notification.error('Error al cargar la cita');
-        this.router.navigate(['/owner/appointments']);
+        this.onCancel();
       },
     });
   }
 
   onSubmit(): void {
-    if (this.appointmentForm.invalid) return;
+    if (this.appointmentForm.invalid) {
+      this.appointmentForm.markAllAsTouched();
+      this.notification.error('Completa los campos obligatorios');
+      return;
+    }
 
     const formValue = this.appointmentForm.value;
+    const providerId = Number(formValue.providerId);
+    const dateTime = this.buildDateTime(formValue.appointmentDate, formValue.timeSlot);
 
-    // Construir dateTime combinando appointmentDate y timeSlot
-    const dateObj = new Date(formValue.appointmentDate);
-    const [hours, minutes] = formValue.timeSlot.split(':');
-    dateObj.setHours(+hours, +minutes, 0, 0);
-    const dateTime = dateObj.toISOString();
+    const userId =
+      Number(localStorage.getItem('userId')) ||
+      Number(localStorage.getItem('currentUserId')) ||
+      Number(localStorage.getItem('id'));
 
     const appointmentData: any = {
-      petId: formValue.petId,
+      petId: Number(formValue.petId),
+      providerId,
       providerType: formValue.providerType,
       serviceType: formValue.services.join(', '),
-      dateTime: dateTime,
-      notes: formValue.notes,
+      dateTime,
+      notes: formValue.notes || '',
+      status: 'pending',
+      paymentStatus: 'pending',
     };
-    // Si el proveedor es una clínica, enviar clinicId (el formulario usa providerId)
+
+    if (!Number.isNaN(userId) && userId > 0) {
+      appointmentData.ownerId = userId;
+    }
+
     if (formValue.providerType === 'clinic') {
-      appointmentData.clinicId = Number(formValue.providerId);
-      // también incluir providerId por compatibilidad
-      appointmentData.providerId = Number(formValue.providerId);
-    } else {
-      // mobile
-      appointmentData.providerId = Number(formValue.providerId);
+      appointmentData.clinicId = providerId;
     }
 
     if (this.isEditMode && this.appointmentId) {
-      this.appointmentService.updateAppointment(this.appointmentId, appointmentData);
-    } else {
-      // ✅ Corregido: agregar status y paymentStatus como literales exactos
-      const newAppointment = {
-        ...appointmentData,
-        status: 'pending' as const,
-        paymentStatus: 'pending' as const,
-      };
-      this.appointmentService.createAppointment(newAppointment);
+      this.http
+        .put(
+          `${environment.platformProviderApiBaseUrl}/appointments/${this.appointmentId}`,
+          appointmentData,
+        )
+        .subscribe({
+          next: () => {
+            this.notification.success('Cita actualizada');
+            this.router.navigate(['/owner/appointments']).then();
+          },
+          error: (error) => {
+            console.error('Error updating appointment', error);
+            this.notification.error(error?.error?.error || 'Error al actualizar la cita');
+          },
+        });
+
+      return;
     }
+
+    this.http
+      .post(`${environment.platformProviderApiBaseUrl}/appointments`, appointmentData)
+      .subscribe({
+        next: () => {
+          this.notification.success('Cita creada correctamente');
+          this.router.navigate(['/owner/appointments']).then();
+        },
+        error: (error) => {
+          console.error('Error creating appointment', error);
+          this.notification.error(error?.error?.error || 'Error al crear la cita');
+        },
+      });
+  }
+
+  onCancel(): void {
     this.router.navigate(['/owner/appointments']).then();
   }
 
-  futureDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const selectedDate = new Date(control.value);
+  availableDateFilter = (date: Date | null): boolean => {
+    if (!date) return false;
+
+    const selectedDate = new Date(date);
+    selectedDate.setHours(0, 0, 0, 0);
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (selectedDate < today) return { pastDate: true };
-    return null;
+
+    if (selectedDate < today) return false;
+
+    const providerType = this.appointmentForm?.get('providerType')?.value;
+    const providerId = Number(this.appointmentForm?.get('providerId')?.value);
+    const dateStr = this.toDateOnlyString(selectedDate);
+
+    if (providerType === 'clinic') {
+      return selectedDate.getDay() !== 0;
+    }
+
+    if (providerType === 'mobile') {
+      if (!providerId) return false;
+
+      return this.mobileAvailabilities.some((availability) => {
+        return (
+          Number(availability.mobileId) === providerId &&
+          availability.date === dateStr &&
+          availability.isAvailable !== false
+        );
+      });
+    }
+
+    return true;
+  };
+
+  futureDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    if (!control.value) return null;
+
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    return selectedDate < today ? { pastDate: true } : null;
   }
 
   isFieldInvalid(field: string): boolean {
     const control = this.appointmentForm.get(field);
     return !!control && control.invalid && control.touched;
+  }
+
+  private setUnavailableDateError(): void {
+    const control = this.appointmentForm.get('appointmentDate');
+    if (!control) return;
+
+    const errors = control.errors || {};
+    control.setErrors({
+      ...errors,
+      unavailableDate: true,
+    });
+  }
+
+  private clearUnavailableDateError(): void {
+    const control = this.appointmentForm.get('appointmentDate');
+
+    if (!control || !control.errors) return;
+
+    const errors = { ...control.errors };
+    delete errors['unavailableDate'];
+
+    control.setErrors(Object.keys(errors).length ? errors : null);
+  }
+
+  private buildDateTime(date: Date, timeSlot: string): string {
+    const dateObj = new Date(date);
+    const [hours, minutes] = timeSlot.split(':').map(Number);
+
+    dateObj.setHours(hours, minutes || 0, 0, 0);
+
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const hour = String(dateObj.getHours()).padStart(2, '0');
+    const minute = String(dateObj.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day}T${hour}:${minute}:00`;
+  }
+
+  private toDateOnlyString(date: Date): string {
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  private resolveProviderName(provider: any): string {
+    return (
+      provider?.name ||
+      provider?.clinicName ||
+      provider?.fullName ||
+      provider?.businessName ||
+      provider?.displayName ||
+      'Proveedor'
+    );
   }
 }

@@ -30,7 +30,6 @@ import { LanguageSwitcher } from '../../../../shared/presentation/components/lan
     MatSelectModule,
     MatCheckboxModule,
     TranslatePipe,
-    BaseFormComponent,
     LanguageSwitcher,
   ],
   templateUrl: './dynamic-sign-up-form.html',
@@ -45,10 +44,7 @@ export class DynamicSignUpFormComponent extends BaseFormComponent implements OnI
   userType: UserType | null = null;
   districts = DISTRICTS_LIMA;
   mobileSubtypes = Object.values(MobileSubtype);
-  isFieldInvalid(controlName: string): boolean {
-    const control = this.form.get(controlName);
-    return !!control && control.invalid && control.touched;
-  }
+
   form = this.fb.group(
     {
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,13 +53,18 @@ export class DynamicSignUpFormComponent extends BaseFormComponent implements OnI
       confirmPassword: ['', Validators.required],
       fullName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
-      ownerGroup: this.fb.group({ district: ['', Validators.required] }),
+
+      ownerGroup: this.fb.group({
+        district: ['', Validators.required],
+      }),
+
       clinicGroup: this.fb.group({
         clinicName: ['', Validators.required],
         ruc: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
         address: ['', Validators.required],
         clinicType: ['', Validators.required],
       }),
+
       mobileGroup: this.fb.group({
         mobileSubtype: ['', Validators.required],
         coverageDistricts: [[], Validators.required],
@@ -75,23 +76,32 @@ export class DynamicSignUpFormComponent extends BaseFormComponent implements OnI
     { validators: this.passwordMatchValidator },
   );
 
-  ngOnInit() {
+  ngOnInit(): void {
     const userTypeParam = this.route.snapshot.queryParamMap.get('userType');
+
     if (!userTypeParam) {
       this.router.navigate(['/iam/select-type']).then();
       return;
     }
+
     this.userType = userTypeParam as UserType;
+  }
+
+  isFieldInvalid(controlName: string): boolean {
+    const control = this.form.get(controlName);
+    return !!control && control.invalid && control.touched;
   }
 
   passwordMatchValidator(group: any) {
     const pass = group.get('password')?.value;
     const confirm = group.get('confirmPassword')?.value;
+
     return pass === confirm ? null : { mismatch: true };
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.invalid) return;
+
     const v = this.form.value;
     const userType = this.userType!;
 
@@ -141,10 +151,11 @@ export class DynamicSignUpFormComponent extends BaseFormComponent implements OnI
         v.mobileGroup?.specialty ?? undefined,
       );
     }
+
     this.store.signUp(command, this.router);
   }
 
-  goToSignIn() {
+  goToSignIn(): void {
     this.router.navigate(['/iam/sign-in']).then();
   }
 }

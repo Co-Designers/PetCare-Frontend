@@ -1,44 +1,105 @@
-<div class="pet-list-container">
-  <div class="header">
-    <h2>{{ 'owner.pets.title' | translate }}</h2>
+<div class="pet-list-page">
+  <section class="pets-header">
+    <div>
+      <span class="section-badge">PetCare</span>
+      <h1>{{ 'owner.pets.title' | translate }}</h1>
+      <p>Gestiona la información principal de tus mascotas y revisa su historial médico.</p>
+    </div>
+
     <button mat-raised-button color="primary" (click)="openAddDialog()">
-      <mat-icon>add</mat-icon> {{ 'owner.pets.add' | translate }}
+      <mat-icon>add</mat-icon>
+      {{ 'owner.pets.add' | translate }}
     </button>
-  </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
+    <div class="loading-state">
+      <mat-icon>pets</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (pets.length === 0) {
+    <div class="empty-state">
+      <mat-icon>pets</mat-icon>
+      <h2>No tienes mascotas registradas</h2>
+      <p>Agrega tu primera mascota para empezar a gestionar sus citas e historial.</p>
+
+      <button mat-raised-button color="primary" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        {{ 'owner.pets.add' | translate }}
+      </button>
+    </div>
   } @else {
-    <div class="pets-grid">
+    <section class="pets-grid">
       @for (pet of paginatedPets; track pet.id) {
         <mat-card class="pet-card">
-          <img [src]="pet.photoUrl || 'assets/default-pet.png'" class="pet-photo">
+          <div class="pet-image-wrapper">
+            <img
+              [src]="getPetImage(pet)"
+              class="pet-photo"
+              alt="Pet photo"
+              (error)="onImageError($event)"
+            >
+
+            <span class="pet-species-chip">
+              <mat-icon>pets</mat-icon>
+              {{ pet.species }}
+            </span>
+          </div>
+
           <mat-card-header>
-            <mat-card-title>{{ pet.name }}</mat-card-title>
-            <mat-card-subtitle>{{ pet.species }} {{ pet.breed ? '- ' + pet.breed : '' }}</mat-card-subtitle>
+            <div>
+              <mat-card-title>{{ pet.name }}</mat-card-title>
+              <mat-card-subtitle>
+                {{ pet.breed || 'Sin raza registrada' }}
+              </mat-card-subtitle>
+            </div>
           </mat-card-header>
+
           <mat-card-content>
-            @if (pet.birthDate) {
-              <p><strong>{{ 'owner.pets.age' | translate }}:</strong> {{ pet.birthDate | date:'yyyy' }}</p>
-            }
-            @if (pet.weight) {
-              <p><strong>{{ 'owner.pets.weight' | translate }}:</strong> {{ pet.weight }} kg</p>
-            }
+            <div class="pet-info-grid">
+              <div class="pet-info-item">
+                <span>{{ 'owner.pets.age' | translate }}</span>
+                <strong>{{ getPetAge(pet.birthDate) }}</strong>
+              </div>
+
+              <div class="pet-info-item">
+                <span>{{ 'owner.pets.weight' | translate }}</span>
+                <strong>{{ pet.weight ? pet.weight + ' kg' : 'No registrado' }}</strong>
+              </div>
+            </div>
           </mat-card-content>
+
           <mat-card-actions>
-            <button mat-icon-button color="primary" (click)="editPet(pet)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button color="warn" (click)="deletePet(pet.id!)"><mat-icon>delete</mat-icon></button>
-            <button mat-button [routerLink]="['/owner/medical-history', pet.id]">{{ 'owner.pets.viewHistory' | translate }}</button>
+            <button mat-icon-button color="primary" (click)="editPet(pet)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="deletePet(pet.id!)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <button mat-button class="history-button" [routerLink]="['/owner/medical-history', pet.id]">
+              {{ 'owner.pets.viewHistory' | translate }}
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
           </mat-card-actions>
         </mat-card>
       }
-    </div>
+    </section>
 
     @if (totalPages > 1) {
       <div class="pagination">
-        <button mat-button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        <button mat-stroked-button (click)="prevPage()" [disabled]="currentPage === 1">
+          <mat-icon>chevron_left</mat-icon>
+          Anterior
+        </button>
+
         <span>Página {{ currentPage }} de {{ totalPages }}</span>
-        <button mat-button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+
+        <button mat-stroked-button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Siguiente
+          <mat-icon>chevron_right</mat-icon>
+        </button>
       </div>
     }
   }

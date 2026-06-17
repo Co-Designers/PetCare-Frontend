@@ -1,62 +1,139 @@
-<div class="dashboard-container">
-  <h1>{{ 'owner.dashboard.welcome' | translate }}</h1>
+<div class="dashboard-page">
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge">PetCare Owner</span>
 
-  <div class="stats-grid">
+      <h1>{{ 'owner.dashboard.welcome' | translate }}</h1>
+
+      <p>
+        Administra tus mascotas, citas y alertas de salud desde un solo lugar.
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <button mat-raised-button color="primary" routerLink="/owner/pets/new">
+        <mat-icon>add</mat-icon>
+        {{ 'owner.dashboard.addPet' | translate }}
+      </button>
+
+      <button mat-stroked-button routerLink="/owner/search">
+        <mat-icon>search</mat-icon>
+        {{ 'owner.dashboard.findServices' | translate }}
+      </button>
+    </div>
+  </section>
+
+  <section class="stats-grid">
     <mat-card class="stat-card">
       <mat-card-header>
-        <mat-card-title>{{ 'owner.dashboard.myPets' | translate }}</mat-card-title>
-        <mat-icon>pets</mat-icon>
+        <div class="stat-header-text">
+          <mat-card-title>{{ 'owner.dashboard.myPets' | translate }}</mat-card-title>
+          <mat-card-subtitle>Mascotas registradas</mat-card-subtitle>
+        </div>
+
+        <div class="stat-icon">
+          <mat-icon>pets</mat-icon>
+        </div>
       </mat-card-header>
+
       <mat-card-content>
-        <div class="stat-number">{{ pets.length }}</div>
+        @if (loadingPets) {
+          <div class="loading">{{ 'common.loading' | translate }}</div>
+        } @else {
+          <div class="stat-number">{{ pets.length }}</div>
+        }
       </mat-card-content>
+
       <mat-card-actions>
-        <button mat-button routerLink="/owner/pets">{{ 'owner.dashboard.viewAll' | translate }}</button>
+        <button mat-button routerLink="/owner/pets">
+          {{ 'owner.dashboard.viewAll' | translate }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
 
     <mat-card class="stat-card">
       <mat-card-header>
-        <mat-card-title>{{ 'owner.dashboard.upcomingAppointments' | translate }}</mat-card-title>
-        <mat-icon>event</mat-icon>
+        <div class="stat-header-text">
+          <mat-card-title>{{ 'owner.dashboard.upcomingAppointments' | translate }}</mat-card-title>
+          <mat-card-subtitle>Próximas visitas</mat-card-subtitle>
+        </div>
+
+        <div class="stat-icon">
+          <mat-icon>event</mat-icon>
+        </div>
       </mat-card-header>
+
       <mat-card-content>
-        <div class="stat-number">{{ getUpcomingAppointments().length }}</div>
+        @if (loadingAppointments) {
+          <div class="loading">{{ 'common.loading' | translate }}</div>
+        } @else {
+          <div class="stat-number">{{ getUpcomingAppointments().length }}</div>
+        }
       </mat-card-content>
+
       <mat-card-actions>
-        <button mat-button routerLink="/owner/appointments">{{ 'owner.dashboard.viewAll' | translate }}</button>
-        <button mat-button routerLink="/owner/appointments/new">{{ 'owner.dashboard.schedule' | translate }}</button>
+        <button mat-button routerLink="/owner/appointments">
+          {{ 'owner.dashboard.viewAll' | translate }}
+        </button>
+
+        <button mat-button routerLink="/owner/appointments/new">
+          {{ 'owner.dashboard.schedule' | translate }}
+          <mat-icon>add_circle</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
 
-    <!-- ALERTAS DE SALUD (corregido) -->
     <mat-card class="stat-card alert-card">
       <mat-card-header>
-        <mat-card-title>{{ 'owner.dashboard.healthAlerts' | translate }}</mat-card-title>
-        <mat-icon>warning</mat-icon>
+        <div class="stat-header-text">
+          <mat-card-title>{{ 'owner.dashboard.healthAlerts' | translate }}</mat-card-title>
+          <mat-card-subtitle>Estado de salud reciente</mat-card-subtitle>
+        </div>
+
+        <div class="stat-icon warning">
+          <mat-icon>warning</mat-icon>
+        </div>
       </mat-card-header>
+
       <mat-card-content>
         @if (loadingAlerts) {
           <div class="loading">{{ 'common.loading' | translate }}</div>
         } @else if (healthAlerts.length === 0) {
-          <p class="no-alerts">{{ 'owner.dashboard.noAlerts' | translate }}</p>
+          <div class="empty-alerts">
+            <mat-icon>check_circle</mat-icon>
+            <p>{{ 'owner.dashboard.noAlerts' | translate }}</p>
+          </div>
         } @else {
-          <ul>
+          <ul class="alerts-list">
             @for (alert of healthAlerts; track alert.id) {
-              <li><strong>{{ alert.petName }}:</strong> {{ alert.message }}</li>
+              <li>
+                <strong>{{ alert.petName }}</strong>
+                <span>{{ alert.message }}</span>
+              </li>
             }
           </ul>
         }
       </mat-card-content>
     </mat-card>
-  </div>
+  </section>
 
-  <div class="quick-actions">
-    <button mat-raised-button color="primary" routerLink="/owner/pets/new">
-      <mat-icon>add</mat-icon> {{ 'owner.dashboard.addPet' | translate }}
-    </button>
-    <button mat-raised-button color="accent" routerLink="/owner/search">
-      <mat-icon>search</mat-icon> {{ 'owner.dashboard.findServices' | translate }}
-    </button>
-  </div>
+  <section class="quick-actions-panel">
+    <div>
+      <h2>Acciones rápidas</h2>
+      <p>Realiza las operaciones principales del dueño de mascota.</p>
+    </div>
+
+    <div class="quick-actions">
+      <button mat-raised-button color="primary" routerLink="/owner/pets/new">
+        <mat-icon>add</mat-icon>
+        {{ 'owner.dashboard.addPet' | translate }}
+      </button>
+
+      <button mat-raised-button color="accent" routerLink="/owner/search">
+        <mat-icon>search</mat-icon>
+        {{ 'owner.dashboard.findServices' | translate }}
+      </button>
+    </div>
+  </section>
 </div>

@@ -1,27 +1,43 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 import { OwnerSearchService } from '../../../application/owner-search';
 import { OwnerSearchFiltersComponent } from '../../components/owner-search-filters/owner-search-filters';
 import { OwnerServiceCardComponent } from '../../components/owner-service-card/owner-service-card';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-owner-search-page',
   standalone: true,
-  imports: [CommonModule, OwnerSearchFiltersComponent, OwnerServiceCardComponent, TranslatePipe],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    OwnerSearchFiltersComponent,
+    OwnerServiceCardComponent,
+    TranslatePipe,
+  ],
   templateUrl: './owner-search-page.html',
   styleUrls: ['./owner-search-page.css'],
 })
 export class OwnerSearchPageComponent {
-  private searchService = inject(OwnerSearchService);
-  private router = inject(Router);
+  private readonly searchService = inject(OwnerSearchService);
+  private readonly router = inject(Router);
 
   get results() {
     return this.searchService.results();
   }
+
   get searching() {
     return this.searchService.searching();
+  }
+
+  get clinicCount(): number {
+    return this.results.filter((provider: any) => provider.type === 'clinic').length;
+  }
+
+  get mobileCount(): number {
+    return this.results.filter((provider: any) => provider.type === 'mobile').length;
   }
 
   onSearch(filters: any): void {
@@ -31,7 +47,10 @@ export class OwnerSearchPageComponent {
   onSelectProvider(provider: any): void {
     this.router
       .navigate(['/owner/appointments/new'], {
-        queryParams: { providerId: provider.id, providerType: provider.type },
+        queryParams: {
+          providerId: provider.id,
+          providerType: provider.type,
+        },
       })
       .then();
   }

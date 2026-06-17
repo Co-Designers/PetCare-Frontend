@@ -4,23 +4,32 @@ import { iamGuard } from './iam/infrastructure/iam-guard';
 
 const pageNotFound = () =>
   import('./shared/presentation/views/page-not-found/page-not-found').then((m) => m.PageNotFound);
+
 const iamRoutes = () => import('./iam/presentation/iam.routes').then((m) => m.iamRoutes);
 
 export const routes: Routes = [
-  // Rutas públicas (sin layout)
-  { path: 'iam', loadChildren: iamRoutes },
+  // Ruta inicial: siempre manda al login
+  {
+    path: '',
+    redirectTo: 'iam/sign-in',
+    pathMatch: 'full',
+  },
 
-  // Rutas protegidas (con layout)
+  // Rutas públicas sin layout
+  {
+    path: 'iam',
+    loadChildren: iamRoutes,
+  },
+
+  // Rutas protegidas con layout
   {
     path: '',
     component: LayoutComponent,
     canActivate: [iamGuard],
     children: [
-      // Cargar los módulos de Owner, Clinic y Mobile como hijos
       {
         path: 'owner',
-        loadChildren: () =>
-          import('./owner/presentation/owner-routes').then((m) => m.ownerRoutes),
+        loadChildren: () => import('./owner/presentation/owner-routes').then((m) => m.ownerRoutes),
       },
       {
         path: 'clinic',
@@ -35,6 +44,9 @@ export const routes: Routes = [
     ],
   },
 
-  // Página 404 (siempre al final)
-  { path: '**', loadComponent: pageNotFound },
+  // Página 404
+  {
+    path: '**',
+    loadComponent: pageNotFound,
+  },
 ];

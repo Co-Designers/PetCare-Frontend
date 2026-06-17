@@ -1,79 +1,190 @@
-<div class="appointments-container">
-  <div class="header">
-    <h2>{{ 'owner.appointments.title' | translate }}</h2>
+<div class="appointments-page">
+  <section class="appointments-header">
+    <div>
+      <span class="section-badge">PetCare</span>
+      <h1>{{ 'owner.appointments.title' | translate }}</h1>
+      <p>Consulta tus próximas citas, revisa atenciones anteriores y gestiona tus reservas.</p>
+    </div>
+
     <button mat-raised-button color="primary" routerLink="/owner/appointments/new">
-      <mat-icon>add</mat-icon> {{ 'owner.appointments.new' | translate }}
+      <mat-icon>add</mat-icon>
+      {{ 'owner.appointments.new' | translate }}
     </button>
-  </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
+    <div class="loading-state">
+      <mat-icon>event</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
   } @else {
-    <mat-tab-group>
-      <!-- PRÓXIMAS CITAS -->
+    <mat-tab-group class="appointments-tabs">
       <mat-tab [label]="'owner.appointments.upcoming' | translate">
-        <div class="cards-grid">
-          @for (app of appointments; track app.id) {
-            @if (isUpcoming(app.dateTime)) {
-              <mat-card class="appointment-card">
-                <mat-card-header>
-                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
-                  <mat-card-subtitle>
-                    {{ getPetName(app.petId) }} - {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p>
-                    <strong>{{ 'owner.appointments.provider' | translate }}:</strong>
-                    {{ getProviderName(app.providerId) }} ({{ app.providerType }})
-                  </p>
-                  <p><strong>{{ 'owner.appointments.status' | translate }}:</strong> {{ app.status }}</p>
-                  @if (app.notes) {
-                    <p><strong>{{ 'owner.appointments.notes' | translate }}:</strong> {{ app.notes }}</p>
-                  }
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button color="primary" [routerLink]="['/owner/appointments/edit', app.id]">
-                    {{ 'owner.appointments.reschedule' | translate }}
-                  </button>
-                  <button mat-button color="warn" (click)="cancelAppointment(app.id!)">
-                    {{ 'owner.appointments.cancel' | translate }}
-                  </button>
-                </mat-card-actions>
+        @if (upcomingAppointments.length === 0) {
+          <div class="empty-state">
+            <mat-icon>event_available</mat-icon>
+            <h2>No tienes citas próximas</h2>
+            <p>Agenda una nueva cita para tu mascota usando el botón superior.</p>
+          </div>
+        } @else {
+          <section class="cards-grid">
+            @for (app of upcomingAppointments; track app.id) {
+              <mat-card class="appointment-card upcoming-card">
+                <div class="appointment-card-content">
+                  <div class="appointment-date-box">
+                    <span class="day">{{ app.dateTime | date:'dd' }}</span>
+                    <span class="month">{{ app.dateTime | date:'MMM' }}</span>
+                    <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
+                  </div>
+
+                  <div class="appointment-main">
+                    <div class="appointment-top">
+                      <div>
+                        <h2>{{ getServiceTitle(app) }}</h2>
+
+                        <p class="pet-name">
+                          <mat-icon>pets</mat-icon>
+                          {{ getPetName(app.petId) }}
+                        </p>
+                      </div>
+
+                      <span class="status-chip" [ngClass]="getStatusClass(app.status)">
+                        {{ getStatusLabel(app.status) }}
+                      </span>
+                    </div>
+
+                    <div class="appointment-details">
+                      <div class="detail-item">
+                        <mat-icon>business</mat-icon>
+                        <div>
+                          <span>{{ 'owner.appointments.provider' | translate }}</span>
+                          <strong>{{ getAppointmentProviderName(app) }}</strong>
+                        </div>
+                      </div>
+
+                      <div class="detail-item">
+                        <mat-icon>category</mat-icon>
+                        <div>
+                          <span>Tipo de atención</span>
+                          <strong>{{ getProviderTypeLabel(app.providerType) }}</strong>
+                        </div>
+                      </div>
+
+                      <div class="detail-item">
+                        <mat-icon>schedule</mat-icon>
+                        <div>
+                          <span>Fecha y hora</span>
+                          <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    @if (app.notes) {
+                      <div class="notes-box">
+                        <mat-icon>notes</mat-icon>
+                        <p>{{ app.notes }}</p>
+                      </div>
+                    }
+
+                    <div class="appointment-actions">
+                      <button
+                        mat-stroked-button
+                        color="primary"
+                        [routerLink]="['/owner/appointments/edit', app.id]"
+                      >
+                        <mat-icon>edit_calendar</mat-icon>
+                        {{ 'owner.appointments.reschedule' | translate }}
+                      </button>
+
+                      <button
+                        mat-stroked-button
+                        color="warn"
+                        (click)="cancelAppointment(app.id!)"
+                      >
+                        <mat-icon>cancel</mat-icon>
+                        {{ 'owner.appointments.cancel' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </mat-card>
             }
-          }
-        </div>
+          </section>
+        }
       </mat-tab>
 
-      <!-- CITAS PASADAS -->
       <mat-tab [label]="'owner.appointments.past' | translate">
-        <div class="cards-grid">
-          @for (app of appointments; track app.id) {
-            @if (!isUpcoming(app.dateTime)) {
-              <mat-card class="appointment-card">
-                <mat-card-header>
-                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
-                  <mat-card-subtitle>
-                    {{ getPetName(app.petId) }} - {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p>
-                    <strong>{{ 'owner.appointments.provider' | translate }}:</strong>
-                    {{ getProviderName(app.providerId) }} ({{ app.providerType }})
-                  </p>
-                  <p><strong>{{ 'owner.appointments.status' | translate }}:</strong> {{ app.status }}</p>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button [routerLink]="['/owner/medical-history', app.petId]">
-                    {{ 'owner.appointments.viewHistory' | translate }}
-                  </button>
-                </mat-card-actions>
+        @if (pastAppointments.length === 0) {
+          <div class="empty-state">
+            <mat-icon>history</mat-icon>
+            <h2>No tienes citas pasadas</h2>
+            <p>Cuando finalices una atención, aparecerá en esta sección.</p>
+          </div>
+        } @else {
+          <section class="cards-grid">
+            @for (app of pastAppointments; track app.id) {
+              <mat-card class="appointment-card past-card">
+                <div class="appointment-card-content">
+                  <div class="appointment-date-box muted">
+                    <span class="day">{{ app.dateTime | date:'dd' }}</span>
+                    <span class="month">{{ app.dateTime | date:'MMM' }}</span>
+                    <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
+                  </div>
+
+                  <div class="appointment-main">
+                    <div class="appointment-top">
+                      <div>
+                        <h2>{{ getServiceTitle(app) }}</h2>
+
+                        <p class="pet-name">
+                          <mat-icon>pets</mat-icon>
+                          {{ getPetName(app.petId) }}
+                        </p>
+                      </div>
+
+                      <span class="status-chip" [ngClass]="getStatusClass(app.status)">
+                        {{ getStatusLabel(app.status) }}
+                      </span>
+                    </div>
+
+                    <div class="appointment-details">
+                      <div class="detail-item">
+                        <mat-icon>business</mat-icon>
+                        <div>
+                          <span>{{ 'owner.appointments.provider' | translate }}</span>
+                          <strong>{{ getAppointmentProviderName(app) }}</strong>
+                        </div>
+                      </div>
+
+                      <div class="detail-item">
+                        <mat-icon>category</mat-icon>
+                        <div>
+                          <span>Tipo de atención</span>
+                          <strong>{{ getProviderTypeLabel(app.providerType) }}</strong>
+                        </div>
+                      </div>
+
+                      <div class="detail-item">
+                        <mat-icon>schedule</mat-icon>
+                        <div>
+                          <span>Fecha y hora</span>
+                          <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="appointment-actions">
+                      <button mat-stroked-button [routerLink]="['/owner/medical-history', app.petId]">
+                        <mat-icon>medical_services</mat-icon>
+                        {{ 'owner.appointments.viewHistory' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </mat-card>
             }
-          }
-        </div>
+          </section>
+        }
       </mat-tab>
     </mat-tab-group>
   }

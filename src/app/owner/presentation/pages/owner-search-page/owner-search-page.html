@@ -1,15 +1,83 @@
 <div class="search-page">
-  <h2>{{ 'owner.search.title' | translate }}</h2>
-  <app-owner-search-filters (searchEvent)="onSearch($event)" />
+  <section class="search-hero">
+    <div>
+      <span class="section-badge">PetCare</span>
+      <h1>{{ 'owner.search.title' | translate }}</h1>
+      <p>
+        Encuentra clínicas veterinarias y profesionales móviles según distrito,
+        especialidad o tipo de atención.
+      </p>
+    </div>
 
-  @if (searching) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
-  } @else {
-    @for (provider of results; track provider.id) {
-      <app-owner-service-card [provider]="provider" (select)="onSelectProvider($event)" />
+    <div class="hero-stats">
+      <div class="stat-box">
+        <strong>{{ results.length }}</strong>
+        <span>Resultados</span>
+      </div>
+
+      <div class="stat-box">
+        <strong>{{ clinicCount }}</strong>
+        <span>Clínicas</span>
+      </div>
+
+      <div class="stat-box">
+        <strong>{{ mobileCount }}</strong>
+        <span>Móviles</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-panel">
+    <div class="filters-title">
+      <mat-icon>tune</mat-icon>
+      <div>
+        <h2>Filtros de búsqueda</h2>
+        <p>Refina la búsqueda para encontrar la mejor atención para tu mascota.</p>
+      </div>
+    </div>
+
+    <app-owner-search-filters (searchEvent)="onSearch($event)" />
+  </section>
+
+  <section class="results-section">
+    <div class="results-header">
+      <div>
+        <h2>Resultados disponibles</h2>
+        <p>
+          @if (results.length > 0) {
+            Se encontraron {{ results.length }} proveedores disponibles.
+          } @else {
+            Realiza una búsqueda para ver proveedores disponibles.
+          }
+        </p>
+      </div>
+    </div>
+
+    @if (searching) {
+      <div class="loading-state">
+        <mat-icon>search</mat-icon>
+        <h3>{{ 'common.loading' | translate }}</h3>
+        <p>Buscando proveedores disponibles...</p>
+      </div>
+    } @else {
+      @if (results.length > 0) {
+        <div class="results-grid">
+          @for (provider of results; track provider.type + '-' + provider.id) {
+            <app-owner-service-card
+              [provider]="provider"
+              (select)="onSelectProvider($event)"
+            />
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>manage_search</mat-icon>
+          <h3>{{ 'owner.search.noResults' | translate }}</h3>
+          <p>
+            Intenta cambiar el distrito, la especialidad o el tipo de proveedor.
+          </p>
+        </div>
+      }
     }
-    @if (results.length === 0 && !searching) {
-      <div class="no-results">{{ 'owner.search.noResults' | translate }}</div>
-    }
-  }
+  </section>
 </div>

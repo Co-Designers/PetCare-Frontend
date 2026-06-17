@@ -33,7 +33,12 @@
     "back": "Back",
     "yes": "Yes",
     "no": "No",
-    "close": "Close"
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "select": "Select",
+    "confirm": "Confirm"
   },
   "login": {
     "title": "SIGN IN",
@@ -107,7 +112,10 @@
       "allergies": "Allergies",
       "age": "Age",
       "viewHistory": "View history",
-      "edit": "Edit Pet"
+      "edit": "Edit Pet",
+      "noPets": "You have no pets registered",
+      "noPetsSubtitle": "Add your first pet to manage appointments and medical history.",
+      "medicalHistory": "Medical history"
     },
     "appointments": {
       "title": "My Appointments",
@@ -120,6 +128,8 @@
       "providerId": "Provider ID",
       "serviceType": "Service type",
       "dateTime": "Date & time",
+      "date": "Appointment date",
+      "availableTime": "Available time",
       "notes": "Notes",
       "provider": "Provider",
       "status": "Status",
@@ -128,7 +138,24 @@
       "viewHistory": "View history",
       "clinic": "Clinic",
       "mobile": "Mobile professional",
-      "services": "Services"
+      "services": "Services",
+      "careType": "Care type",
+      "noUpcoming": "You have no upcoming appointments",
+      "noUpcomingSubtitle": "Schedule a new appointment for your pet using the top button.",
+      "noPast": "You have no past appointments",
+      "noPastSubtitle": "When you complete an appointment, it will appear in this section.",
+      "formSubtitle": "Complete the information to book veterinary care.",
+      "dateHint": "First select a provider. The calendar only enables available dates.",
+      "timeHint": "Select an available date to see times.",
+      "pastDate": "The date cannot be earlier than today",
+      "unavailableDate": "Date not available for this provider",
+      "noAvailableTimes": "Select an available date to see times.",
+      "providerNotAssigned": "Provider not assigned",
+      "petNotAssigned": "Pet not assigned",
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "completed": "Completed"
     },
     "medicalHistory": {
       "title": "Medical history of",
@@ -143,6 +170,7 @@
       "noData": "No medical records found for this pet."
     },
     "search": {
+      "title": "Search services",
       "district": "District",
       "specialty": "Specialty",
       "providerType": "Provider type",
@@ -153,22 +181,40 @@
       "specialties": "Specialties",
       "services": "Services",
       "rating": "Rating",
-      "select": "Select"
+      "select": "Select",
+      "noResults": "No results found",
+      "heroDescription": "Find veterinary clinics and mobile professionals by district, specialty or type of care.",
+      "results": "Results",
+      "clinics": "Clinics",
+      "mobiles": "Mobile",
+      "filtersTitle": "Search filters",
+      "filtersSubtitle": "Refine the search to find the best care for your pet.",
+      "resultsTitle": "Available results",
+      "resultsEmptySubtitle": "Run a search to see available providers.",
+      "resultsFoundSubtitle": "available providers were found.",
+      "loadingProviders": "Searching available providers...",
+      "changeFilters": "Try changing the district, specialty or provider type."
     },
     "profile": {
       "title": "My Profile",
+      "personalInfo": "Personal information",
+      "personalInfoSubtitle": "Update your contact information and service district.",
       "fullName": "Full name",
       "email": "Email",
       "phone": "Phone",
+      "phoneHint": "Enter a 9-digit phone number",
       "district": "District",
       "invalidEmail": "Invalid email format",
       "phoneError": "9-digit phone required",
       "changePassword": "Change password",
+      "changePasswordSubtitle": "Update your password to keep your account secure.",
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmPassword": "Confirm new password",
+      "passwordHint": "Minimum 6 characters",
       "passwordMinLength": "Password must be at least 6 characters",
-      "passwordMismatch": "Passwords do not match"
+      "passwordMismatch": "Passwords do not match",
+      "updatePassword": "Update password"
     }
   },
   "clinic": {

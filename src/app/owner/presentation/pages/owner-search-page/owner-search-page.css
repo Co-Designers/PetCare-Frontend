@@ -1,10 +1,231 @@
 .search-page {
-  padding: 1.5rem;
-  max-width: 1000px;
+  max-width: 1180px;
   margin: 0 auto;
+  padding: 3rem 2rem;
 }
-.loading, .no-results {
+
+.search-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 2.2rem;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(246, 166, 35, 0.18), transparent 30%),
+    linear-gradient(135deg, #ffffff 0%, #f2f6ff 100%);
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 18px 42px rgba(26, 52, 88, 0.1);
+}
+
+.section-badge {
+  display: inline-flex;
+  margin-bottom: 0.7rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: #fff3d8;
+  color: #b7791f;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.search-hero h1 {
+  margin: 0;
+  color: #1a3458;
+  font-size: 2.35rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.search-hero p {
+  max-width: 650px;
+  margin: 0.55rem 0 0;
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(95px, 1fr));
+  gap: 0.8rem;
+  min-width: 330px;
+}
+
+.stat-box {
+  padding: 1rem;
+  border-radius: 20px;
   text-align: center;
-  margin: 2rem;
-  color: #666;
+  background: #ffffff;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 10px 24px rgba(26, 52, 88, 0.08);
+}
+
+.stat-box strong {
+  display: block;
+  color: #1a3458;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.stat-box span {
+  display: block;
+  margin-top: 0.2rem;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.filters-panel {
+  margin-bottom: 1.5rem;
+  padding: 1.6rem;
+  border-radius: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 14px 32px rgba(26, 52, 88, 0.08);
+}
+
+.filters-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+.filters-title mat-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0.55rem;
+  border-radius: 16px;
+  color: #1a3458;
+  background: #edf4ff;
+}
+
+.filters-title h2 {
+  margin: 0;
+  color: #1a3458;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.filters-title p {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.results-section {
+  padding: 1.6rem;
+  border-radius: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 14px 32px rgba(26, 52, 88, 0.08);
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.results-header h2 {
+  margin: 0;
+  color: #1a3458;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.results-header p {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.2rem;
+}
+
+.loading-state,
+.empty-state {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border-radius: 22px;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px dashed rgba(26, 52, 88, 0.18);
+}
+
+.loading-state mat-icon,
+.empty-state mat-icon {
+  color: #1a3458;
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.loading-state h3,
+.empty-state h3 {
+  margin: 0;
+  color: #1a3458;
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.loading-state p,
+.empty-state p {
+  max-width: 440px;
+  margin: 0.45rem 0 0;
+  color: #64748b;
+}
+
+@media (max-width: 900px) {
+  .search-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-stats {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .search-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .search-hero {
+    padding: 1.6rem;
+  }
+
+  .search-hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-panel,
+  .results-section {
+    padding: 1.2rem;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -17,25 +17,30 @@ import { OwnerAlertService } from '../../../application/owner-alert';
   styleUrls: ['./owner-dashboard.css'],
 })
 export class OwnerDashboardComponent implements OnInit {
-  private petService = inject(OwnerPetService);
-  private appointmentService = inject(OwnerAppointmentService);
-  private alertService = inject(OwnerAlertService);
+  private readonly petService = inject(OwnerPetService);
+  private readonly appointmentService = inject(OwnerAppointmentService);
+  private readonly alertService = inject(OwnerAlertService);
 
   get pets() {
     return this.petService.pets();
   }
+
   get appointments() {
     return this.appointmentService.appointments();
   }
+
   get loadingPets() {
     return this.petService.loading();
   }
+
   get loadingAppointments() {
     return this.appointmentService.loading();
   }
+
   get healthAlerts() {
     return this.alertService.alerts();
   }
+
   get loadingAlerts() {
     return this.alertService.loading();
   }
@@ -48,6 +53,9 @@ export class OwnerDashboardComponent implements OnInit {
 
   getUpcomingAppointments() {
     const now = new Date();
-    return this.appointments.filter((a) => new Date(a.dateTime) >= now).slice(0, 3);
+
+    return this.appointments
+      .filter((appointment) => new Date(appointment.dateTime) >= now)
+      .slice(0, 3);
   }
 }

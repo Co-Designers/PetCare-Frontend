@@ -775,7 +775,7 @@
       "petId": 1,
       "providerId": 1,
       "notes": "jhkjhg",
-      "serviceType": "Radiograf�a",
+      "serviceType": "Radiografía",
       "dateTime": "2026-06-12T13:00:00Z",
       "createdAt": "2026-06-09T07:34:38.989Z"
     },
@@ -785,13 +785,13 @@
       "petId": 1,
       "providerId": 1,
       "notes": "jhkjhg",
-      "serviceType": "Radiograf�a",
+      "serviceType": "Radiografía",
       "dateTime": "2026-06-12T13:00:00Z",
       "createdAt": "2026-06-09T07:35:30.232Z"
     },
     {
       "id": 16,
-      "serviceType": "Radiograf�a",
+      "serviceType": "Radiografía",
       "providerType": "clinic",
       "petId": 1,
       "providerId": 1,
@@ -1222,7 +1222,7 @@
       "date": "2025-06-21",
       "startTime": "10:00",
       "endTime": "14:00",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": 3,
@@ -1238,6 +1238,78 @@
       "date": "2025-06-22",
       "startTime": "08:00",
       "endTime": "12:00",
+      "isAvailable": true
+    },
+    {
+      "id": 5,
+      "mobileId": 2,
+      "date": "2026-06-18",
+      "startTime": "09:00",
+      "endTime": "13:00",
+      "isAvailable": true
+    },
+    {
+      "id": 6,
+      "mobileId": 2,
+      "date": "2026-06-18",
+      "startTime": "14:00",
+      "endTime": "18:00",
+      "isAvailable": true
+    },
+    {
+      "id": 7,
+      "mobileId": 2,
+      "date": "2026-06-19",
+      "startTime": "09:00",
+      "endTime": "12:00",
+      "isAvailable": true
+    },
+    {
+      "id": 8,
+      "mobileId": 2,
+      "date": "2026-06-19",
+      "startTime": "15:00",
+      "endTime": "18:00",
+      "isAvailable": true
+    },
+    {
+      "id": 9,
+      "mobileId": 1,
+      "date": "2026-06-18",
+      "startTime": "08:00",
+      "endTime": "12:00",
+      "isAvailable": true
+    },
+    {
+      "id": 10,
+      "mobileId": 1,
+      "date": "2026-06-18",
+      "startTime": "13:00",
+      "endTime": "17:00",
+      "isAvailable": true
+    },
+    {
+      "id": 11,
+      "mobileId": 3,
+      "date": "2026-06-18",
+      "startTime": "10:00",
+      "endTime": "14:00",
+      "isAvailable": true
+    },
+    {
+      "id": 12,
+      "mobileId": 4,
+      "date": "2026-06-18",
+      "startTime": "09:00",
+      "endTime": "13:00",
+      "isAvailable": true
+    },
+    {
+      "id": 13,
+      "mobileId": 5,
+      "date": "2026-06-18",
+      "startTime": "11:00",
+      "endTime": "15:00",
       "isAvailable": true
     }
   ],

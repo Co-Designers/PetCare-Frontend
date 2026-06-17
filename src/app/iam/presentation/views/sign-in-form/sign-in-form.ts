@@ -27,7 +27,6 @@ import { LanguageSwitcher } from '../../../../shared/presentation/components/lan
     MatIconModule,
     MatCheckboxModule,
     TranslatePipe,
-    BaseFormComponent,
     LanguageSwitcher,
   ],
   templateUrl: './sign-in-form.html',
@@ -46,13 +45,15 @@ export class SignInFormComponent extends BaseFormComponent {
     rememberMe: [false],
   });
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.invalid) return;
+
     const command = new SignInCommand(this.form.value.username!, this.form.value.password!);
+
     this.store.signIn(command, this.router);
   }
 
-  goToSelectType() {
+  goToSelectType(): void {
     this.router.navigate(['/iam/select-type']).then();
   }
 }
