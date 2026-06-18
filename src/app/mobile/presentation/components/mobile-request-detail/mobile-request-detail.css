@@ -1,10 +1,243 @@
-.detail-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+.detail-page {
+  min-height: calc(100vh - 64px);
+  padding: 2rem;
+  background: #f8fafc;
 }
-.loading {
+
+.detail-hero {
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  border-radius: 28px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at top right, rgba(246, 166, 35, 0.18), transparent 32%),
+    linear-gradient(135deg, #1a3458 0%, #2563eb 100%);
+  box-shadow: 0 20px 45px rgba(26, 52, 88, 0.22);
+}
+
+.hero-badge {
+  display: inline-flex;
+  padding: 0.42rem 0.8rem;
+  margin-bottom: 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.detail-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.detail-hero p {
+  margin: 0.6rem 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+.detail-card {
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.07);
+}
+
+.detail-card mat-card-header {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.detail-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detail-title > mat-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: #1a3458;
+  background: #edf4ff;
+  font-size: 28px;
+}
+
+.detail-title mat-card-title {
+  color: #1a3458;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.detail-title mat-card-subtitle {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.detail-card mat-card-content {
+  padding: 1.5rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid rgba(26, 52, 88, 0.07);
+}
+
+.detail-item.full {
+  grid-column: 1 / -1;
+}
+
+.detail-item mat-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #1a3458;
+  background: #edf4ff;
+  font-size: 23px;
+}
+
+.detail-item strong {
+  display: block;
+  color: #1a3458;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.detail-item span {
+  display: block;
+  margin-top: 0.15rem;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 108px;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.status-pending {
+  color: #92400e;
+  background: #fff7ed;
+}
+
+.status-accepted {
+  color: #075985;
+  background: #e0f2fe;
+}
+
+.status-rejected {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.status-completed {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.status-default {
+  color: #475569;
+  background: #f1f5f9;
+}
+
+.detail-card mat-card-actions {
+  padding: 0 1.5rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detail-card mat-card-actions button {
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.detail-card mat-card-actions button mat-icon {
+  margin-right: 0.3rem;
+  font-size: 19px;
+  width: 19px;
+  height: 19px;
+}
+
+.loading-state {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
   text-align: center;
-  margin: 2rem;
-  color: #6c757d;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.07);
+}
+
+.loading-state mat-icon {
+  color: #1a3458;
+  font-size: 42px;
+  width: 42px;
+  height: 42px;
+}
+
+.loading-state p {
+  margin: 0.6rem 0 0;
+  color: #64748b;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .detail-page {
+    padding: 1rem;
+  }
+
+  .detail-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-card mat-card-actions {
+    justify-content: stretch;
+  }
+
+  .detail-card mat-card-actions button {
+    flex: 1 1 150px;
+  }
 }

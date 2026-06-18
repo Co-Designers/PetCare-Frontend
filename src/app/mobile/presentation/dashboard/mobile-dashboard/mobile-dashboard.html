@@ -1,42 +1,104 @@
-<div class="dashboard-container">
-  <div class="welcome-section">
-    <h1>{{ 'mobile.dashboard.welcome' | translate }}</h1>
-  </div>
+<div class="mobile-dashboard-page">
+  <section class="mobile-hero">
+    <div class="hero-content">
+      <span class="hero-badge">PetCare Mobile</span>
 
-  <div class="stats-grid">
+      <h1>{{ 'mobile.dashboard.welcome' | translate }}</h1>
+
+      <p>
+        Gestiona tus solicitudes, servicios, disponibilidad y perfil profesional.
+      </p>
+    </div>
+
+    <div class="hero-icon">
+      <mat-icon>local_shipping</mat-icon>
+    </div>
+  </section>
+
+  <section class="stats-grid">
     <mat-card class="stat-card">
       <mat-card-header>
-        <mat-card-title>{{ 'mobile.dashboard.pendingRequests' | translate }}</mat-card-title>
-        <mat-icon>pending</mat-icon>
+        <div>
+          <mat-card-title>{{ 'mobile.dashboard.pendingRequests' | translate }}</mat-card-title>
+          <mat-card-subtitle>Solicitudes por atender</mat-card-subtitle>
+        </div>
+
+        <div class="stat-icon warning">
+          <mat-icon>pending_actions</mat-icon>
+        </div>
       </mat-card-header>
+
       <mat-card-content>
-        <div class="stat-number">{{ pendingRequests }}</div>
+        @if (loadingRequests) {
+          <div class="loading">Cargando...</div>
+        } @else {
+          <div class="stat-number">{{ pendingRequests }}</div>
+        }
       </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button routerLink="/mobile/requests">
+          {{ 'mobile.dashboard.viewRequests' | translate }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-actions>
     </mat-card>
 
     <mat-card class="stat-card">
       <mat-card-header>
-        <mat-card-title>{{ 'mobile.dashboard.activeServices' | translate }}</mat-card-title>
-        <mat-icon>build</mat-icon>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-number">{{ activeServices }}</div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+        <div>
+          <mat-card-title>{{ 'mobile.dashboard.activeServices' | translate }}</mat-card-title>
+          <mat-card-subtitle>Servicios publicados</mat-card-subtitle>
+        </div>
 
-  <div class="dashboard-actions">
-    <button mat-raised-button color="primary" routerLink="/mobile/requests">
-      <mat-icon>list</mat-icon> {{ 'mobile.dashboard.viewRequests' | translate }}
-    </button>
-    <button mat-raised-button color="accent" routerLink="/mobile/services">
-      <mat-icon>medical_services</mat-icon> {{ 'mobile.dashboard.manageServices' | translate }}
-    </button>
-    <button mat-raised-button routerLink="/mobile/availability">
-      <mat-icon>event</mat-icon> {{ 'mobile.dashboard.setAvailability' | translate }}
-    </button>
-    <button mat-raised-button routerLink="/mobile/profile">
-      <mat-icon>person</mat-icon> {{ 'mobile.dashboard.profile' | translate }}
-    </button>
-  </div>
+        <div class="stat-icon">
+          <mat-icon>medical_services</mat-icon>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        @if (loadingServices) {
+          <div class="loading">Cargando...</div>
+        } @else {
+          <div class="stat-number">{{ activeServices }}</div>
+        }
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button routerLink="/mobile/services">
+          {{ 'mobile.dashboard.manageServices' | translate }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+
+  <section class="quick-actions-panel">
+    <div>
+      <h2>Acciones rápidas</h2>
+      <p>Administra las funciones principales del profesional móvil.</p>
+    </div>
+
+    <div class="dashboard-actions">
+      <button mat-raised-button color="primary" routerLink="/mobile/requests">
+        <mat-icon>list_alt</mat-icon>
+        {{ 'mobile.dashboard.viewRequests' | translate }}
+      </button>
+
+      <button mat-raised-button color="accent" routerLink="/mobile/services">
+        <mat-icon>medical_services</mat-icon>
+        {{ 'mobile.dashboard.manageServices' | translate }}
+      </button>
+
+      <button mat-raised-button routerLink="/mobile/availability">
+        <mat-icon>event_available</mat-icon>
+        {{ 'mobile.dashboard.setAvailability' | translate }}
+      </button>
+
+      <button mat-raised-button routerLink="/mobile/profile">
+        <mat-icon>person</mat-icon>
+        {{ 'mobile.dashboard.profile' | translate }}
+      </button>
+    </div>
+  </section>
 </div>

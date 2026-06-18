@@ -1,26 +1,102 @@
 @if (loading) {
-  <div class="loading">{{ 'common.loading' | translate }}</div>
+  <div class="detail-page">
+    <div class="loading-state">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  </div>
 } @else if (request) {
-  <div class="detail-container">
-    <mat-card>
+  <div class="detail-page">
+    <section class="detail-hero">
+      <div>
+        <span class="hero-badge">PetCare Mobile</span>
+        <h1>{{ 'mobile.requests.detail' | translate }}</h1>
+        <p>Revisa la información completa de la solicitud de servicio.</p>
+      </div>
+
+      <span class="status-chip" [ngClass]="getStatusClass(request.status)">
+        {{ getStatusLabel(request.status) }}
+      </span>
+    </section>
+
+    <mat-card class="detail-card">
       <mat-card-header>
-        <mat-card-title>{{ 'mobile.requests.detail' | translate }}</mat-card-title>
+        <div class="detail-title">
+          <mat-icon>assignment</mat-icon>
+          <div>
+            <mat-card-title>
+              {{ 'mobile.requests.request' | translate }} #{{ request.id }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ getDateLabel(request) }}
+            </mat-card-subtitle>
+          </div>
+        </div>
       </mat-card-header>
+
       <mat-card-content>
-        <p><strong>{{ 'mobile.requests.serviceId' | translate }}:</strong> {{ request.serviceId }}</p>
-        <p><strong>{{ 'mobile.requests.date' | translate }}:</strong> {{ request.scheduledDateTime | date:'dd/MM/yyyy HH:mm' }}</p>
-        <p><strong>{{ 'mobile.requests.address' | translate }}:</strong> {{ request.address }}</p>
-        <p><strong>{{ 'mobile.requests.status' | translate }}:</strong> {{ request.status }}</p>
-        @if (request.notes) {
-          <p><strong>{{ 'mobile.requests.notes' | translate }}:</strong> {{ request.notes }}</p>
-        }
+        <div class="detail-grid">
+          <div class="detail-item">
+            <mat-icon>medical_services</mat-icon>
+            <div>
+              <strong>{{ 'mobile.requests.serviceId' | translate }}</strong>
+              <span>{{ request.serviceId || 'No registrado' }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon>event</mat-icon>
+            <div>
+              <strong>{{ 'mobile.requests.date' | translate }}</strong>
+              <span>{{ getDateLabel(request) }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item full">
+            <mat-icon>room</mat-icon>
+            <div>
+              <strong>{{ 'mobile.requests.address' | translate }}</strong>
+              <span>{{ request.address || 'Dirección no registrada' }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon>flag</mat-icon>
+            <div>
+              <strong>{{ 'mobile.requests.status' | translate }}</strong>
+              <span>{{ getStatusLabel(request.status) }}</span>
+            </div>
+          </div>
+
+          @if (request.notes) {
+            <div class="detail-item full">
+              <mat-icon>notes</mat-icon>
+              <div>
+                <strong>{{ 'mobile.requests.notes' | translate }}</strong>
+                <span>{{ request.notes }}</span>
+              </div>
+            </div>
+          }
+        </div>
       </mat-card-content>
+
       <mat-card-actions>
-        @if (request.status === 'pending') {
-          <button mat-raised-button color="accent" (click)="accept()">{{ 'mobile.requests.accept' | translate }}</button>
-          <button mat-raised-button color="warn" (click)="reject()">{{ 'mobile.requests.reject' | translate }}</button>
+        @if (isPending(request.status)) {
+          <button mat-raised-button color="accent" (click)="accept()">
+            <mat-icon>check</mat-icon>
+            {{ 'mobile.requests.accept' | translate }}
+          </button>
+
+          <button mat-raised-button color="warn" (click)="reject()">
+            <mat-icon>close</mat-icon>
+            {{ 'mobile.requests.reject' | translate }}
+          </button>
         }
-        <button mat-button routerLink="/mobile/requests">{{ 'common.back' | translate }}</button>
+
+        <button mat-stroked-button routerLink="/mobile/requests">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'common.back' | translate }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>

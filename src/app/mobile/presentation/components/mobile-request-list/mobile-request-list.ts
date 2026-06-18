@@ -1,35 +1,30 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
+
 import { TranslatePipe } from '@ngx-translate/core';
+
 import { MobileRequestService } from '../../../application/mobile-request';
 
 @Component({
   selector: 'app-mobile-request-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    TranslatePipe,
-  ],
+  imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe],
   templateUrl: './mobile-request-list.html',
   styleUrls: ['./mobile-request-list.css'],
 })
 export class MobileRequestListComponent implements OnInit {
-  private requestService = inject(MobileRequestService);
+  private readonly requestService = inject(MobileRequestService);
 
-  get requests() {
-    return this.requestService.requests();
+  get requests(): any[] {
+    return this.requestService.requests() as any[];
   }
-  get loading() {
+
+  get loading(): boolean {
     return this.requestService.loading();
   }
 
@@ -38,25 +33,74 @@ export class MobileRequestListComponent implements OnInit {
   }
 
   accept(id: number): void {
+    if (!id) return;
+
     this.requestService.acceptRequest(id);
+
+    setTimeout(() => {
+      this.requestService.loadRequests();
+    }, 250);
   }
 
   reject(id: number): void {
+    if (!id) return;
+
     this.requestService.rejectRequest(id);
+
+    setTimeout(() => {
+      this.requestService.loadRequests();
+    }, 250);
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
+  isPending(status: string): boolean {
+    return String(status || '').toLowerCase() === 'pending';
+  }
+
+  getStatusClass(status: string): string {
+    const normalizedStatus = String(status || '').toLowerCase();
+
+    switch (normalizedStatus) {
       case 'pending':
-        return 'warn';
+        return 'status-pending';
       case 'accepted':
-        return 'primary';
+        return 'status-accepted';
       case 'rejected':
-        return 'accent';
+        return 'status-rejected';
       case 'completed':
-        return '';
+        return 'status-completed';
       default:
-        return '';
+        return 'status-default';
     }
+  }
+
+  getStatusLabel(status: string): string {
+    const normalizedStatus = String(status || '').toLowerCase();
+
+    const labels: Record<string, string> = {
+      pending: 'Pendiente',
+      accepted: 'Aceptada',
+      rejected: 'Rechazada',
+      completed: 'Completada',
+    };
+
+    return labels[normalizedStatus] || 'Sin estado';
+  }
+
+  getDateLabel(request: any): string {
+    const dateTime = request?.scheduledDateTime || request?.dateTime || request?.date;
+
+    if (!dateTime) return 'Fecha no registrada';
+
+    const date = new Date(dateTime);
+
+    if (Number.isNaN(date.getTime())) return 'Fecha no registrada';
+
+    return date.toLocaleString('es-PE', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   }
 }
