@@ -1,11 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+
 import { TranslatePipe } from '@ngx-translate/core';
+
 import { OwnerPetService } from '../../../application/owner-pet';
 import { OwnerPetFormComponent } from '../owner-pet-form/owner-pet-form';
 
@@ -19,6 +22,8 @@ import { OwnerPetFormComponent } from '../owner-pet-form/owner-pet-form';
 export class OwnerPetListComponent implements OnInit {
   private readonly petService = inject(OwnerPetService);
   private readonly dialog = inject(MatDialog);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   pageSize = 6;
   currentPage = 1;
@@ -59,6 +64,14 @@ export class OwnerPetListComponent implements OnInit {
 
   ngOnInit(): void {
     this.petService.loadPets();
+
+    this.route.queryParamMap.subscribe((params) => {
+      const shouldOpenAddPet = params.get('openAddPet') === 'true';
+
+      if (shouldOpenAddPet) {
+        this.openAddDialog();
+      }
+    });
   }
 
   getPetImage(pet: any): string {
@@ -93,30 +106,42 @@ export class OwnerPetListComponent implements OnInit {
   openAddDialog(): void {
     this.dialog
       .open(OwnerPetFormComponent, {
-        width: '520px',
+        width: '560px',
+        maxWidth: '95vw',
         data: { mode: 'create' },
       })
       .afterClosed()
       .subscribe((result) => {
-        if (result) this.petService.loadPets();
+        if (result) {
+          this.petService.loadPets();
+        }
+
+        this.clearOpenAddPetQueryParam();
       });
   }
 
   editPet(pet: any): void {
     this.dialog
       .open(OwnerPetFormComponent, {
-        width: '520px',
+        width: '560px',
+        maxWidth: '95vw',
         data: { mode: 'edit', pet },
       })
       .afterClosed()
       .subscribe((result) => {
-        if (result) this.petService.loadPets();
+        if (result) {
+          this.petService.loadPets();
+        }
       });
   }
 
   deletePet(id: number): void {
     if (confirm('¿Eliminar esta mascota?')) {
       this.petService.deletePet(id);
+
+      setTimeout(() => {
+        this.petService.loadPets();
+      }, 250);
     }
   }
 
@@ -130,5 +155,14 @@ export class OwnerPetListComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
+  }
+
+  private clearOpenAddPetQueryParam(): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { openAddPet: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 }

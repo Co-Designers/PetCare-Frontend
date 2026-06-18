@@ -1,26 +1,134 @@
-<div class="patients-container">
-  <h2>{{ 'clinic.patients.title' | translate }}</h2>
+<div class="clinic-patients-page">
+  <section class="patients-hero">
+    <div>
+      <span class="section-badge">PetCare Clinic</span>
+      <h1>{{ 'clinic.patients.title' | translate }}</h1>
+      <p>Consulta los pacientes registrados, sus dueños y sus últimas visitas en la clínica.</p>
+    </div>
+
+    <div class="hero-icon">
+      <mat-icon>pets</mat-icon>
+    </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
-  } @else {
-    <div class="patients-grid">
-      @for (patient of patients; track patient.id) {
-        <mat-card class="patient-card">
-          <img [src]="patient.photoUrl || 'assets/default-pet.png'" class="patient-photo">
-          <mat-card-header>
-            <mat-card-title>{{ patient.name }}</mat-card-title>
-            <mat-card-subtitle>{{ patient.species }} {{ patient.breed ? '- ' + patient.breed : '' }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p><strong>{{ 'clinic.patients.owner' | translate }}:</strong> {{ patient.ownerName || ('ID: ' + patient.ownerId) }}</p>
-            <p *ngIf="patient.lastVisit"><strong>{{ 'clinic.patients.lastVisit' | translate }}:</strong> {{ patient.lastVisit | date:'dd/MM/yyyy' }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button [routerLink]="['/clinic/patients', patient.id]">{{ 'common.view' | translate }}</button>
-          </mat-card-actions>
-        </mat-card>
-      }
+    <div class="loading-state">
+      <mat-icon>hourglass_top</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
     </div>
+  } @else {
+    <section class="stats-grid">
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon blue">
+            <mat-icon>pets</mat-icon>
+          </div>
+          <div>
+            <span>Total pacientes</span>
+            <strong>{{ patients.length }}</strong>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon green">
+            <mat-icon>event_available</mat-icon>
+          </div>
+          <div>
+            <span>Con última visita</span>
+            <strong>{{ getPatientsWithLastVisit() }}</strong>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon amber">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div>
+            <span>Con dueño asignado</span>
+            <strong>{{ getPatientsWithOwner() }}</strong>
+          </div>
+        </div>
+      </mat-card>
+    </section>
+
+    @if (patients.length === 0) {
+      <div class="empty-state">
+        <mat-icon>pets</mat-icon>
+        <h2>No hay pacientes registrados</h2>
+        <p>Cuando los dueños registren mascotas y generen atenciones, aparecerán aquí.</p>
+      </div>
+    } @else {
+      <section class="patients-grid">
+        @for (patient of patients; track patient.id) {
+          <mat-card class="patient-card">
+            <div class="photo-wrapper">
+              <img
+                [src]="getPatientPhoto(patient)"
+                [alt]="patient.name"
+                class="patient-photo"
+              >
+
+              <span class="species-chip">
+                {{ patient.species || 'Mascota' }}
+              </span>
+            </div>
+
+            <mat-card-content>
+              <div class="patient-header">
+                <div>
+                  <h2>{{ patient.name }}</h2>
+                  <p>{{ getPatientSubtitle(patient) }}</p>
+                </div>
+              </div>
+
+              <div class="info-list">
+                <div class="info-item">
+                  <mat-icon>person</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.patients.owner' | translate }}</span>
+                    <strong>{{ getOwnerLabel(patient) }}</strong>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <mat-icon>event</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.patients.lastVisit' | translate }}</span>
+                    <strong>{{ getLastVisitLabel(patient) }}</strong>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <mat-icon>monitor_weight</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.patients.weight' | translate }}</span>
+                    <strong>{{ getWeightLabel(patient) }}</strong>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <mat-icon>warning</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.patients.allergies' | translate }}</span>
+                    <strong>{{ getAllergiesLabel(patient) }}</strong>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <button mat-stroked-button color="primary" [routerLink]="['/clinic/patients', patient.id]">
+                <mat-icon>visibility</mat-icon>
+                {{ 'common.view' | translate }}
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </section>
+    }
   }
 </div>

@@ -12,6 +12,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Dashboard',
   },
+
   {
     path: 'appointments',
     loadComponent: () =>
@@ -22,16 +23,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Appointments',
   },
-  {
-    path: 'appointments/:id',
-    loadComponent: () =>
-      import('./components/clinic-appointment-detail/clinic-appointment-detail').then(
-        (m) => m.ClinicAppointmentDetailComponent,
-      ),
-    canActivate: [roleGuard],
-    data: { requiredRole: 'CLINIC' },
-    title: 'PetCare - Appointment Details',
-  },
+
   {
     path: 'appointments/new',
     loadComponent: () =>
@@ -42,6 +34,29 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - New Appointment',
   },
+
+  {
+    path: 'appointments/edit/:id',
+    loadComponent: () =>
+      import('./components/clinic-appointment-form/clinic-appointment-form').then(
+        (m) => m.ClinicAppointmentFormComponent,
+      ),
+    canActivate: [roleGuard],
+    data: { requiredRole: 'CLINIC' },
+    title: 'PetCare - Edit Appointment',
+  },
+
+  {
+    path: 'appointments/:id',
+    loadComponent: () =>
+      import('./components/clinic-appointment-detail/clinic-appointment-detail').then(
+        (m) => m.ClinicAppointmentDetailComponent,
+      ),
+    canActivate: [roleGuard],
+    data: { requiredRole: 'CLINIC' },
+    title: 'PetCare - Appointment Details',
+  },
+
   {
     path: 'patients',
     loadComponent: () =>
@@ -52,6 +67,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Patients',
   },
+
   {
     path: 'patients/:id',
     loadComponent: () =>
@@ -62,6 +78,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Patient Details',
   },
+
   {
     path: 'veterinarians',
     loadComponent: () =>
@@ -72,6 +89,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Veterinarians',
   },
+
   {
     path: 'services',
     loadComponent: () =>
@@ -82,6 +100,7 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Services',
   },
+
   {
     path: 'settings',
     loadComponent: () =>
@@ -90,5 +109,10 @@ export const clinicRoutes: Routes = [
     data: { requiredRole: 'CLINIC' },
     title: 'PetCare - Clinic Settings',
   },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
 ];

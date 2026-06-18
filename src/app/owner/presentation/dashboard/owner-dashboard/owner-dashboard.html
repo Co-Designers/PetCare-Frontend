@@ -11,7 +11,12 @@
     </div>
 
     <div class="hero-actions">
-      <button mat-raised-button color="primary" routerLink="/owner/pets/new">
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/owner/pets"
+        [queryParams]="{ openAddPet: true }"
+      >
         <mat-icon>add</mat-icon>
         {{ 'owner.dashboard.addPet' | translate }}
       </button>
@@ -125,7 +130,12 @@
     </div>
 
     <div class="quick-actions">
-      <button mat-raised-button color="primary" routerLink="/owner/pets/new">
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/owner/pets"
+        [queryParams]="{ openAddPet: true }"
+      >
         <mat-icon>add</mat-icon>
         {{ 'owner.dashboard.addPet' | translate }}
       </button>

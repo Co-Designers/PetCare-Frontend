@@ -46,11 +46,39 @@ export class OwnerAppointmentListComponent implements OnInit {
   }
 
   get upcomingAppointments() {
-    return this.appointments.filter((appointment) => this.isUpcoming(appointment.dateTime));
+    const now = new Date();
+
+    return this.appointments
+      .filter((appointment) => {
+        const status = (appointment.status || '').toLowerCase();
+        const appointmentDate = new Date(appointment.dateTime);
+
+        const isPendingOrConfirmed =
+          status === 'pending' || status === 'confirmed' || status === 'accepted';
+
+        return appointmentDate >= now && isPendingOrConfirmed;
+      })
+      .sort((a, b) => {
+        return new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime();
+      });
   }
 
   get pastAppointments() {
-    return this.appointments.filter((appointment) => !this.isUpcoming(appointment.dateTime));
+    const now = new Date();
+
+    return this.appointments
+      .filter((appointment) => {
+        const status = (appointment.status || '').toLowerCase();
+        const appointmentDate = new Date(appointment.dateTime);
+
+        const isFinished =
+          status === 'completed' || status === 'cancelled' || status === 'canceled';
+
+        return appointmentDate < now || isFinished;
+      })
+      .sort((a, b) => {
+        return new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime();
+      });
   }
 
   ngOnInit(): void {
@@ -154,10 +182,18 @@ export class OwnerAppointmentListComponent implements OnInit {
     return 'status-default';
   }
 
-  isUpcoming(dateTime: string): boolean {
+  isUpcoming(dateTime: string, status?: string): boolean {
     if (!dateTime) return false;
 
-    return new Date(dateTime) >= new Date();
+    const normalizedStatus = (status || '').toLowerCase();
+    const appointmentDate = new Date(dateTime);
+
+    return (
+      appointmentDate >= new Date() &&
+      (normalizedStatus === 'pending' ||
+        normalizedStatus === 'confirmed' ||
+        normalizedStatus === 'accepted')
+    );
   }
 
   cancelAppointment(id: number): void {

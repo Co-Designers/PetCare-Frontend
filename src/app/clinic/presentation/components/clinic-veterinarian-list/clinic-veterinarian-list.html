@@ -1,31 +1,129 @@
-<div class="vets-container">
-  <div class="header">
-    <h2>{{ 'clinic.veterinarians.title' | translate }}</h2>
+<div class="clinic-vets-page">
+  <section class="vets-hero">
+    <div>
+      <span class="section-badge">PetCare Clinic</span>
+      <h1>{{ 'clinic.veterinarians.title' | translate }}</h1>
+      <p>Administra el equipo veterinario de la clínica, sus especialidades, licencias y datos de contacto.</p>
+    </div>
+
     <button mat-raised-button color="primary" (click)="openAddDialog()">
-      <mat-icon>add</mat-icon> {{ 'clinic.veterinarians.add' | translate }}
+      <mat-icon>add</mat-icon>
+      {{ 'clinic.veterinarians.add' | translate }}
     </button>
-  </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
-  } @else {
-    <div class="vets-grid">
-      @for (vet of vets; track vet.id) {
-        <mat-card class="vet-card">
-          <mat-card-header>
-            <mat-card-title>{{ vet.name }}</mat-card-title>
-            <mat-card-subtitle>{{ vet.specialty }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p><strong>{{ 'clinic.veterinarians.license' | translate }}:</strong> {{ vet.licenseNumber }}</p>
-            <p><strong>{{ 'clinic.veterinarians.phone' | translate }}:</strong> {{ vet.phone || '-' }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-icon-button color="primary" (click)="editVet(vet)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button color="warn" (click)="deleteVet(vet.id!)"><mat-icon>delete</mat-icon></button>
-          </mat-card-actions>
-        </mat-card>
-      }
+    <div class="loading-state">
+      <mat-icon>hourglass_top</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
     </div>
+  } @else {
+    <section class="stats-grid">
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon blue">
+            <mat-icon>medical_services</mat-icon>
+          </div>
+          <div>
+            <span>Total veterinarios</span>
+            <strong>{{ vets.length }}</strong>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon green">
+            <mat-icon>badge</mat-icon>
+          </div>
+          <div>
+            <span>Con licencia</span>
+            <strong>{{ getVetsWithLicense() }}</strong>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <div class="stat-icon amber">
+            <mat-icon>workspace_premium</mat-icon>
+          </div>
+          <div>
+            <span>Especialidades</span>
+            <strong>{{ getSpecialtyCount() }}</strong>
+          </div>
+        </div>
+      </mat-card>
+    </section>
+
+    @if (vets.length === 0) {
+      <div class="empty-state">
+        <mat-icon>medical_services</mat-icon>
+        <h2>No hay veterinarios registrados</h2>
+        <p>Agrega veterinarios para poder asignarlos a las citas pendientes de la clínica.</p>
+
+        <button mat-raised-button color="primary" (click)="openAddDialog()">
+          <mat-icon>add</mat-icon>
+          {{ 'clinic.veterinarians.add' | translate }}
+        </button>
+      </div>
+    } @else {
+      <section class="vets-grid">
+        @for (vet of vets; track vet.id) {
+          <mat-card class="vet-card">
+            <div class="vet-card-top">
+              <div class="vet-avatar">
+                {{ getVetInitials(vet) }}
+              </div>
+
+              <div class="vet-main-info">
+                <h2>{{ vet.name }}</h2>
+                <span>{{ vet.specialty || 'Especialidad no registrada' }}</span>
+              </div>
+            </div>
+
+            <mat-card-content>
+              <div class="info-list">
+                <div class="info-item">
+                  <mat-icon>badge</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.veterinarians.license' | translate }}</span>
+                    <strong>{{ vet.licenseNumber || 'No registrada' }}</strong>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <mat-icon>call</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.veterinarians.phone' | translate }}</span>
+                    <strong>{{ getVetPhone(vet) }}</strong>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <mat-icon>mail</mat-icon>
+                  <div>
+                    <span>{{ 'clinic.veterinarians.email' | translate }}</span>
+                    <strong>{{ getVetEmail(vet) }}</strong>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <button mat-stroked-button color="primary" (click)="editVet(vet)">
+                <mat-icon>edit</mat-icon>
+                {{ 'common.edit' | translate }}
+              </button>
+
+              <button mat-stroked-button color="warn" (click)="deleteVet(vet.id!)">
+                <mat-icon>delete</mat-icon>
+                {{ 'common.delete' | translate }}
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </section>
+    }
   }
 </div>

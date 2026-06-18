@@ -3,7 +3,7 @@
     "logo": "PetCare"
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "Panel",
     "pets": "Mascotas",
     "appointments": "Citas",
     "search": "Buscar",
@@ -38,7 +38,8 @@
     "delete": "Eliminar",
     "search": "Buscar",
     "select": "Seleccionar",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "all": "Todos"
   },
   "login": {
     "title": "INICIAR SESIÓN",
@@ -55,10 +56,10 @@
     "clinicTitle": "Clínica veterinaria",
     "clinicDescription": "Gestiona horarios, pacientes y operaciones de la clínica.",
     "mobileTitle": "Profesional móvil",
-    "mobileDescription": "Veterinario independiente, groomer o técnico."
+    "mobileDescription": "Veterinario, groomer o técnico independiente."
   },
   "signup": {
-    "title": "Crea tu cuenta PetCare",
+    "title": "Crea tu cuenta de PetCare",
     "as": "Como",
     "owner": "Dueño de mascota",
     "clinic": "Clínica veterinaria",
@@ -88,18 +89,24 @@
   "owner": {
     "dashboard": {
       "welcome": "¡Bienvenido de nuevo!",
-      "myPets": "Mis Mascotas",
+      "subtitle": "Administra tus mascotas, citas y alertas de salud desde un solo lugar.",
+      "myPets": "Mis mascotas",
+      "registeredPets": "Mascotas registradas",
       "viewAll": "Ver todo",
-      "upcomingAppointments": "Próximas Citas",
+      "upcomingAppointments": "Próximas citas",
+      "upcomingVisits": "Próximas visitas",
       "schedule": "Agendar",
-      "healthAlerts": "Alertas de Salud",
+      "healthAlerts": "Alertas de salud",
+      "recentHealthStatus": "Estado de salud reciente",
       "noAlerts": "No hay alertas activas.",
       "addPet": "Agregar mascota",
-      "findServices": "Buscar servicios"
+      "findServices": "Buscar servicios",
+      "quickActions": "Acciones rápidas",
+      "quickActionsDescription": "Realiza las operaciones principales para gestionar tu mascota."
     },
     "pets": {
-      "title": "Mis Mascotas",
-      "add": "Agregar Mascota",
+      "title": "Mis mascotas",
+      "add": "Agregar mascota",
       "name": "Nombre",
       "species": "Especie",
       "dog": "Perro",
@@ -112,13 +119,13 @@
       "allergies": "Alergias",
       "age": "Edad",
       "viewHistory": "Ver historial",
-      "edit": "Editar Mascota",
+      "edit": "Editar mascota",
       "noPets": "No tienes mascotas registradas",
       "noPetsSubtitle": "Agrega tu primera mascota para gestionar citas e historial médico.",
       "medicalHistory": "Historial médico"
     },
     "appointments": {
-      "title": "Mis Citas",
+      "title": "Mis citas",
       "upcoming": "Próximas",
       "past": "Pasadas",
       "new": "Nueva cita",
@@ -140,12 +147,12 @@
       "mobile": "Profesional móvil",
       "services": "Servicios",
       "careType": "Tipo de atención",
-      "noUpcoming": "No tienes citas próximas",
+      "noUpcoming": "No tienes próximas citas",
       "noUpcomingSubtitle": "Agenda una nueva cita para tu mascota usando el botón superior.",
       "noPast": "No tienes citas pasadas",
-      "noPastSubtitle": "Cuando finalices una atención, aparecerá en esta sección.",
-      "formSubtitle": "Completa los datos para reservar una atención veterinaria.",
-      "dateHint": "Primero selecciona proveedor. El calendario solo habilita fechas disponibles.",
+      "noPastSubtitle": "Cuando completes una cita, aparecerá en esta sección.",
+      "formSubtitle": "Completa la información para reservar atención veterinaria.",
+      "dateHint": "Primero selecciona un proveedor. El calendario solo habilita fechas disponibles.",
       "timeHint": "Selecciona una fecha disponible para ver horarios.",
       "pastDate": "La fecha no puede ser anterior a hoy",
       "unavailableDate": "Fecha no disponible para este proveedor",
@@ -166,7 +173,7 @@
       "treatment": "Tratamiento",
       "medications": "Medicamentos",
       "observations": "Observaciones",
-      "nextDue": "Próxima fecha",
+      "nextDue": "Próximo control",
       "noData": "No se encontraron registros médicos para esta mascota."
     },
     "search": {
@@ -183,7 +190,7 @@
       "rating": "Calificación",
       "select": "Seleccionar",
       "noResults": "No se encontraron resultados",
-      "heroDescription": "Encuentra clínicas veterinarias y profesionales móviles según distrito, especialidad o tipo de atención.",
+      "heroDescription": "Encuentra clínicas veterinarias y profesionales móviles por distrito, especialidad o tipo de atención.",
       "results": "Resultados",
       "clinics": "Clínicas",
       "mobiles": "Móviles",
@@ -191,23 +198,23 @@
       "filtersSubtitle": "Refina la búsqueda para encontrar la mejor atención para tu mascota.",
       "resultsTitle": "Resultados disponibles",
       "resultsEmptySubtitle": "Realiza una búsqueda para ver proveedores disponibles.",
-      "resultsFoundSubtitle": "proveedores disponibles encontrados.",
+      "resultsFoundSubtitle": "proveedores disponibles fueron encontrados.",
       "loadingProviders": "Buscando proveedores disponibles...",
-      "changeFilters": "Intenta cambiar el distrito, la especialidad o el tipo de proveedor."
+      "changeFilters": "Intenta cambiar el distrito, especialidad o tipo de proveedor."
     },
     "profile": {
-      "title": "Mi Perfil",
+      "title": "Mi perfil",
       "personalInfo": "Información personal",
-      "personalInfoSubtitle": "Actualiza tus datos de contacto y distrito de atención.",
+      "personalInfoSubtitle": "Actualiza tu información de contacto y distrito de servicio.",
       "fullName": "Nombre completo",
       "email": "Correo electrónico",
       "phone": "Teléfono",
-      "phoneHint": "Ingresa un número de 9 dígitos",
+      "phoneHint": "Ingresa un teléfono de 9 dígitos",
       "district": "Distrito",
       "invalidEmail": "Formato de correo inválido",
       "phoneError": "Se requiere un teléfono de 9 dígitos",
       "changePassword": "Cambiar contraseña",
-      "changePasswordSubtitle": "Actualiza tu contraseña para mantener segura tu cuenta.",
+      "changePasswordSubtitle": "Actualiza tu contraseña para mantener tu cuenta segura.",
       "currentPassword": "Contraseña actual",
       "newPassword": "Nueva contraseña",
       "confirmPassword": "Confirmar nueva contraseña",
@@ -219,7 +226,7 @@
   },
   "clinic": {
     "dashboard": {
-      "welcome": "Bienvenido al dashboard de tu clínica",
+      "welcome": "Bienvenido al panel de tu clínica",
       "todayAppointments": "Citas de hoy",
       "pendingAppointments": "Citas pendientes",
       "totalPatients": "Total de pacientes",
@@ -230,24 +237,48 @@
     },
     "appointments": {
       "title": "Citas",
+      "subtitle": "Gestiona citas pendientes, confirmadas y completadas de la clínica.",
       "pending": "Pendientes",
       "confirmed": "Confirmadas",
       "completed": "Completadas",
-      "detail": "Detalle de cita",
+      "cancelled": "Canceladas",
+      "new": "Nueva cita",
+      "edit": "Editar cita",
+      "detail": "Detalles de la cita",
       "service": "Servicio",
+      "serviceType": "Tipo de servicio",
       "date": "Fecha y hora",
+      "dateTime": "Fecha y hora",
+      "appointmentDate": "Fecha de la cita",
+      "time": "Hora",
       "petId": "ID de mascota",
       "status": "Estado",
       "notes": "Notas",
+      "payment": "Pago",
       "confirm": "Confirmar",
       "complete": "Completar",
       "cancel": "Cancelar",
       "filterDate": "Filtrar por fecha",
       "filterVet": "Veterinario",
       "filterStatus": "Estado",
-      "cancelled": "Cancelada",
+      "filtersTitle": "Filtros",
+      "filtersSubtitle": "Filtra las citas por fecha o veterinario.",
+      "allVeterinarians": "Todos los veterinarios",
       "outsideHours": "La hora seleccionada está fuera del horario de atención",
-      "selectPet": "Seleccionar mascota"
+      "selectPet": "Seleccionar mascota",
+      "formSubtitle": "Registra una cita para un paciente de la clínica.",
+      "noPending": "No hay citas pendientes",
+      "noPendingSubtitle": "Las nuevas solicitudes de cita aparecerán en esta sección.",
+      "noConfirmed": "No hay citas confirmadas",
+      "noConfirmedSubtitle": "Cuando confirmes una cita, aparecerá aquí.",
+      "noCompleted": "No hay citas completadas",
+      "noCompletedSubtitle": "Las citas finalizadas aparecerán en esta sección.",
+      "notAssigned": "No asignado",
+      "noNotes": "No hay notas registradas.",
+      "paymentPending": "Pendiente",
+      "paymentPaid": "Pagado",
+      "paymentCompleted": "Completado",
+      "paymentCancelled": "Cancelado"
     },
     "patients": {
       "title": "Pacientes",
@@ -264,7 +295,7 @@
       "edit": "Editar veterinario",
       "name": "Nombre completo",
       "specialty": "Especialidad",
-      "license": "Número de licencia",
+      "license": "Número de colegiatura",
       "email": "Correo electrónico",
       "phone": "Teléfono"
     },
@@ -295,15 +326,15 @@
       "treatment": "Tratamiento",
       "medications": "Medicamentos",
       "observations": "Observaciones",
-      "nextDue": "Próxima fecha"
+      "nextDue": "Próximo control"
     }
   },
   "mobile": {
     "requests": {
       "title": "Solicitudes de servicio",
-      "detail": "Detalle de solicitud",
+      "detail": "Detalles de la solicitud",
       "request": "Solicitud",
-      "serviceId": "ID de servicio",
+      "serviceId": "ID del servicio",
       "date": "Fecha y hora",
       "address": "Dirección",
       "status": "Estado",
@@ -312,7 +343,7 @@
       "reject": "Rechazar"
     },
     "availability": {
-      "title": "Configurar disponibilidad",
+      "title": "Definir disponibilidad",
       "date": "Fecha",
       "startTime": "Hora de inicio",
       "endTime": "Hora de fin",
@@ -345,12 +376,12 @@
       "specialty": "Especialidad"
     },
     "dashboard": {
-      "welcome": "Bienvenido al dashboard móvil",
+      "welcome": "Bienvenido a tu panel móvil",
       "pendingRequests": "Solicitudes pendientes",
       "activeServices": "Servicios activos",
       "viewRequests": "Ver solicitudes",
       "manageServices": "Gestionar servicios",
-      "setAvailability": "Configurar disponibilidad",
+      "setAvailability": "Definir disponibilidad",
       "profile": "Perfil"
     }
   }

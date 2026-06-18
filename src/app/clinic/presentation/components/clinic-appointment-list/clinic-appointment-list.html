@@ -1,133 +1,329 @@
-<div class="appointments-container">
-  <h2>{{ 'clinic.appointments.title' | translate }}</h2>
+<div class="clinic-appointments-page">
+  <section class="appointments-hero">
+    <div>
+      <span class="section-badge">PetCare Clinic</span>
+      <h1>{{ 'clinic.appointments.title' | translate }}</h1>
+      <p>{{ 'clinic.appointments.subtitle' | translate }}</p>
+    </div>
+  </section>
 
-  <!-- BARRA DE FILTROS -->
-  <div class="filters-bar">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'clinic.appointments.filterDate' | translate }}</mat-label>
-      <input matInput type="date" [(ngModel)]="filterDate">
-    </mat-form-field>
+  <section class="filters-panel">
+    <div class="filters-title">
+      <mat-icon>filter_alt</mat-icon>
+      <div>
+        <h2>{{ 'clinic.appointments.filtersTitle' | translate }}</h2>
+        <p>Filtra las citas recibidas por fecha.</p>
+      </div>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'clinic.appointments.filterVet' | translate }}</mat-label>
-      <mat-select [(ngModel)]="filterVetId">
-        <mat-option [value]="null">{{ 'common.all' | translate }}</mat-option>
-        @for (vet of veterinarians; track vet.id) {
-          <mat-option [value]="vet.id">{{ vet.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <div class="filters-bar only-date">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'clinic.appointments.filterDate' | translate }}</mat-label>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'clinic.appointments.filterStatus' | translate }}</mat-label>
-      <mat-select [(ngModel)]="filterStatus">
-        <mat-option value="">{{ 'common.all' | translate }}</mat-option>
-        <mat-option value="pending">{{ 'clinic.appointments.pending' | translate }}</mat-option>
-        <mat-option value="confirmed">{{ 'clinic.appointments.confirmed' | translate }}</mat-option>
-        <mat-option value="completed">{{ 'clinic.appointments.completed' | translate }}</mat-option>
-        <mat-option value="cancelled">{{ 'clinic.appointments.cancelled' | translate }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="filterDatePicker"
+          [(ngModel)]="filterDate"
+          readonly
+          (click)="filterDatePicker.open()"
+        >
 
-    <button mat-raised-button (click)="resetFilters()">{{ 'common.reset' | translate }}</button>
-  </div>
+        <mat-datepicker-toggle matSuffix [for]="filterDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #filterDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-stroked-button type="button" (click)="resetFilters()">
+        <mat-icon>restart_alt</mat-icon>
+        {{ 'common.reset' | translate }}
+      </button>
+    </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
+    <div class="loading-state">
+      <mat-icon>hourglass_top</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
   } @else {
-    <mat-tab-group>
-      <!-- PESTAÑA: PENDIENTES -->
-      <mat-tab [label]="'clinic.appointments.pending' | translate">
-        <div class="cards-grid">
-          @for (app of filteredAppointments; track app.id) {
-            @if (app.status === 'pending') {
-              <mat-card class="appointment-card">
-                <mat-card-header>
-                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
-                  <mat-card-subtitle>
-                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
-                  @if (app.notes) {
-                    <p><strong>{{ 'clinic.appointments.notes' | translate }}:</strong> {{ app.notes }}</p>
-                  }
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
-                    {{ 'common.view' | translate }}
-                  </button>
-                  <button mat-button color="accent" (click)="updateStatus(app.id!, 'confirmed')">
-                    {{ 'clinic.appointments.confirm' | translate }}
-                  </button>
-                  <button mat-button color="warn" (click)="updateStatus(app.id!, 'cancelled')">
-                    {{ 'clinic.appointments.cancel' | translate }}
-                  </button>
-                </mat-card-actions>
-              </mat-card>
-            }
-          }
-        </div>
-      </mat-tab>
+    <section class="tabs-panel">
+      <mat-tab-group>
+        <mat-tab [label]="'clinic.appointments.pending' | translate">
+          @if (getAppointmentsByStatus('pending').length === 0) {
+            <div class="empty-state">
+              <mat-icon>pending_actions</mat-icon>
+              <h2>{{ 'clinic.appointments.noPending' | translate }}</h2>
+              <p>{{ 'clinic.appointments.noPendingSubtitle' | translate }}</p>
+            </div>
+          } @else {
+            <div class="cards-grid">
+              @for (app of getAppointmentsByStatus('pending'); track app.id) {
+                <mat-card class="appointment-card pending-card">
+                  <div class="appointment-content">
+                    <div class="date-box">
+                      <span class="day">{{ app.dateTime | date:'dd' }}</span>
+                      <span class="month">{{ app.dateTime | date:'MMM' }}</span>
+                      <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
+                    </div>
 
-      <!-- PESTAÑA: CONFIRMADAS -->
-      <mat-tab [label]="'clinic.appointments.confirmed' | translate">
-        <div class="cards-grid">
-          @for (app of filteredAppointments; track app.id) {
-            @if (app.status === 'confirmed') {
-              <mat-card class="appointment-card">
-                <mat-card-header>
-                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
-                  <mat-card-subtitle>
-                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
-                    {{ 'common.view' | translate }}
-                  </button>
-                  <button mat-button color="primary" (click)="updateStatus(app.id!, 'completed')">
-                    {{ 'clinic.appointments.complete' | translate }}
-                  </button>
-                  <button mat-button color="warn" (click)="updateStatus(app.id!, 'cancelled')">
-                    {{ 'clinic.appointments.cancel' | translate }}
-                  </button>
-                </mat-card-actions>
-              </mat-card>
-            }
-          }
-        </div>
-      </mat-tab>
+                    <div class="appointment-main">
+                      <div class="appointment-top">
+                        <div>
+                          <h2>{{ app.serviceType || 'Servicio veterinario' }}</h2>
+                          <p>
+                            <mat-icon>pets</mat-icon>
+                            {{ 'clinic.appointments.petId' | translate }}: {{ app.petId }}
+                          </p>
+                        </div>
 
-      <!-- PESTAÑA: COMPLETADAS -->
-      <mat-tab [label]="'clinic.appointments.completed' | translate">
-        <div class="cards-grid">
-          @for (app of filteredAppointments; track app.id) {
-            @if (app.status === 'completed') {
-              <mat-card class="appointment-card">
-                <mat-card-header>
-                  <mat-card-title>{{ app.serviceType }}</mat-card-title>
-                  <mat-card-subtitle>
-                    {{ app.dateTime | date:'dd/MM/yyyy HH:mm' }} - Mascota ID: {{ app.petId }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <p><strong>{{ 'clinic.appointments.status' | translate }}:</strong> {{ app.status }}</p>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button [routerLink]="['/clinic/appointments', app.id]">
-                    {{ 'common.view' | translate }}
-                  </button>
-                </mat-card-actions>
-              </mat-card>
-            }
+                        <span class="status-chip pending">
+                          {{ getStatusLabel(app.status) }}
+                        </span>
+                      </div>
+
+                      <div class="details-grid">
+                        <div class="detail-item">
+                          <mat-icon>event</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.dateTime' | translate }}</span>
+                            <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>business</mat-icon>
+                          <div>
+                            <span>Clínica</span>
+                            <strong>{{ getClinicReference(app) }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>payments</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.payment' | translate }}</span>
+                            <strong>{{ getPaymentLabel(app.paymentStatus) }}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="assign-box">
+                        <mat-icon>person_add</mat-icon>
+
+                        <mat-form-field appearance="outline">
+                          <mat-label>Asignar veterinario</mat-label>
+
+                          <mat-select
+                            [ngModel]="getSelectedVeterinarianId(app)"
+                            (ngModelChange)="setSelectedVeterinarian(app, $event)"
+                          >
+                            @for (vet of veterinarians; track vet.id) {
+                              <mat-option [value]="vet.id">{{ vet.name }}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      @if (app.notes) {
+                        <div class="notes-box">
+                          <mat-icon>notes</mat-icon>
+                          <p>{{ app.notes }}</p>
+                        </div>
+                      }
+
+                      <div class="card-actions">
+                        <button mat-stroked-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
+                          <mat-icon>visibility</mat-icon>
+                          {{ 'common.view' | translate }}
+                        </button>
+
+                        <button mat-stroked-button color="accent" (click)="confirmWithVeterinarian(app)">
+                          <mat-icon>check_circle</mat-icon>
+                          {{ 'clinic.appointments.confirm' | translate }}
+                        </button>
+
+                        <button mat-stroked-button color="warn" (click)="cancelAppointment(app)">
+                          <mat-icon>cancel</mat-icon>
+                          {{ 'clinic.appointments.cancel' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              }
+            </div>
           }
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+        </mat-tab>
+
+        <mat-tab [label]="'clinic.appointments.confirmed' | translate">
+          @if (getAppointmentsByStatus('confirmed').length === 0) {
+            <div class="empty-state">
+              <mat-icon>event_available</mat-icon>
+              <h2>{{ 'clinic.appointments.noConfirmed' | translate }}</h2>
+              <p>{{ 'clinic.appointments.noConfirmedSubtitle' | translate }}</p>
+            </div>
+          } @else {
+            <div class="cards-grid">
+              @for (app of getAppointmentsByStatus('confirmed'); track app.id) {
+                <mat-card class="appointment-card confirmed-card">
+                  <div class="appointment-content">
+                    <div class="date-box confirmed">
+                      <span class="day">{{ app.dateTime | date:'dd' }}</span>
+                      <span class="month">{{ app.dateTime | date:'MMM' }}</span>
+                      <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
+                    </div>
+
+                    <div class="appointment-main">
+                      <div class="appointment-top">
+                        <div>
+                          <h2>{{ app.serviceType || 'Servicio veterinario' }}</h2>
+                          <p>
+                            <mat-icon>pets</mat-icon>
+                            {{ 'clinic.appointments.petId' | translate }}: {{ app.petId }}
+                          </p>
+                        </div>
+
+                        <span class="status-chip confirmed">
+                          {{ getStatusLabel(app.status) }}
+                        </span>
+                      </div>
+
+                      <div class="details-grid">
+                        <div class="detail-item">
+                          <mat-icon>event</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.dateTime' | translate }}</span>
+                            <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>medical_services</mat-icon>
+                          <div>
+                            <span>Veterinario asignado</span>
+                            <strong>{{ getVeterinarianName(app.veterinarianId) }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>payments</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.payment' | translate }}</span>
+                            <strong>{{ getPaymentLabel(app.paymentStatus) }}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      @if (app.notes) {
+                        <div class="notes-box">
+                          <mat-icon>notes</mat-icon>
+                          <p>{{ app.notes }}</p>
+                        </div>
+                      }
+
+                      <div class="card-actions">
+                        <button mat-stroked-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
+                          <mat-icon>visibility</mat-icon>
+                          {{ 'common.view' | translate }}
+                        </button>
+
+                        <button mat-stroked-button color="primary" (click)="completeAppointment(app)">
+                          <mat-icon>task_alt</mat-icon>
+                          {{ 'clinic.appointments.complete' | translate }}
+                        </button>
+
+                        <button mat-stroked-button color="warn" (click)="cancelAppointment(app)">
+                          <mat-icon>cancel</mat-icon>
+                          {{ 'clinic.appointments.cancel' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+        </mat-tab>
+
+        <mat-tab [label]="'clinic.appointments.completed' | translate">
+          @if (getAppointmentsByStatus('completed').length === 0) {
+            <div class="empty-state">
+              <mat-icon>done_all</mat-icon>
+              <h2>{{ 'clinic.appointments.noCompleted' | translate }}</h2>
+              <p>{{ 'clinic.appointments.noCompletedSubtitle' | translate }}</p>
+            </div>
+          } @else {
+            <div class="cards-grid">
+              @for (app of getAppointmentsByStatus('completed'); track app.id) {
+                <mat-card class="appointment-card completed-card">
+                  <div class="appointment-content">
+                    <div class="date-box completed">
+                      <span class="day">{{ app.dateTime | date:'dd' }}</span>
+                      <span class="month">{{ app.dateTime | date:'MMM' }}</span>
+                      <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
+                    </div>
+
+                    <div class="appointment-main">
+                      <div class="appointment-top">
+                        <div>
+                          <h2>{{ app.serviceType || 'Servicio veterinario' }}</h2>
+                          <p>
+                            <mat-icon>pets</mat-icon>
+                            {{ 'clinic.appointments.petId' | translate }}: {{ app.petId }}
+                          </p>
+                        </div>
+
+                        <span class="status-chip completed">
+                          {{ getStatusLabel(app.status) }}
+                        </span>
+                      </div>
+
+                      <div class="details-grid">
+                        <div class="detail-item">
+                          <mat-icon>event</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.dateTime' | translate }}</span>
+                            <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>medical_services</mat-icon>
+                          <div>
+                            <span>Veterinario asignado</span>
+                            <strong>{{ getVeterinarianName(app.veterinarianId) }}</strong>
+                          </div>
+                        </div>
+
+                        <div class="detail-item">
+                          <mat-icon>payments</mat-icon>
+                          <div>
+                            <span>{{ 'clinic.appointments.payment' | translate }}</span>
+                            <strong>{{ getPaymentLabel(app.paymentStatus) }}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      @if (app.notes) {
+                        <div class="notes-box">
+                          <mat-icon>notes</mat-icon>
+                          <p>{{ app.notes }}</p>
+                        </div>
+                      }
+
+                      <div class="card-actions">
+                        <button mat-stroked-button [routerLink]="['/clinic/appointments', app.id]">
+                          <mat-icon>visibility</mat-icon>
+                          {{ 'common.view' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          }
+        </mat-tab>
+      </mat-tab-group>
+    </section>
   }
 </div>

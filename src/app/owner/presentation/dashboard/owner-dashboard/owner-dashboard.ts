@@ -1,10 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+
 import { TranslatePipe } from '@ngx-translate/core';
+
 import { OwnerPetService } from '../../../application/owner-pet';
 import { OwnerAppointmentService } from '../../../application/owner-appointment';
 import { OwnerAlertService } from '../../../application/owner-alert';
@@ -21,27 +24,27 @@ export class OwnerDashboardComponent implements OnInit {
   private readonly appointmentService = inject(OwnerAppointmentService);
   private readonly alertService = inject(OwnerAlertService);
 
-  get pets() {
-    return this.petService.pets();
+  get pets(): any[] {
+    return this.petService.pets() as any[];
   }
 
-  get appointments() {
-    return this.appointmentService.appointments();
+  get appointments(): any[] {
+    return this.appointmentService.appointments() as any[];
   }
 
-  get loadingPets() {
+  get loadingPets(): boolean {
     return this.petService.loading();
   }
 
-  get loadingAppointments() {
+  get loadingAppointments(): boolean {
     return this.appointmentService.loading();
   }
 
-  get healthAlerts() {
-    return this.alertService.alerts();
+  get healthAlerts(): any[] {
+    return this.alertService.alerts() as any[];
   }
 
-  get loadingAlerts() {
+  get loadingAlerts(): boolean {
     return this.alertService.loading();
   }
 
@@ -51,11 +54,27 @@ export class OwnerDashboardComponent implements OnInit {
     this.alertService.loadAlerts();
   }
 
-  getUpcomingAppointments() {
+  getUpcomingAppointments(): any[] {
     const now = new Date();
 
     return this.appointments
-      .filter((appointment) => new Date(appointment.dateTime) >= now)
+      .filter((appointment: any) => {
+        const dateTime = appointment?.dateTime;
+        const status = String(appointment?.status || '').toLowerCase();
+
+        if (!dateTime) return false;
+
+        const appointmentDate = new Date(dateTime);
+
+        if (Number.isNaN(appointmentDate.getTime())) return false;
+
+        const isActive = status === 'pending' || status === 'confirmed' || status === 'accepted';
+
+        return appointmentDate >= now && isActive;
+      })
+      .sort((a: any, b: any) => {
+        return new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime();
+      })
       .slice(0, 3);
   }
 }
