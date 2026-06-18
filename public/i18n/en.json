@@ -332,7 +332,9 @@
   "mobile": {
     "requests": {
       "title": "Service Requests",
+      "subtitle": "Review, accept or reject home service requests.",
       "detail": "Request Details",
+      "detailSubtitle": "Review the full service request information.",
       "request": "Request",
       "serviceId": "Service ID",
       "date": "Date & Time",
@@ -340,27 +342,59 @@
       "status": "Status",
       "notes": "Notes",
       "accept": "Accept",
-      "reject": "Reject"
+      "reject": "Reject",
+      "dashboard": "Dashboard",
+      "noRequests": "No requests found",
+      "noRequestsSubtitle": "When a pet owner requests a mobile service, it will appear here.",
+      "addressNotRegistered": "Address not registered",
+      "serviceNotRegistered": "Not registered",
+      "dateNotRegistered": "Date not registered",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "completed": "Completed",
+      "noStatus": "No status"
     },
     "availability": {
       "title": "Set Availability",
+      "subtitle": "Define the days and times when you are available to handle requests.",
+      "formSubtitle": "Register your mobile service schedule",
       "date": "Date",
       "startTime": "Start Time",
       "endTime": "End Time",
-      "available": "Available"
+      "available": "Available",
+      "availableDescription": "Enable this option to indicate that you can provide service during this time slot.",
+      "timeRangeError": "End time must be later than start time.",
+      "requiredFieldsError": "Complete the required fields",
+      "saved": "Availability saved"
     },
     "services": {
       "title": "My Services",
+      "subtitle": "Manage the services you offer as a mobile professional.",
       "add": "Add Service",
       "edit": "Edit Service",
       "name": "Service Name",
       "description": "Description",
       "duration": "Duration (minutes)",
       "durationError": "Minimum 5 minutes",
-      "price": "Price"
+      "price": "Price",
+      "priceError": "Price cannot be negative",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activeService": "Active service",
+      "activeServiceDescription": "If active, pet owners will be able to request this service.",
+      "formCreateSubtitle": "Register a new mobile service.",
+      "formEditSubtitle": "Update the service information.",
+      "noServices": "You have no services registered",
+      "noServicesSubtitle": "Add your first service using the top button.",
+      "serviceWithoutName": "Unnamed service",
+      "noDescription": "No description registered.",
+      "notRegistered": "Not registered"
     },
     "profile": {
       "title": "Mobile Professional Profile",
+      "subtitle": "Update your professional information, coverage and mobile unit availability.",
+      "formSubtitle": "Information visible to pet owners",
       "name": "Full Name",
       "email": "Email",
       "phone": "Phone",
@@ -372,17 +406,25 @@
       "diagnosticTech": "Diagnostic Technician",
       "coverageDistricts": "Coverage districts",
       "hasVehicle": "I have a vehicle / mobile unit",
+      "hasVehicleDescription": "Indicate whether you have a mobile unit for home service.",
       "vehiclePlate": "Vehicle plate",
-      "specialty": "Specialty"
+      "specialty": "Specialty",
+      "requiredFieldsError": "Complete the required fields",
+      "updated": "Profile updated successfully"
     },
     "dashboard": {
-      "welcome": "Welcome to your Mobile Dashboard",
+      "welcome": "Mobile Dashboard",
+      "subtitle": "Manage your requests, services, availability and professional profile.",
       "pendingRequests": "Pending Requests",
+      "pendingRequestsSubtitle": "Requests to handle",
       "activeServices": "Active Services",
+      "activeServicesSubtitle": "Published services",
       "viewRequests": "View Requests",
       "manageServices": "Manage Services",
       "setAvailability": "Set Availability",
-      "profile": "Profile"
+      "profile": "Profile",
+      "quickActions": "Quick actions",
+      "quickActionsDescription": "Manage the main features of the mobile professional module."
     }
   }
 }

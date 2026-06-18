@@ -332,7 +332,9 @@
   "mobile": {
     "requests": {
       "title": "Solicitudes de servicio",
+      "subtitle": "Revisa, acepta o rechaza las solicitudes de atención a domicilio.",
       "detail": "Detalles de la solicitud",
+      "detailSubtitle": "Revisa la información completa de la solicitud de servicio.",
       "request": "Solicitud",
       "serviceId": "ID del servicio",
       "date": "Fecha y hora",
@@ -340,27 +342,59 @@
       "status": "Estado",
       "notes": "Notas",
       "accept": "Aceptar",
-      "reject": "Rechazar"
+      "reject": "Rechazar",
+      "dashboard": "Panel",
+      "noRequests": "No hay solicitudes",
+      "noRequestsSubtitle": "Cuando un dueño solicite un servicio móvil, aparecerá aquí.",
+      "addressNotRegistered": "Dirección no registrada",
+      "serviceNotRegistered": "No registrado",
+      "dateNotRegistered": "Fecha no registrada",
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada",
+      "completed": "Completada",
+      "noStatus": "Sin estado"
     },
     "availability": {
       "title": "Definir disponibilidad",
+      "subtitle": "Define los días y horarios en los que estarás disponible para atender solicitudes.",
+      "formSubtitle": "Registra tu horario de atención móvil",
       "date": "Fecha",
       "startTime": "Hora de inicio",
       "endTime": "Hora de fin",
-      "available": "Disponible"
+      "available": "Disponible",
+      "availableDescription": "Activa esta opción para indicar que puedes atender en ese horario.",
+      "timeRangeError": "La hora de fin debe ser mayor que la hora de inicio.",
+      "requiredFieldsError": "Completa los campos obligatorios",
+      "saved": "Disponibilidad guardada"
     },
     "services": {
       "title": "Mis servicios",
+      "subtitle": "Gestiona los servicios que ofreces como profesional móvil.",
       "add": "Agregar servicio",
       "edit": "Editar servicio",
       "name": "Nombre del servicio",
       "description": "Descripción",
       "duration": "Duración (minutos)",
       "durationError": "Mínimo 5 minutos",
-      "price": "Precio"
+      "price": "Precio",
+      "priceError": "El precio no puede ser negativo",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "activeService": "Servicio activo",
+      "activeServiceDescription": "Si está activo, los dueños podrán solicitarlo.",
+      "formCreateSubtitle": "Registra un nuevo servicio móvil.",
+      "formEditSubtitle": "Actualiza la información del servicio.",
+      "noServices": "No tienes servicios registrados",
+      "noServicesSubtitle": "Agrega tu primer servicio usando el botón superior.",
+      "serviceWithoutName": "Servicio sin nombre",
+      "noDescription": "Sin descripción registrada.",
+      "notRegistered": "No registrado"
     },
     "profile": {
       "title": "Perfil del profesional móvil",
+      "subtitle": "Actualiza tus datos profesionales, cobertura y disponibilidad de unidad móvil.",
+      "formSubtitle": "Información visible para los dueños de mascotas",
       "name": "Nombre completo",
       "email": "Correo electrónico",
       "phone": "Teléfono",
@@ -372,17 +406,25 @@
       "diagnosticTech": "Técnico de diagnóstico",
       "coverageDistricts": "Distritos de cobertura",
       "hasVehicle": "Tengo vehículo / unidad móvil",
+      "hasVehicleDescription": "Indica si cuentas con una unidad móvil para atender a domicilio.",
       "vehiclePlate": "Placa del vehículo",
-      "specialty": "Especialidad"
+      "specialty": "Especialidad",
+      "requiredFieldsError": "Completa los campos obligatorios",
+      "updated": "Perfil actualizado correctamente"
     },
     "dashboard": {
-      "welcome": "Bienvenido a tu panel móvil",
+      "welcome": "Panel móvil",
+      "subtitle": "Gestiona tus solicitudes, servicios, disponibilidad y perfil profesional.",
       "pendingRequests": "Solicitudes pendientes",
+      "pendingRequestsSubtitle": "Solicitudes por atender",
       "activeServices": "Servicios activos",
+      "activeServicesSubtitle": "Servicios publicados",
       "viewRequests": "Ver solicitudes",
       "manageServices": "Gestionar servicios",
       "setAvailability": "Definir disponibilidad",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "quickActions": "Acciones rápidas",
+      "quickActionsDescription": "Administra las funciones principales del profesional móvil."
     }
   }
 }
