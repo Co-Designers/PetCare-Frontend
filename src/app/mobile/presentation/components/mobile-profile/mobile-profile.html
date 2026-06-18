@@ -1,62 +1,140 @@
-<div class="profile-container">
-  <mat-card>
+<div class="profile-page">
+  <section class="profile-hero">
+    <div>
+      <span class="hero-badge">PetCare Mobile</span>
+      <h1>{{ 'mobile.profile.title' | translate }}</h1>
+      <p>Actualiza tus datos profesionales, cobertura y disponibilidad de unidad móvil.</p>
+    </div>
+
+    <button mat-stroked-button routerLink="/mobile/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+      Dashboard
+    </button>
+  </section>
+
+  <mat-card class="profile-card">
     <mat-card-header>
-      <mat-card-title>{{ 'mobile.profile.title' | translate }}</mat-card-title>
+      <div class="card-title-block">
+        <div class="card-icon">
+          <mat-icon>person</mat-icon>
+        </div>
+
+        <div>
+          <mat-card-title>{{ 'mobile.profile.title' | translate }}</mat-card-title>
+          <mat-card-subtitle>Información visible para los dueños de mascotas</mat-card-subtitle>
+        </div>
+      </div>
     </mat-card-header>
+
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.profile.name' | translate }} *</mat-label>
+          <mat-label>{{ 'mobile.profile.name' | translate }}</mat-label>
+          <mat-icon matPrefix>badge</mat-icon>
+
           <input matInput formControlName="name">
-          <mat-error *ngIf="form.get('name')?.invalid">{{ 'common.required' | translate }}</mat-error>
+
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            {{ 'common.required' | translate }}
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.profile.email' | translate }} *</mat-label>
-          <input matInput formControlName="email">
-          <mat-error *ngIf="form.get('email')?.hasError('required')">{{ 'common.required' | translate }}</mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('email')">{{ 'mobile.profile.invalidEmail' | translate }}</mat-error>
-        </mat-form-field>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'mobile.profile.email' | translate }}</mat-label>
+            <mat-icon matPrefix>mail</mat-icon>
+
+            <input matInput formControlName="email">
+
+            <mat-error *ngIf="form.get('email')?.hasError('required')">
+              {{ 'common.required' | translate }}
+            </mat-error>
+
+            <mat-error *ngIf="form.get('email')?.hasError('email')">
+              {{ 'mobile.profile.invalidEmail' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'mobile.profile.phone' | translate }}</mat-label>
+            <mat-icon matPrefix>phone</mat-icon>
+
+            <input matInput formControlName="phone" maxlength="9">
+
+            <mat-error *ngIf="form.get('phone')?.invalid">
+              {{ 'mobile.profile.phoneError' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.profile.phone' | translate }} *</mat-label>
-          <input matInput formControlName="phone">
-          <mat-error *ngIf="form.get('phone')?.invalid">{{ 'mobile.profile.phoneError' | translate }}</mat-error>
-        </mat-form-field>
+          <mat-label>{{ 'mobile.profile.subtype' | translate }}</mat-label>
+          <mat-icon matPrefix>work</mat-icon>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.profile.subtype' | translate }} *</mat-label>
           <mat-select formControlName="mobileSubtype">
             <mat-option value="vet">{{ 'mobile.profile.vet' | translate }}</mat-option>
             <mat-option value="groomer">{{ 'mobile.profile.groomer' | translate }}</mat-option>
             <mat-option value="diagnostic_tech">{{ 'mobile.profile.diagnosticTech' | translate }}</mat-option>
           </mat-select>
-          <mat-error>{{ 'common.required' | translate }}</mat-error>
+
+          <mat-error *ngIf="form.get('mobileSubtype')?.hasError('required')">
+            {{ 'common.required' | translate }}
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.profile.coverageDistricts' | translate }} *</mat-label>
+          <mat-label>{{ 'mobile.profile.coverageDistricts' | translate }}</mat-label>
+          <mat-icon matPrefix>location_on</mat-icon>
+
           <mat-select formControlName="coverageDistricts" multiple>
-            <mat-option *ngFor="let d of districts" [value]="d">{{ d }}</mat-option>
+            @for (district of districts; track district) {
+              <mat-option [value]="district">{{ district }}</mat-option>
+            }
           </mat-select>
-          <mat-error>{{ 'common.required' | translate }}</mat-error>
+
+          <mat-error *ngIf="form.get('coverageDistricts')?.hasError('required')">
+            {{ 'common.required' | translate }}
+          </mat-error>
         </mat-form-field>
 
-        <mat-checkbox formControlName="hasVehicle">{{ 'mobile.profile.hasVehicle' | translate }}</mat-checkbox>
+        <div class="vehicle-box">
+          <div>
+            <strong>{{ 'mobile.profile.hasVehicle' | translate }}</strong>
+            <p>Indica si cuentas con una unidad móvil para atender a domicilio.</p>
+          </div>
 
-        <mat-form-field appearance="outline" class="full-width" *ngIf="form.get('hasVehicle')?.value">
-          <mat-label>{{ 'mobile.profile.vehiclePlate' | translate }}</mat-label>
-          <input matInput formControlName="vehiclePlate">
-        </mat-form-field>
+          <mat-checkbox formControlName="hasVehicle"></mat-checkbox>
+        </div>
+
+        @if (form.get('hasVehicle')?.value) {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'mobile.profile.vehiclePlate' | translate }}</mat-label>
+            <mat-icon matPrefix>directions_car</mat-icon>
+
+            <input matInput formControlName="vehiclePlate">
+
+            <mat-error *ngIf="form.get('vehiclePlate')?.hasError('required')">
+              {{ 'common.required' | translate }}
+            </mat-error>
+          </mat-form-field>
+        }
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'mobile.profile.specialty' | translate }}</mat-label>
+          <mat-icon matPrefix>star</mat-icon>
+
           <input matInput formControlName="specialty">
         </mat-form-field>
 
         <div class="button-group">
-          <button mat-raised-button color="primary" type="submit" [disabled]="loading">{{ 'common.save' | translate }}</button>
-          <button mat-button type="button" (click)="goBack()">{{ 'common.cancel' | translate }}</button>
+          <button mat-stroked-button type="button" (click)="goBack()">
+            {{ 'common.cancel' | translate }}
+          </button>
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            <mat-icon>save</mat-icon>
+            {{ 'common.save' | translate }}
+          </button>
         </div>
       </form>
     </mat-card-content>

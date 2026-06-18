@@ -1,37 +1,108 @@
-<div class="form-container">
-  <mat-card class="form-card">
+<div class="availability-page">
+  <section class="availability-hero">
+    <div>
+      <span class="hero-badge">PetCare Mobile</span>
+      <h1>{{ 'mobile.availability.title' | translate }}</h1>
+      <p>Define los días y horarios en los que estarás disponible para atender solicitudes.</p>
+    </div>
+
+    <button mat-stroked-button routerLink="/mobile/dashboard">
+      <mat-icon>arrow_back</mat-icon>
+      Dashboard
+    </button>
+  </section>
+
+  <mat-card class="availability-card">
     <mat-card-header>
-      <mat-card-title>{{ 'mobile.availability.title' | translate }}</mat-card-title>
+      <div class="card-title-block">
+        <div class="card-icon">
+          <mat-icon>event_available</mat-icon>
+        </div>
+
+        <div>
+          <mat-card-title>{{ 'mobile.availability.title' | translate }}</mat-card-title>
+          <mat-card-subtitle>Registra tu horario de atención móvil</mat-card-subtitle>
+        </div>
+      </div>
     </mat-card-header>
+
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'mobile.availability.date' | translate }} *</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="date" [min]="minDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="isFieldInvalid('date')">{{ 'common.required' | translate }}</mat-error>
+          <mat-label>{{ 'mobile.availability.date' | translate }}</mat-label>
+          <mat-icon matPrefix>event</mat-icon>
+
+          <input
+            matInput
+            type="date"
+            formControlName="date"
+            [min]="minDate"
+          >
+
+          <mat-error *ngIf="isFieldInvalid('date')">
+            {{ 'common.required' | translate }}
+          </mat-error>
         </mat-form-field>
 
         <div class="time-row">
           <mat-form-field appearance="outline" class="half-width">
-            <mat-label>{{ 'mobile.availability.startTime' | translate }} *</mat-label>
-            <input matInput type="time" formControlName="startTime" step="60">
-            <mat-error *ngIf="isFieldInvalid('startTime')">{{ 'common.required' | translate }}</mat-error>
+            <mat-label>{{ 'mobile.availability.startTime' | translate }}</mat-label>
+            <mat-icon matPrefix>schedule</mat-icon>
+
+            <input
+              matInput
+              type="time"
+              formControlName="startTime"
+              step="60"
+            >
+
+            <mat-error *ngIf="isFieldInvalid('startTime')">
+              {{ 'common.required' | translate }}
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="half-width">
-            <mat-label>{{ 'mobile.availability.endTime' | translate }} *</mat-label>
-            <input matInput type="time" formControlName="endTime" step="60">
-            <mat-error *ngIf="isFieldInvalid('endTime')">{{ 'common.required' | translate }}</mat-error>
+            <mat-label>{{ 'mobile.availability.endTime' | translate }}</mat-label>
+            <mat-icon matPrefix>schedule</mat-icon>
+
+            <input
+              matInput
+              type="time"
+              formControlName="endTime"
+              step="60"
+            >
+
+            <mat-error *ngIf="isFieldInvalid('endTime')">
+              {{ 'common.required' | translate }}
+            </mat-error>
           </mat-form-field>
         </div>
 
-        <mat-checkbox formControlName="isAvailable">{{ 'mobile.availability.available' | translate }}</mat-checkbox>
+        @if (timeRangeError) {
+          <div class="time-error">
+            <mat-icon>error</mat-icon>
+            <span>La hora de fin debe ser mayor que la hora de inicio.</span>
+          </div>
+        }
+
+        <div class="available-box">
+          <div>
+            <strong>{{ 'mobile.availability.available' | translate }}</strong>
+            <p>Activa esta opción para indicar que puedes atender en ese horario.</p>
+          </div>
+
+          <mat-checkbox formControlName="isAvailable"></mat-checkbox>
+        </div>
 
         <div class="button-group">
-          <button mat-raised-button color="primary" type="submit">{{ 'common.save' | translate }}</button>
-          <button mat-button type="button" (click)="onCancel()">{{ 'common.cancel' | translate }}</button>
+          <button mat-stroked-button type="button" (click)="onCancel()">
+            {{ 'common.cancel' | translate }}
+          </button>
+
+          <button mat-raised-button color="primary" type="submit">
+            <mat-icon>save</mat-icon>
+            {{ 'common.save' | translate }}
+          </button>
         </div>
       </form>
     </mat-card-content>

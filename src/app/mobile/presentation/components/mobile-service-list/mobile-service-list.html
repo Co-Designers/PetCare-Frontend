@@ -1,30 +1,82 @@
-<div class="services-container">
-  <div class="header">
-    <h2>{{ 'mobile.services.title' | translate }}</h2>
+<div class="services-page">
+  <section class="services-hero">
+    <div>
+      <span class="hero-badge">PetCare Mobile</span>
+      <h1>{{ 'mobile.services.title' | translate }}</h1>
+      <p>Gestiona los servicios que ofreces como profesional móvil.</p>
+    </div>
+
     <button mat-raised-button color="primary" (click)="openAddDialog()">
-      <mat-icon>add</mat-icon> {{ 'mobile.services.add' | translate }}
+      <mat-icon>add</mat-icon>
+      {{ 'mobile.services.add' | translate }}
     </button>
-  </div>
+  </section>
 
   @if (loading) {
-    <div class="loading">{{ 'common.loading' | translate }}</div>
+    <div class="loading-state">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>{{ 'common.loading' | translate }}</p>
+    </div>
+  } @else if (services.length === 0) {
+    <div class="empty-state">
+      <mat-icon>medical_services</mat-icon>
+      <h2>No tienes servicios registrados</h2>
+      <p>Agrega tu primer servicio usando el botón superior.</p>
+    </div>
   } @else {
-    <div class="services-grid">
-      @for (s of services; track s.id) {
+    <section class="services-grid">
+      @for (service of services; track service.id) {
         <mat-card class="service-card">
           <mat-card-header>
-            <mat-card-title>{{ s.name }}</mat-card-title>
-            <mat-card-subtitle>{{ s.durationMinutes }} min - {{ s.price | currency }}</mat-card-subtitle>
+            <div class="service-title-block">
+              <mat-card-title>{{ service.name || 'Servicio sin nombre' }}</mat-card-title>
+              <mat-card-subtitle>
+                {{ getDurationLabel(service) }} · {{ getPriceLabel(service) }}
+              </mat-card-subtitle>
+            </div>
+
+            <span class="status-chip" [class.status-inactive]="service.isActive === false">
+              {{ service.isActive === false ? 'Inactivo' : 'Activo' }}
+            </span>
           </mat-card-header>
+
           <mat-card-content>
-            <p>{{ s.description || '-' }}</p>
+            <div class="service-description">
+              {{ service.description || 'Sin descripción registrada.' }}
+            </div>
+
+            <div class="service-meta">
+              <div class="meta-item">
+                <mat-icon>schedule</mat-icon>
+                <div>
+                  <strong>{{ 'mobile.services.duration' | translate }}</strong>
+                  <span>{{ getDurationLabel(service) }}</span>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <mat-icon>payments</mat-icon>
+                <div>
+                  <strong>{{ 'mobile.services.price' | translate }}</strong>
+                  <span>{{ getPriceLabel(service) }}</span>
+                </div>
+              </div>
+            </div>
           </mat-card-content>
+
           <mat-card-actions>
-            <button mat-icon-button color="primary" (click)="editService(s)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button color="warn" (click)="deleteService(s.id!)"><mat-icon>delete</mat-icon></button>
+            <button mat-stroked-button color="primary" (click)="editService(service)">
+              <mat-icon>edit</mat-icon>
+              {{ 'common.edit' | translate }}
+            </button>
+
+            <button mat-stroked-button color="warn" (click)="deleteService(service.id)">
+              <mat-icon>delete</mat-icon>
+              {{ 'common.delete' | translate }}
+            </button>
           </mat-card-actions>
         </mat-card>
       }
-    </div>
+    </section>
   }
 </div>
