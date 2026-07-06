@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  platformProviderApiBaseUrl: 'https://petcare-platform-api-u20241e242.azurewebsites.net/api/v1',
   platformProviderSignInEndpointPath: '/authentication/sign-in',
   platformProviderSignUpEndpointPath: '/authentication/sign-up',
 };

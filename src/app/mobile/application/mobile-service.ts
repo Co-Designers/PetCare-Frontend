@@ -5,6 +5,7 @@ import {
 } from '../infrastructure/mobile-service-api';
 import { IamStore } from '../../iam/application/iam-store';
 import { NotificationService } from '../../shared/application/notification';
+import { resolveCurrentMobileId } from './mobile-id';
 
 @Injectable({ providedIn: 'root' })
 export class MobileServiceService {
@@ -18,7 +19,7 @@ export class MobileServiceService {
   public readonly error = signal<string | null>(null);
 
   loadServices(): void {
-    const mobileId = this.iamStore.currentUserId();
+    const mobileId = resolveCurrentMobileId(this.iamStore.currentUserId());
     if (!mobileId) return;
     this.loading.set(true);
     this.api.getByMobileId(mobileId).subscribe({
@@ -37,7 +38,7 @@ export class MobileServiceService {
   }
 
   createService(service: Omit<MobileService, 'id'>): void {
-    const mobileId = this.iamStore.currentUserId();
+    const mobileId = resolveCurrentMobileId(this.iamStore.currentUserId());
     if (!mobileId) return;
     const serviceWithMobile = { ...service, mobileId };
     this.api.create(serviceWithMobile).subscribe({

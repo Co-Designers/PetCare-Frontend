@@ -44,6 +44,14 @@ export class MobileAvailabilityFormComponent implements OnInit {
   minDate = new Date().toISOString().split('T')[0];
   timeRangeError = false;
 
+  get slots() {
+    return this.availabilityService.slots();
+  }
+
+  get loading() {
+    return this.availabilityService.loading();
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       date: ['', Validators.required],
@@ -55,6 +63,8 @@ export class MobileAvailabilityFormComponent implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.timeRangeError = false;
     });
+
+    this.availabilityService.loadSlots();
   }
 
   onSubmit(): void {
@@ -90,6 +100,11 @@ export class MobileAvailabilityFormComponent implements OnInit {
     });
   }
 
+  deleteSlot(id: number | undefined): void {
+    if (!id) return;
+    this.availabilityService.deleteSlot(id);
+  }
+
   onCancel(): void {
     this.router.navigate(['/mobile/dashboard']);
   }
@@ -106,5 +121,19 @@ export class MobileAvailabilityFormComponent implements OnInit {
     if (!startTime || !endTime) return false;
 
     return endTime > startTime;
+  }
+
+  formatDate(date: string): string {
+    if (!date) return 'Fecha no registrada';
+
+    const parsed = new Date(`${date}T00:00:00`);
+
+    if (Number.isNaN(parsed.getTime())) return date;
+
+    return parsed.toLocaleDateString('es-PE', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   }
 }

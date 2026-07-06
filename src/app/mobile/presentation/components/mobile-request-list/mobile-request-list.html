@@ -74,11 +74,6 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button mat-stroked-button color="primary" [routerLink]="['/mobile/requests', req.id]">
-              <mat-icon>visibility</mat-icon>
-              {{ 'common.view' | translate }}
-            </button>
-
             @if (isPending(req.status)) {
               <button mat-raised-button color="accent" (click)="accept(req.id)">
                 <mat-icon>check</mat-icon>
@@ -90,6 +85,18 @@
                 {{ 'mobile.requests.reject' | translate }}
               </button>
             }
+
+            @if (isAccepted(req.status)) {
+              <button mat-stroked-button color="primary" (click)="complete(req.id)">
+                <mat-icon>task_alt</mat-icon>
+                Completar
+              </button>
+            }
+
+            <button mat-stroked-button color="warn" (click)="deleteRequest(req.id)">
+              <mat-icon>delete</mat-icon>
+              Eliminar
+            </button>
           </mat-card-actions>
         </mat-card>
       }

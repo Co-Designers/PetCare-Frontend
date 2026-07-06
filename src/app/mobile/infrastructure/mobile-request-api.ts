@@ -9,7 +9,7 @@ export interface MobileRequest {
   ownerId: number;
   petId: number;
   serviceId: number;
-  status: 'pending' | 'accepted' | 'rejected' | 'completed';
+  status: 'pending' | 'confirmed' | 'accepted' | 'rejected' | 'in_process' | 'completed' | 'cancelled';
   scheduledDateTime?: string;
   address: string;
   notes?: string;
@@ -35,6 +35,18 @@ export class MobileRequestApiService {
 
   update(id: number, data: Partial<MobileRequest>): Observable<MobileRequest> {
     return this.http.put<MobileRequest>(`${this.baseUrl}/${id}`, data);
+  }
+
+  start(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/start`, {});
+  }
+
+  complete(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/complete`, {});
+  }
+
+  cancel(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/cancel`, {});
   }
 
   delete(id: number): Observable<void> {

@@ -1,8 +1,8 @@
 export interface SignUpRequest {
   username: string;
   password: string;
+  confirmPassword: string;
   email: string;
-  userType: string;
   fullName: string;
   phone: string;
   district?: string;

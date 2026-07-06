@@ -52,17 +52,11 @@ export class ClinicDashboardComponent implements OnInit {
     this.veterinarianService.loadVeterinarians();
   }
 
-  getPendingAppointments(): any[] {
-    return this.appointments.filter((appointment: any) => {
-      const status = String(appointment?.status || '').toLowerCase();
-      return status === 'pending';
-    });
-  }
-
   getUpcomingAppointments(): any[] {
     const now = new Date();
+    const activeStatuses = ['confirmed', 'accepted', 'in_process'];
 
-    return this.appointments
+    const activeAppointments = this.appointments
       .filter((appointment: any) => {
         const status = String(appointment?.status || '').toLowerCase();
         const dateTime = appointment?.dateTime;
@@ -73,11 +67,20 @@ export class ClinicDashboardComponent implements OnInit {
 
         if (Number.isNaN(appointmentDate.getTime())) return false;
 
-        return appointmentDate >= now && status === 'pending';
+        return activeStatuses.includes(status);
       })
       .sort((a: any, b: any) => {
         return new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime();
-      })
+      });
+
+    const futureAppointments = activeAppointments.filter(
+      (appointment: any) => new Date(appointment.dateTime) >= now,
+    );
+
+    if (futureAppointments.length > 0) return futureAppointments.slice(0, 4);
+
+    return activeAppointments
+      .sort((a: any, b: any) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime())
       .slice(0, 4);
   }
 

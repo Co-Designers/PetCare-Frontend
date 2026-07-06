@@ -14,10 +14,14 @@ export class AvailabilityService {
   private baseUrl = environment.platformProviderApiBaseUrl;
 
   getClinicSlots(clinicId: number, date: string): Observable<TimeSlot[]> {
-    return this.http.get<TimeSlot[]>(`${this.baseUrl}/clinics/${clinicId}/available-slots?date=${date}`);
+    return this.http.get<TimeSlot[]>(
+      `${this.baseUrl}/appointments/available-slots?clinicId=${clinicId}&date=${date}`,
+    );
   }
 
   getMobileSlots(mobileId: number, date: string): Observable<TimeSlot[]> {
-    return this.http.get<TimeSlot[]>(`${this.baseUrl}/mobile-professionals/${mobileId}/available-slots?date=${date}`);
+    return this.http.get<TimeSlot[]>(
+      `${this.baseUrl}/mobile-requests/available-slots?mobileId=${mobileId}&date=${date}`,
+    );
   }
 }

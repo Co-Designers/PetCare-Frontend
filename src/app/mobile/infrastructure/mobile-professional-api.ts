@@ -27,6 +27,10 @@ export class MobileProfessionalApiService {
     return this.http.get<MobileProfessional[]>(`${this.baseUrl}?userId=${userId}`);
   }
 
+  getAll(): Observable<MobileProfessional[]> {
+    return this.http.get<MobileProfessional[]>(this.baseUrl);
+  }
+
   getById(id: number): Observable<MobileProfessional> {
     return this.http.get<MobileProfessional>(`${this.baseUrl}/${id}`);
   }

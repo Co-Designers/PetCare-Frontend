@@ -47,113 +47,6 @@
   } @else {
     <section class="tabs-panel">
       <mat-tab-group>
-        <mat-tab [label]="'clinic.appointments.pending' | translate">
-          @if (getAppointmentsByStatus('pending').length === 0) {
-            <div class="empty-state">
-              <mat-icon>pending_actions</mat-icon>
-              <h2>{{ 'clinic.appointments.noPending' | translate }}</h2>
-              <p>{{ 'clinic.appointments.noPendingSubtitle' | translate }}</p>
-            </div>
-          } @else {
-            <div class="cards-grid">
-              @for (app of getAppointmentsByStatus('pending'); track app.id) {
-                <mat-card class="appointment-card pending-card">
-                  <div class="appointment-content">
-                    <div class="date-box">
-                      <span class="day">{{ app.dateTime | date:'dd' }}</span>
-                      <span class="month">{{ app.dateTime | date:'MMM' }}</span>
-                      <span class="time">{{ app.dateTime | date:'HH:mm' }}</span>
-                    </div>
-
-                    <div class="appointment-main">
-                      <div class="appointment-top">
-                        <div>
-                          <h2>{{ app.serviceType || 'Servicio veterinario' }}</h2>
-                          <p>
-                            <mat-icon>pets</mat-icon>
-                            {{ 'clinic.appointments.petId' | translate }}: {{ app.petId }}
-                          </p>
-                        </div>
-
-                        <span class="status-chip pending">
-                          {{ getStatusLabel(app.status) }}
-                        </span>
-                      </div>
-
-                      <div class="details-grid">
-                        <div class="detail-item">
-                          <mat-icon>event</mat-icon>
-                          <div>
-                            <span>{{ 'clinic.appointments.dateTime' | translate }}</span>
-                            <strong>{{ app.dateTime | date:'dd/MM/yyyy HH:mm' }}</strong>
-                          </div>
-                        </div>
-
-                        <div class="detail-item">
-                          <mat-icon>business</mat-icon>
-                          <div>
-                            <span>Clínica</span>
-                            <strong>{{ getClinicReference(app) }}</strong>
-                          </div>
-                        </div>
-
-                        <div class="detail-item">
-                          <mat-icon>payments</mat-icon>
-                          <div>
-                            <span>{{ 'clinic.appointments.payment' | translate }}</span>
-                            <strong>{{ getPaymentLabel(app.paymentStatus) }}</strong>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="assign-box">
-                        <mat-icon>person_add</mat-icon>
-
-                        <mat-form-field appearance="outline">
-                          <mat-label>Asignar veterinario</mat-label>
-
-                          <mat-select
-                            [ngModel]="getSelectedVeterinarianId(app)"
-                            (ngModelChange)="setSelectedVeterinarian(app, $event)"
-                          >
-                            @for (vet of veterinarians; track vet.id) {
-                              <mat-option [value]="vet.id">{{ vet.name }}</mat-option>
-                            }
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-
-                      @if (app.notes) {
-                        <div class="notes-box">
-                          <mat-icon>notes</mat-icon>
-                          <p>{{ app.notes }}</p>
-                        </div>
-                      }
-
-                      <div class="card-actions">
-                        <button mat-stroked-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
-                          <mat-icon>visibility</mat-icon>
-                          {{ 'common.view' | translate }}
-                        </button>
-
-                        <button mat-stroked-button color="accent" (click)="confirmWithVeterinarian(app)">
-                          <mat-icon>check_circle</mat-icon>
-                          {{ 'clinic.appointments.confirm' | translate }}
-                        </button>
-
-                        <button mat-stroked-button color="warn" (click)="cancelAppointment(app)">
-                          <mat-icon>cancel</mat-icon>
-                          {{ 'clinic.appointments.cancel' | translate }}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </mat-card>
-              }
-            </div>
-          }
-        </mat-tab>
-
         <mat-tab [label]="'clinic.appointments.confirmed' | translate">
           @if (getAppointmentsByStatus('confirmed').length === 0) {
             <div class="empty-state">
@@ -221,11 +114,6 @@
                       }
 
                       <div class="card-actions">
-                        <button mat-stroked-button color="primary" [routerLink]="['/clinic/appointments', app.id]">
-                          <mat-icon>visibility</mat-icon>
-                          {{ 'common.view' | translate }}
-                        </button>
-
                         <button mat-stroked-button color="primary" (click)="completeAppointment(app)">
                           <mat-icon>task_alt</mat-icon>
                           {{ 'clinic.appointments.complete' | translate }}
@@ -311,10 +199,6 @@
                       }
 
                       <div class="card-actions">
-                        <button mat-stroked-button [routerLink]="['/clinic/appointments', app.id]">
-                          <mat-icon>visibility</mat-icon>
-                          {{ 'common.view' | translate }}
-                        </button>
                       </div>
                     </div>
                   </div>

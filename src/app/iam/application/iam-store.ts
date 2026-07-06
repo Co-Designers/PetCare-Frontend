@@ -15,6 +15,7 @@ export class IamStore {
   private currentUserIdSignal = signal<number | null>(null);
   private currentUsernameSignal = signal<string | null>(null);
   private currentUserTypeSignal = signal<UserType | null>(null);
+  private currentTokenSignal = signal<string | null>(localStorage.getItem('token'));
   private errorMessageSignal = signal<string | null>(null);
 
   // Exposición pública
@@ -24,8 +25,7 @@ export class IamStore {
   readonly currentUserType = this.currentUserTypeSignal.asReadonly();
   readonly errorMessage = this.errorMessageSignal.asReadonly();
 
-  // Token computado desde localStorage
-  readonly currentToken = computed(() => localStorage.getItem('token'));
+  readonly currentToken = this.currentTokenSignal.asReadonly();
 
   constructor() {
     // En modo desarrollo forzar limpieza completa de localStorage para evitar
@@ -36,6 +36,7 @@ export class IamStore {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('username');
+        localStorage.removeItem('email');
         localStorage.removeItem('userType');
         // Borrar todo para asegurar un estado completamente limpio en dev
         localStorage.clear();
@@ -47,6 +48,7 @@ export class IamStore {
       this.currentUserIdSignal.set(null);
       this.currentUsernameSignal.set(null);
       this.currentUserTypeSignal.set(null);
+      this.currentTokenSignal.set(null);
     } else {
       // En producción restaurar sesión desde localStorage
       this.restoreSession();
@@ -64,6 +66,7 @@ export class IamStore {
       this.currentUserIdSignal.set(Number(userId));
       this.currentUsernameSignal.set(username);
       this.currentUserTypeSignal.set(userType);
+      this.currentTokenSignal.set(token);
     }
   }
 
@@ -73,8 +76,10 @@ export class IamStore {
         localStorage.setItem('token', res.token);
         localStorage.setItem('userId', res.id.toString());
         localStorage.setItem('username', res.username);
+        localStorage.setItem('email', res.email || '');
         localStorage.setItem('userType', res.userType);
 
+        this.currentTokenSignal.set(res.token);
         this.isSignedInSignal.set(true);
         this.currentUserIdSignal.set(res.id);
         this.currentUsernameSignal.set(res.username);
@@ -108,7 +113,9 @@ export class IamStore {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
+    localStorage.removeItem('email');
     localStorage.removeItem('userType');
+    this.currentTokenSignal.set(null);
     this.isSignedInSignal.set(false);
     this.clearLocalState();
     router.navigate(['/iam/sign-in']);
@@ -118,6 +125,7 @@ export class IamStore {
     this.currentUserIdSignal.set(null);
     this.currentUsernameSignal.set(null);
     this.currentUserTypeSignal.set(null);
+    this.currentTokenSignal.set(null);
   }
 
   private navigateByUserType(router: Router, userType: string): void {

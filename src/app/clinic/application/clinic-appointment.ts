@@ -91,4 +91,42 @@ export class ClinicAppointmentService {
       },
     });
   }
+
+  completeAppointment(id: number): void {
+    this.api.complete(id).subscribe({
+      next: () => {
+        this.appointmentsSignal.update((apps) =>
+          apps.map((appointment) =>
+            appointment.id === id
+              ? { ...appointment, status: 'completed', paymentStatus: 'paid' }
+              : appointment,
+          ),
+        );
+        this.notification.success('Cita completada y pago registrado');
+      },
+      error: (err) => {
+        console.error(err);
+        this.error.set('Error completing appointment');
+        this.notification.error('Error al completar cita');
+      },
+    });
+  }
+
+  cancelAppointment(id: number): void {
+    this.api.cancel(id).subscribe({
+      next: () => {
+        this.appointmentsSignal.update((apps) =>
+          apps.map((appointment) =>
+            appointment.id === id ? { ...appointment, status: 'cancelled' } : appointment,
+          ),
+        );
+        this.notification.success('Cita cancelada');
+      },
+      error: (err) => {
+        console.error(err);
+        this.error.set('Error cancelling appointment');
+        this.notification.error('Error al cancelar cita');
+      },
+    });
+  }
 }

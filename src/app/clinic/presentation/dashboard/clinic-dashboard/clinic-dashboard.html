@@ -83,34 +83,6 @@
     <mat-card class="stat-card">
       <mat-card-header>
         <div class="stat-header-text">
-          <mat-card-title>Citas pendientes</mat-card-title>
-          <mat-card-subtitle>Requieren confirmación</mat-card-subtitle>
-        </div>
-
-        <div class="stat-icon warning">
-          <mat-icon>pending_actions</mat-icon>
-        </div>
-      </mat-card-header>
-
-      <mat-card-content>
-        @if (loadingAppointments) {
-          <div class="loading">Cargando...</div>
-        } @else {
-          <div class="stat-number">{{ getPendingAppointments().length }}</div>
-        }
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button mat-button routerLink="/clinic/appointments">
-          Gestionar
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="stat-card">
-      <mat-card-header>
-        <div class="stat-header-text">
           <mat-card-title>Próximas citas</mat-card-title>
           <mat-card-subtitle>Atenciones futuras</mat-card-subtitle>
         </div>
@@ -140,7 +112,7 @@
   <section class="quick-actions-panel">
     <div>
       <h2>Atenciones cercanas</h2>
-      <p>Citas pendientes o próximas que necesitan seguimiento.</p>
+      <p>Citas confirmadas o próximas que necesitan seguimiento.</p>
     </div>
 
     <div class="quick-actions">
@@ -156,56 +128,4 @@
     </div>
   </section>
 
-  <section class="appointments-panel">
-    @if (loadingAppointments) {
-      <mat-card class="stat-card">
-        <mat-card-content>
-          <div class="loading">Cargando citas...</div>
-        </mat-card-content>
-      </mat-card>
-    } @else if (getUpcomingAppointments().length === 0) {
-      <mat-card class="stat-card">
-        <mat-card-content>
-          <div class="empty-alerts">
-            <mat-icon>check_circle</mat-icon>
-            <p>No hay citas próximas por atender.</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    } @else {
-      @for (appointment of getUpcomingAppointments(); track appointment.id) {
-        <mat-card class="stat-card">
-          <mat-card-header>
-            <div class="stat-header-text">
-              <mat-card-title>{{ getPetName(appointment) }}</mat-card-title>
-              <mat-card-subtitle>{{ getOwnerName(appointment) }}</mat-card-subtitle>
-            </div>
-
-            <div class="stat-icon">
-              <mat-icon>event</mat-icon>
-            </div>
-          </mat-card-header>
-
-          <mat-card-content>
-            <ul class="alerts-list">
-              <li>
-                <strong>Fecha</strong>
-                <span>{{ getDateLabel(appointment) }}</span>
-              </li>
-
-              <li>
-                <strong>Estado</strong>
-                <span>{{ getStatusLabel(appointment) }}</span>
-              </li>
-
-              <li>
-                <strong>Motivo</strong>
-                <span>{{ getReasonLabel(appointment) }}</span>
-              </li>
-            </ul>
-          </mat-card-content>
-        </mat-card>
-      }
-    }
-  </section>
 </div>

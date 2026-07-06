@@ -31,6 +31,6 @@ export class OwnerAppointmentApiService {
 
   /** Eliminar (cancelar) una cita */
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.patch<void>(`${this.baseUrl}/${id}/cancel`, {});
   }
 }

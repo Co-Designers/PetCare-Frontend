@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +12,7 @@ import { MobileRequestService } from '../../../application/mobile-request';
 @Component({
   selector: 'app-mobile-request-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslatePipe],
   templateUrl: './mobile-request-list.html',
   styleUrls: ['./mobile-request-list.css'],
 })
@@ -52,8 +51,36 @@ export class MobileRequestListComponent implements OnInit {
     }, 250);
   }
 
-  isPending(status: string): boolean {
-    return String(status || '').toLowerCase() === 'pending';
+  complete(id: number): void {
+    if (!id) return;
+
+    this.requestService.completeRequest(id);
+
+    setTimeout(() => {
+      this.requestService.loadRequests();
+    }, 250);
+  }
+
+  deleteRequest(id: number): void {
+    if (!id) return;
+
+    if (!confirm('¿Eliminar esta solicitud?')) return;
+
+    this.requestService.deleteRequest(id);
+  }
+
+  isPending(status: string | null | undefined): boolean {
+    const normalizedStatus = String(status || '').toLowerCase();
+    return !normalizedStatus || normalizedStatus === 'pending';
+  }
+
+  isAccepted(status: string | null | undefined): boolean {
+    const normalizedStatus = String(status || '').toLowerCase();
+    return (
+      normalizedStatus === 'accepted' ||
+      normalizedStatus === 'confirmed' ||
+      normalizedStatus === 'in_process'
+    );
   }
 
   getStatusClass(status: string): string {
@@ -63,8 +90,12 @@ export class MobileRequestListComponent implements OnInit {
       case 'pending':
         return 'status-pending';
       case 'accepted':
+      case 'confirmed':
+      case 'in_process':
         return 'status-accepted';
       case 'rejected':
+      case 'cancelled':
+      case 'canceled':
         return 'status-rejected';
       case 'completed':
         return 'status-completed';
@@ -79,11 +110,15 @@ export class MobileRequestListComponent implements OnInit {
     const labels: Record<string, string> = {
       pending: 'Pendiente',
       accepted: 'Aceptada',
-      rejected: 'Rechazada',
+      confirmed: 'Aceptada',
+      in_process: 'Aceptada',
+      rejected: 'Cancelada',
+      cancelled: 'Cancelada',
+      canceled: 'Cancelada',
       completed: 'Completada',
     };
 
-    return labels[normalizedStatus] || 'Sin estado';
+    return labels[normalizedStatus] || 'Pendiente';
   }
 
   getDateLabel(request: any): string {

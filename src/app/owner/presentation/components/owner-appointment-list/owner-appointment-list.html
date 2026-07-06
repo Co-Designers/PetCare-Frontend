@@ -28,7 +28,7 @@
           </div>
         } @else {
           <section class="cards-grid">
-            @for (app of upcomingAppointments; track app.id) {
+            @for (app of upcomingAppointments; track getAppointmentTrackId(app)) {
               <mat-card class="appointment-card upcoming-card">
                 <div class="appointment-card-content">
                   <div class="appointment-date-box">
@@ -79,7 +79,7 @@
                       </div>
                     </div>
 
-                    @if (app.notes) {
+                    @if (app.notes && !isMobileRequest(app)) {
                       <div class="notes-box">
                         <mat-icon>notes</mat-icon>
                         <p>{{ app.notes }}</p>
@@ -87,23 +87,27 @@
                     }
 
                     <div class="appointment-actions">
-                      <button
-                        mat-stroked-button
-                        color="primary"
-                        [routerLink]="['/owner/appointments/edit', app.id]"
-                      >
-                        <mat-icon>edit_calendar</mat-icon>
-                        {{ 'owner.appointments.reschedule' | translate }}
-                      </button>
+                      @if (!isMobileRequest(app)) {
+                        <button
+                          mat-stroked-button
+                          color="primary"
+                          [routerLink]="['/owner/appointments/edit', app.id]"
+                        >
+                          <mat-icon>edit_calendar</mat-icon>
+                          {{ 'owner.appointments.reschedule' | translate }}
+                        </button>
+                      }
 
-                      <button
-                        mat-stroked-button
-                        color="warn"
-                        (click)="cancelAppointment(app.id!)"
-                      >
-                        <mat-icon>cancel</mat-icon>
-                        {{ 'owner.appointments.cancel' | translate }}
-                      </button>
+                      @if (!isMobileRequest(app)) {
+                        <button
+                          mat-stroked-button
+                          color="warn"
+                          (click)="cancelDisplayItem(app)"
+                        >
+                          <mat-icon>cancel</mat-icon>
+                          {{ 'owner.appointments.cancel' | translate }}
+                        </button>
+                      }
                     </div>
                   </div>
                 </div>
@@ -122,7 +126,7 @@
           </div>
         } @else {
           <section class="cards-grid">
-            @for (app of pastAppointments; track app.id) {
+            @for (app of pastAppointments; track getAppointmentTrackId(app)) {
               <mat-card class="appointment-card past-card">
                 <div class="appointment-card-content">
                   <div class="appointment-date-box muted">

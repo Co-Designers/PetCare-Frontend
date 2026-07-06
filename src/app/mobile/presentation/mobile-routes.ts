@@ -34,13 +34,8 @@ export const mobileRoutes: Routes = [
   },
   {
     path: 'availability',
-    loadComponent: () =>
-      import('./components/mobile-availability-form/mobile-availability-form').then(
-        (m) => m.MobileAvailabilityFormComponent,
-      ),
-    canActivate: [roleGuard],
-    data: { requiredRole: 'MOBILE' },
-    title: 'PetCare - Set Availability',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
   {
     path: 'services',

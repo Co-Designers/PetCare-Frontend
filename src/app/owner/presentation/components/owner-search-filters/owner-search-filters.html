@@ -3,6 +3,7 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'owner.search.district' | translate }}</mat-label>
       <mat-select formControlName="district">
+        <mat-option value="">Todos</mat-option>
         @for (d of districts; track d) {
           <mat-option [value]="d">{{ d }}</mat-option>
         }
@@ -12,6 +13,7 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'owner.search.specialty' | translate }}</mat-label>
       <mat-select formControlName="specialty">
+        <mat-option value="">Todas</mat-option>
         @for (s of specialties; track s) {
           <mat-option [value]="s">{{ s }}</mat-option>
         }
@@ -28,8 +30,8 @@
     </mat-form-field>
 
     <div class="buttons">
-      <button mat-raised-button color="primary" (click)="search()">{{ 'owner.search.search' | translate }}</button>
-      <button mat-button (click)="reset()">{{ 'common.reset' | translate }}</button>
+      <button mat-raised-button color="primary" type="button" (click)="search()">{{ 'owner.search.search' | translate }}</button>
+      <button mat-button type="button" (click)="reset()">{{ 'common.reset' | translate }}</button>
     </div>
   </form>
 </div>

@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +23,6 @@ import { NotificationService } from '../../../../shared/application/notification
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     FormsModule,
     MatCardModule,
     MatButtonModule,
@@ -82,7 +80,7 @@ export class ClinicAppointmentListComponent implements OnInit {
 
   getAppointmentsByStatus(status: 'pending' | 'confirmed' | 'completed') {
     return this.filteredAppointments
-      .filter((appointment) => (appointment as any).status === status)
+      .filter((appointment) => this.normalizeStatus((appointment as any).status) === status)
       .sort((a, b) => {
         return new Date((a as any).dateTime).getTime() - new Date((b as any).dateTime).getTime();
       });
@@ -141,14 +139,7 @@ export class ClinicAppointmentListComponent implements OnInit {
       return;
     }
 
-    const updatedAppointment = {
-      ...appointment,
-      status: 'completed',
-      paymentStatus: 'paid',
-    };
-
-    this.appointmentService.updateAppointment(appointmentId, updatedAppointment);
-    this.notification.success('Cita completada y pago registrado');
+    this.appointmentService.completeAppointment(appointmentId);
 
     setTimeout(() => {
       this.appointmentService.loadAppointments();
@@ -163,14 +154,7 @@ export class ClinicAppointmentListComponent implements OnInit {
       return;
     }
 
-    const updatedAppointment = {
-      ...appointment,
-      status: 'cancelled',
-      paymentStatus: 'cancelled',
-    };
-
-    this.appointmentService.updateAppointment(appointmentId, updatedAppointment);
-    this.notification.success('Cita cancelada');
+    this.appointmentService.cancelAppointment(appointmentId);
 
     setTimeout(() => {
       this.appointmentService.loadAppointments();
@@ -246,5 +230,9 @@ export class ClinicAppointmentListComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+  }
+
+  private normalizeStatus(status: string | null | undefined): string {
+    return String(status || '').trim().toLowerCase();
   }
 }

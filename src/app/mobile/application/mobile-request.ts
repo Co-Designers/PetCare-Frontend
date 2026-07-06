@@ -6,6 +6,7 @@ import {
 import { IamStore } from '../../iam/application/iam-store';
 import { NotificationService } from '../../shared/application/notification';
 import { Observable } from 'rxjs';
+import { resolveCurrentMobileId } from './mobile-id';
 
 @Injectable({ providedIn: 'root' })
 export class MobileRequestService {
@@ -19,7 +20,7 @@ export class MobileRequestService {
   public readonly error = signal<string | null>(null);
 
   loadRequests(): void {
-    const mobileId = this.iamStore.currentUserId();
+    const mobileId = resolveCurrentMobileId(this.iamStore.currentUserId());
     if (!mobileId) return;
     this.loading.set(true);
     this.api.getByMobileId(mobileId).subscribe({
@@ -40,7 +41,9 @@ export class MobileRequestService {
   acceptRequest(id: number): void {
     this.api.update(id, { status: 'accepted' }).subscribe({
       next: (updated) => {
-        this.requestsSignal.update((list) => list.map((r) => (r.id === id ? updated : r)));
+        this.requestsSignal.update((list) =>
+          list.map((request) => (request.id === id ? { ...request, ...updated, status: 'accepted' } : request)),
+        );
         this.notification.success('Solicitud aceptada');
       },
       error: (err) => {
@@ -52,10 +55,12 @@ export class MobileRequestService {
   }
 
   rejectRequest(id: number): void {
-    this.api.update(id, { status: 'rejected' }).subscribe({
-      next: (updated) => {
-        this.requestsSignal.update((list) => list.map((r) => (r.id === id ? updated : r)));
-        this.notification.success('Solicitud rechazada');
+    this.api.cancel(id).subscribe({
+      next: () => {
+        this.requestsSignal.update((list) =>
+          list.map((request) => (request.id === id ? { ...request, status: 'cancelled' } : request)),
+        );
+        this.notification.success('Solicitud cancelada');
       },
       error: (err) => {
         console.error(err);
@@ -65,10 +70,26 @@ export class MobileRequestService {
     });
   }
 
+  deleteRequest(id: number): void {
+    this.api.delete(id).subscribe({
+      next: () => {
+        this.requestsSignal.update((list) => list.filter((request) => request.id !== id));
+        this.notification.success('Solicitud eliminada');
+      },
+      error: (err) => {
+        console.error(err);
+        this.error.set('Error deleting request');
+        this.notification.error('Error al eliminar solicitud');
+      },
+    });
+  }
+
   completeRequest(id: number): void {
-    this.api.update(id, { status: 'completed' }).subscribe({
-      next: (updated) => {
-        this.requestsSignal.update((list) => list.map((r) => (r.id === id ? updated : r)));
+    this.api.complete(id).subscribe({
+      next: () => {
+        this.requestsSignal.update((list) =>
+          list.map((request) => (request.id === id ? { ...request, status: 'completed' } : request)),
+        );
         this.notification.success('Servicio completado');
       },
       error: (err) => {

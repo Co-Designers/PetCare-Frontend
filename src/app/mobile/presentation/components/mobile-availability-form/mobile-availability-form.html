@@ -107,4 +107,62 @@
       </form>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="availability-card slots-card">
+    <mat-card-header>
+      <div class="card-title-block">
+        <div class="card-icon">
+          <mat-icon>calendar_month</mat-icon>
+        </div>
+
+        <div>
+          <mat-card-title>Horarios registrados</mat-card-title>
+          <mat-card-subtitle>Disponibilidad actual sincronizada con el backend</mat-card-subtitle>
+        </div>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (loading) {
+        <div class="empty-slots">
+          <mat-icon>hourglass_top</mat-icon>
+          <p>Cargando disponibilidad...</p>
+        </div>
+      } @else if (slots.length === 0) {
+        <div class="empty-slots">
+          <mat-icon>event_busy</mat-icon>
+          <p>No hay horarios registrados todavía.</p>
+        </div>
+      } @else {
+        <div class="slots-list">
+          @for (slot of slots; track slot.id || slot.date + slot.startTime) {
+            <div class="slot-item">
+              <div class="slot-icon">
+                <mat-icon>event_available</mat-icon>
+              </div>
+
+              <div>
+                <strong>{{ formatDate(slot.date) }}</strong>
+                <span>{{ slot.startTime }} - {{ slot.endTime }}</span>
+              </div>
+
+              <span class="slot-status" [class.unavailable]="slot.isAvailable === false">
+                {{ slot.isAvailable === false ? 'No disponible' : 'Disponible' }}
+              </span>
+
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                aria-label="Eliminar horario"
+                (click)="deleteSlot(slot.id)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
 </div>

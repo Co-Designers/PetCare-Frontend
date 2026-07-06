@@ -67,6 +67,10 @@
   box-shadow: 0 14px 35px rgba(15, 23, 42, 0.07);
 }
 
+.slots-card {
+  margin-top: 1.5rem;
+}
+
 .availability-card mat-card-header {
   padding: 1.5rem 1.5rem 0;
 }
@@ -191,6 +195,92 @@ mat-form-field mat-icon {
   height: 19px;
 }
 
+.empty-slots {
+  min-height: 150px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #64748b;
+  border-radius: 20px;
+  background: #f8fafc;
+  border: 1px dashed rgba(26, 52, 88, 0.18);
+}
+
+.empty-slots mat-icon {
+  color: #1a3458;
+  font-size: 2.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-slots p {
+  margin: 0;
+  font-weight: 800;
+}
+
+.slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.slot-item {
+  display: grid;
+  grid-template-columns: 46px 1fr auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.95rem;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid rgba(26, 52, 88, 0.08);
+}
+
+.slot-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: #1a3458;
+  background: #edf4ff;
+}
+
+.slot-icon mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.slot-item strong {
+  display: block;
+  color: #1a3458;
+  font-weight: 900;
+}
+
+.slot-item span {
+  display: block;
+  margin-top: 0.1rem;
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.slot-status {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  color: #166534 !important;
+  background: #dcfce7;
+  font-size: 0.78rem !important;
+  font-weight: 900 !important;
+  white-space: nowrap;
+}
+
+.slot-status.unavailable {
+  color: #991b1b !important;
+  background: #fee2e2;
+}
+
 @media (max-width: 700px) {
   .availability-page {
     padding: 1rem;
@@ -218,5 +308,15 @@ mat-form-field mat-icon {
 
   .button-group button {
     width: 100%;
+  }
+
+  .slot-item {
+    grid-template-columns: 46px 1fr;
+  }
+
+  .slot-status,
+  .slot-item button {
+    grid-column: 2;
+    width: fit-content;
   }
 }

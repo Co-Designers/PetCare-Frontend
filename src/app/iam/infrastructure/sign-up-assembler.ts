@@ -9,8 +9,8 @@ export class SignUpAssembler {
     return {
       username: command.username,
       password: command.password,
+      confirmPassword: command.password,
       email: command.email,
-      userType: command.userType,
       fullName: command.fullName,
       phone: command.phone,
       district: command.district,

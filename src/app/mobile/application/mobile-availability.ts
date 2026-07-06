@@ -5,6 +5,7 @@ import {
 } from '../infrastructure/mobile-availability-api';
 import { IamStore } from '../../iam/application/iam-store';
 import { NotificationService } from '../../shared/application/notification';
+import { resolveCurrentMobileId } from './mobile-id';
 
 @Injectable({ providedIn: 'root' })
 export class MobileAvailabilityService {
@@ -18,7 +19,7 @@ export class MobileAvailabilityService {
   public readonly error = signal<string | null>(null);
 
   loadSlots(date?: string): void {
-    const mobileId = this.iamStore.currentUserId();
+    const mobileId = resolveCurrentMobileId(this.iamStore.currentUserId());
     if (!mobileId) return;
     this.loading.set(true);
     this.api.getByMobileId(mobileId, date).subscribe({
@@ -37,7 +38,7 @@ export class MobileAvailabilityService {
   }
 
   createSlot(slot: Omit<TimeSlot, 'id'>): void {
-    const mobileId = this.iamStore.currentUserId();
+    const mobileId = resolveCurrentMobileId(this.iamStore.currentUserId());
     if (!mobileId) return;
     const slotWithMobile = { ...slot, mobileId };
     this.api.create(slotWithMobile).subscribe({

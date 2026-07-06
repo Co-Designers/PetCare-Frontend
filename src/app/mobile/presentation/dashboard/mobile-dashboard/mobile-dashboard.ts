@@ -30,10 +30,10 @@ export class MobileDashboardComponent implements OnInit {
     return this.serviceService.services() as any[];
   }
 
-  get pendingRequests(): number {
+  get acceptedRequests(): number {
     return this.requests.filter((request: any) => {
       const status = String(request?.status || '').toLowerCase();
-      return status === 'pending';
+      return status === 'accepted' || status === 'confirmed' || status === 'in_process';
     }).length;
   }
 

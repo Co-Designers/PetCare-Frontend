@@ -6,7 +6,7 @@
       <h1>{{ 'mobile.dashboard.welcome' | translate }}</h1>
 
       <p>
-        Gestiona tus solicitudes, servicios, disponibilidad y perfil profesional.
+        Gestiona tus solicitudes, servicios y perfil profesional.
       </p>
     </div>
 
@@ -19,7 +19,7 @@
     <mat-card class="stat-card">
       <mat-card-header>
         <div>
-          <mat-card-title>{{ 'mobile.dashboard.pendingRequests' | translate }}</mat-card-title>
+          <mat-card-title>Solicitudes aceptadas</mat-card-title>
           <mat-card-subtitle>Solicitudes por atender</mat-card-subtitle>
         </div>
 
@@ -32,7 +32,7 @@
         @if (loadingRequests) {
           <div class="loading">Cargando...</div>
         } @else {
-          <div class="stat-number">{{ pendingRequests }}</div>
+          <div class="stat-number">{{ acceptedRequests }}</div>
         }
       </mat-card-content>
 
@@ -88,11 +88,6 @@
       <button mat-raised-button color="accent" routerLink="/mobile/services">
         <mat-icon>medical_services</mat-icon>
         {{ 'mobile.dashboard.manageServices' | translate }}
-      </button>
-
-      <button mat-raised-button routerLink="/mobile/availability">
-        <mat-icon>event_available</mat-icon>
-        {{ 'mobile.dashboard.setAvailability' | translate }}
       </button>
 
       <button mat-raised-button routerLink="/mobile/profile">

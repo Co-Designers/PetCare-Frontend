@@ -7,8 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, forkJoin, map, of } from 'rxjs';
 import { OwnerAppointmentService } from '../../../application/owner-appointment';
 import { OwnerPetService } from '../../../application/owner-pet';
+import { IamStore } from '../../../../iam/application/iam-store';
+import { NotificationService } from '../../../../shared/application/notification';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -30,8 +33,12 @@ export class OwnerAppointmentListComponent implements OnInit {
   private readonly appointmentService = inject(OwnerAppointmentService);
   private readonly petService = inject(OwnerPetService);
   private readonly http = inject(HttpClient);
+  private readonly iamStore = inject(IamStore);
+  private readonly notification = inject(NotificationService);
 
   private readonly providersMap = new Map<string, string>();
+  private readonly mobileServicesMap = new Map<number, string>();
+  mobileRequests: any[] = [];
 
   get appointments() {
     return this.appointmentService.appointments();
@@ -48,13 +55,16 @@ export class OwnerAppointmentListComponent implements OnInit {
   get upcomingAppointments() {
     const now = new Date();
 
-    return this.appointments
+    return this.allAppointments
       .filter((appointment) => {
         const status = (appointment.status || '').toLowerCase();
         const appointmentDate = new Date(appointment.dateTime);
 
         const isPendingOrConfirmed =
-          status === 'pending' || status === 'confirmed' || status === 'accepted';
+          status === 'pending' ||
+          status === 'confirmed' ||
+          status === 'accepted' ||
+          status === 'in_process';
 
         return appointmentDate >= now && isPendingOrConfirmed;
       })
@@ -66,13 +76,16 @@ export class OwnerAppointmentListComponent implements OnInit {
   get pastAppointments() {
     const now = new Date();
 
-    return this.appointments
+    return this.allAppointments
       .filter((appointment) => {
         const status = (appointment.status || '').toLowerCase();
         const appointmentDate = new Date(appointment.dateTime);
 
         const isFinished =
-          status === 'completed' || status === 'cancelled' || status === 'canceled';
+          status === 'completed' ||
+          status === 'cancelled' ||
+          status === 'canceled' ||
+          status === 'rejected';
 
         return appointmentDate < now || isFinished;
       })
@@ -85,21 +98,36 @@ export class OwnerAppointmentListComponent implements OnInit {
     this.appointmentService.loadAppointments();
     this.petService.loadPets();
     this.loadProviders();
+    this.loadMobileServices();
+    this.loadMobileRequests();
   }
 
   loadProviders(): void {
-    this.http.get<any[]>(`${environment.platformProviderApiBaseUrl}/service-providers`).subscribe({
-      next: (providers) => {
-        providers.forEach((provider) => {
-          const id = this.normalizeId(provider.id);
-          const type = this.normalizeProviderType(provider.type);
-          const name = this.resolveProviderName(provider);
+    const clinics$ = this.http.get<any[]>(`${environment.platformProviderApiBaseUrl}/clinics`).pipe(
+      map((clinics) =>
+        (clinics || []).map((clinic) => ({
+          ...clinic,
+          type: 'clinic',
+        })),
+      ),
+      catchError(() => of([] as any[])),
+    );
 
-          if (!id || !name) return;
+    const mobileProfessionals$ = this.http
+      .get<any[]>(`${environment.platformProviderApiBaseUrl}/mobile-professionals`)
+      .pipe(
+        map((professionals) =>
+          (professionals || []).map((professional) => ({
+            ...professional,
+            type: 'mobile',
+          })),
+        ),
+        catchError(() => of([] as any[])),
+      );
 
-          this.providersMap.set(`${type}:${id}`, name);
-          this.providersMap.set(`${id}`, name);
-        });
+    forkJoin([clinics$, mobileProfessionals$]).subscribe({
+      next: ([clinics, mobileProfessionals]) => {
+        [...clinics, ...mobileProfessionals].forEach((provider) => this.registerProvider(provider));
       },
       error: (error) => console.error('Error loading providers', error),
     });
@@ -153,8 +181,10 @@ export class OwnerAppointmentListComponent implements OnInit {
       pending: 'Pendiente',
       cancelled: 'Cancelada',
       canceled: 'Cancelada',
+      rejected: 'Cancelada',
       completed: 'Completada',
       accepted: 'Aceptada',
+      in_process: 'Aceptada',
     };
 
     return labels[normalizedStatus] || status || 'Sin estado';
@@ -163,7 +193,11 @@ export class OwnerAppointmentListComponent implements OnInit {
   getStatusClass(status: string | null | undefined): string {
     const normalizedStatus = (status || '').toLowerCase();
 
-    if (normalizedStatus === 'confirmed' || normalizedStatus === 'accepted') {
+    if (
+      normalizedStatus === 'confirmed' ||
+      normalizedStatus === 'accepted' ||
+      normalizedStatus === 'in_process'
+    ) {
       return 'status-confirmed';
     }
 
@@ -202,6 +236,29 @@ export class OwnerAppointmentListComponent implements OnInit {
     }
   }
 
+  cancelDisplayItem(appointment: any): void {
+    if (this.isMobileRequest(appointment)) {
+      this.cancelMobileRequest(appointment.requestId);
+      return;
+    }
+
+    this.cancelAppointment(Number(appointment.id));
+  }
+
+  isMobileRequest(appointment: any): boolean {
+    return appointment?.source === 'mobile-request';
+  }
+
+  getAppointmentTrackId(appointment: any): string {
+    return `${appointment?.source || 'appointment'}-${appointment?.id || appointment?.requestId}`;
+  }
+
+  private get allAppointments(): any[] {
+    return [...this.appointments, ...this.mobileRequests].filter((appointment) =>
+      this.isRenderableAppointment(appointment),
+    );
+  }
+
   private resolveProviderId(appointment: any): number | null {
     return this.normalizeId(
       appointment?.providerId ??
@@ -217,6 +274,32 @@ export class OwnerAppointmentListComponent implements OnInit {
     const id = Number(value);
 
     return Number.isNaN(id) ? null : id;
+  }
+
+  private isRenderableAppointment(appointment: any): boolean {
+    const petId = this.normalizeId(appointment?.petId);
+    const providerId = this.resolveProviderId(appointment);
+    const dateTime = appointment?.dateTime;
+    const serviceTitle = this.getServiceTitle(appointment);
+
+    if (!petId || !providerId || !dateTime) return false;
+    if (this.isPlaceholderText(serviceTitle)) return false;
+
+    const date = new Date(dateTime);
+
+    if (Number.isNaN(date.getTime())) return false;
+    if (!this.pets.some((pet) => Number(pet.id) === Number(petId))) return false;
+
+    const providerType = this.normalizeProviderType(appointment?.providerType);
+
+    return providerType === 'clinic' || providerType === 'mobile';
+  }
+
+  private isPlaceholderText(value: string | null | undefined): boolean {
+    const text = String(value || '').trim().toLowerCase();
+    const placeholderValues = ['pe', 'de', 'bu', 'ca', 'sc', 'string'];
+
+    return text.length < 3 || placeholderValues.includes(text);
   }
 
   private normalizeProviderType(type: string | null | undefined): string {
@@ -237,5 +320,134 @@ export class OwnerAppointmentListComponent implements OnInit {
       provider?.displayName ||
       ''
     );
+  }
+
+  private registerProvider(provider: any): void {
+    const id = this.normalizeId(provider.id);
+    const type = this.normalizeProviderType(provider.type);
+    const name = this.resolveProviderName(provider);
+
+    if (!id || !name) return;
+
+    this.providersMap.set(`${type}:${id}`, name);
+    this.providersMap.set(`${id}`, name);
+  }
+
+  private loadMobileServices(): void {
+    this.http
+      .get<any[]>(`${environment.platformProviderApiBaseUrl}/mobile-services`)
+      .pipe(catchError(() => of([] as any[])))
+      .subscribe((services) => {
+        (services || []).forEach((service) => {
+          const id = this.normalizeId(service?.id);
+          const name = service?.name || service?.serviceName || service?.title;
+
+          if (!id || !name) return;
+
+          this.mobileServicesMap.set(id, name);
+        });
+
+        this.mobileRequests = this.mobileRequests.map((request) => ({
+          ...request,
+          serviceType: this.resolveMobileServiceName(request.serviceId),
+        }));
+      });
+  }
+
+  private loadMobileRequests(): void {
+    const ownerId = this.resolveOwnerId();
+
+    if (!ownerId) return;
+
+    this.http
+      .get<any[]>(`${environment.platformProviderApiBaseUrl}/mobile-requests?ownerId=${ownerId}`)
+      .pipe(
+        catchError(() =>
+          this.http.get<any[]>(`${environment.platformProviderApiBaseUrl}/mobile-requests`).pipe(
+            map((requests) =>
+              (requests || []).filter((request) => Number(request?.ownerId) === Number(ownerId)),
+            ),
+            catchError(() => of([] as any[])),
+          ),
+        ),
+      )
+      .subscribe((requests) => {
+        this.mobileRequests = (requests || []).map((request) => this.mapMobileRequest(request));
+      });
+  }
+
+  private mapMobileRequest(request: any): any {
+    const requestId = Number(request?.id);
+    const mobileId = Number(request?.mobileId || request?.providerId || 0);
+    const status = this.normalizeMobileRequestStatus(request?.status);
+
+    return {
+      id: `mobile-${requestId}`,
+      requestId,
+      source: 'mobile-request',
+      petId: request?.petId,
+      providerId: mobileId,
+      mobileId,
+      providerType: 'mobile',
+      serviceId: request?.serviceId,
+      serviceType: this.resolveMobileServiceName(request?.serviceId),
+      dateTime: request?.scheduledDateTime || request?.dateTime || request?.date,
+      status,
+      notes: request?.notes,
+      address: request?.address,
+    };
+  }
+
+  private resolveMobileServiceName(serviceId: number | string | null | undefined): string {
+    const id = this.normalizeId(serviceId);
+
+    if (!id) return 'Servicio móvil';
+
+    return this.mobileServicesMap.get(id) || `Servicio móvil #${id}`;
+  }
+
+  private normalizeMobileRequestStatus(status: string | null | undefined): string {
+    const normalizedStatus = String(status || '').trim().toLowerCase();
+
+    if (!normalizedStatus) return 'pending';
+    if (normalizedStatus === 'rejected') return 'cancelled';
+    if (normalizedStatus === 'confirmed' || normalizedStatus === 'in_process') return 'accepted';
+
+    return normalizedStatus;
+  }
+
+  private cancelMobileRequest(requestId: number): void {
+    if (!requestId || !confirm('¿Cancelar esta solicitud móvil?')) return;
+
+    this.http
+      .patch(`${environment.platformProviderApiBaseUrl}/mobile-requests/${requestId}/cancel`, {})
+      .subscribe({
+        next: () => {
+          this.mobileRequests = this.mobileRequests.map((request) =>
+            request.requestId === requestId ? { ...request, status: 'cancelled' } : request,
+          );
+          this.notification.success('Solicitud móvil cancelada');
+        },
+        error: (error) => {
+          console.error('Error cancelling mobile request', error);
+          this.notification.error('Error al cancelar solicitud móvil');
+        },
+      });
+  }
+
+  private resolveOwnerId(): number | null {
+    const currentUserId = this.iamStore.currentUserId();
+
+    if (currentUserId) return Number(currentUserId);
+
+    const localStorageKeys = ['userId', 'currentUserId', 'id'];
+
+    for (const key of localStorageKeys) {
+      const value = Number(localStorage.getItem(key));
+
+      if (!Number.isNaN(value) && value > 0) return value;
+    }
+
+    return null;
   }
 }

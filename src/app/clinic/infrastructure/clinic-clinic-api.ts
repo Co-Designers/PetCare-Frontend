@@ -30,6 +30,11 @@ export class ClinicClinicApiService {
     return this.http.get<ClinicProfile>(`${this.baseUrl}/${id}`);
   }
 
+  /** Obtener clínicas disponibles */
+  getAll(): Observable<ClinicProfile[]> {
+    return this.http.get<ClinicProfile[]>(this.baseUrl);
+  }
+
   /** Actualizar perfil de la clínica */
   update(id: number, data: Partial<ClinicProfile>): Observable<ClinicProfile> {
     return this.http.patch<ClinicProfile>(`${this.baseUrl}/${id}`, data);

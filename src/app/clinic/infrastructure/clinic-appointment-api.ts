@@ -36,6 +36,19 @@ export class ClinicAppointmentApiService {
   update(id: number, updates: Partial<ClinicAppointment>): Observable<ClinicAppointment> {
     return this.http.put<ClinicAppointment>(`${this.baseUrl}/${id}`, updates);
   }
+
+  start(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/start`, {});
+  }
+
+  complete(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/complete`, {});
+  }
+
+  cancel(id: number): Observable<{ message: string }> {
+    return this.http.patch<{ message: string }>(`${this.baseUrl}/${id}/cancel`, {});
+  }
+
   create(appointment: Omit<ClinicAppointment, 'id'>): Observable<ClinicAppointment> {
     return this.http.post<ClinicAppointment>(this.baseUrl, appointment);
   }
